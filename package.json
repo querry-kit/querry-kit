@@ -1,0 +1,14 @@
+{
+  "name": "@querry-kit/landing-page",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.15.1",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

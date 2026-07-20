@@ -6,6 +6,17 @@ Querry Kit provides focused open-source packages for parsing and validating
 queries, selecting response fields, resolving relation includes, normalizing
 request data, and reducing repetitive API infrastructure code.
 
+## Organization landing page
+
+The Querry Kit GitHub organization landing page is built with VitePress and
+published through GitHub Pages:
+
+- Website: <https://querry-kit.github.io/querry-kit/>
+- Organization: <https://github.com/querry-kit>
+
+It presents Querry Kit as composable, type-safe query tooling for NestJS APIs
+and links the individual package repositories with short descriptions.
+
 ## Packages
 
 ### [`@querry-kit/nest-util`](https://github.com/querry-kit/nest-util)
