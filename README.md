@@ -4,7 +4,8 @@ Composable, type-safe query tooling for NestJS APIs.
 
 Querry Kit provides focused open-source packages for parsing and validating
 queries, selecting response fields, resolving relation includes, normalizing
-request data, and reducing repetitive API infrastructure code.
+request data, building Prisma-backed query services, and reducing repetitive API
+infrastructure code.
 
 ## Organization landing page
 
@@ -39,6 +40,16 @@ Field projection utilities for:
 - Building relation includes
 - Projecting API response objects
 - Generating schemas from Swagger-decorated DTOs
+
+### [`@querry-kit/nest-prisma-query`](https://github.com/querry-kit/nest-prisma-query)
+
+Generic NestJS query helpers for Prisma-compatible delegates:
+
+- Typed `QueryService` methods for common read operations
+- Pagination request and response DTOs
+- Swagger helpers for paginated responses
+- Query object parsing through `@querry-kit/nest-util`
+- Optional CASL Prisma adapter for access-controlled reads
 
 ## Design goals
 

@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Querry Kit
   text: Type-safe query tooling for NestJS APIs.
-  tagline: Focused packages for parsing requests, validating field projections, resolving includes, shaping responses, and removing repetitive API plumbing.
+  tagline: Focused packages for parsing requests, validating field projections, resolving includes, shaping Prisma-backed responses, and removing repetitive API plumbing.
   image:
     src: /logo/querry-kit-logo.svg
     alt: Querry Kit logo
@@ -17,12 +17,12 @@ hero:
       link: https://github.com/querry-kit
 
 features:
-  - title: Composable packages
+  - title: 🧩 Composable packages
     details: Install only the query utilities your API needs, with small package boundaries and framework-friendly APIs.
-  - title: DTO-backed behavior
+  - title: 📦 DTO-backed behavior
     details: Keep field selection, relation includes, validation, and response shaping aligned with your public DTO model.
-  - title: NestJS focused
-    details: Built around common NestJS controller, validation, Swagger, and request normalization workflows.
+  - title: 🔐 Access-control ready
+    details: Keep query services CASL-agnostic while still supporting optional Prisma access filters in NestJS applications.
 ---
 
 <section id="repositories" class="repository-section">
@@ -47,6 +47,24 @@ General-purpose NestJS utilities for query parsing, nested query object creation
 <div class="repository-actions">
 <a href="https://github.com/querry-kit/nest-util">GitHub</a>
 <a href="https://querry-kit.github.io/nest-util/">Docs</a>
+</div>
+</article>
+
+<article class="repository-card">
+<div>
+<h3>@querry-kit/nest-prisma-query</h3>
+<p>
+Generic NestJS query helpers for Prisma-compatible delegates, pagination DTOs, Swagger response metadata, and optional CASL Prisma access filters.
+</p>
+<ul>
+<li>Wrap Prisma delegates with a typed <code>QueryService</code></li>
+<li>Use pagination DTOs with class-validator, class-transformer, and Swagger</li>
+<li>Merge app access rules with caller filters for protected reads</li>
+</ul>
+</div>
+<div class="repository-actions">
+<a href="https://github.com/querry-kit/nest-prisma-query">GitHub</a>
+<a href="https://querry-kit.github.io/nest-prisma-query/">Docs</a>
 </div>
 </article>
 
