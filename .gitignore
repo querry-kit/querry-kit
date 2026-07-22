@@ -1,4 +1,9 @@
-node_modules/
-docs/.vitepress/cache/
-docs/.vitepress/dist/
-docs/.vitepress/.temp/
+node_modules
+.nuxt
+.output
+dist
+coverage
+docs/.vitepress/.temp
+docs/.vitepress/cache
+examples/*/api/src/generated
+examples/*/api/.env

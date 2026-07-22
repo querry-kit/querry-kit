@@ -1,0 +1,26 @@
+{
+  "name": "@querry-kit/example-workboard-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --port 3201",
+    "typecheck": "nuxt typecheck",
+    "build": "nuxt build"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^4.10.0",
+    "@querry-kit/nuxt": "link:../../../../nuxt",
+    "@querry-kit/nuxt-ui": "link:../../../../nuxt-ui",
+    "@tanstack/table-core": "^8.21.3",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/router": "^14.3.0",
+    "axios": "^1.18.1",
+    "nuxt": "^4.4.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.7"
+  }
+}

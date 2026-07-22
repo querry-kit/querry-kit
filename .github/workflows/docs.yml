@@ -1,4 +1,4 @@
-name: Pages
+name: Docs
 
 on:
   push:
@@ -34,8 +34,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build site
-        run: pnpm build
+      - name: Build documentation
+        run: pnpm docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

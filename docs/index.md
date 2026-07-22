@@ -3,87 +3,50 @@ layout: home
 
 hero:
   name: Querry Kit
-  text: Type-safe query tooling for NestJS APIs.
-  tagline: Focused packages for parsing requests, validating field projections, resolving includes, shaping Prisma-backed responses, and removing repetitive API plumbing.
+  text: From relational Nest APIs to useful Nuxt data screens.
+  tagline: Three focused libraries and one complete, Prisma-backed reference application.
   image:
     src: /logo/querry-kit-logo.svg
     alt: Querry Kit logo
   actions:
     - theme: brand
-      text: View repositories
-      link: '#repositories'
+      text: Explore Workboard
+      link: '#workboard'
     - theme: alt
       text: GitHub organization
       link: https://github.com/querry-kit
 
 features:
-  - title: 🧩 Composable packages
-    details: Install only the query utilities your API needs, with small package boundaries and framework-friendly APIs.
-  - title: 📦 DTO-backed behavior
-    details: Keep field selection, relation includes, validation, and response shaping aligned with your public DTO model.
-  - title: 🔐 Access-control ready
-    details: Keep query services CASL-agnostic while still supporting optional Prisma access filters in NestJS applications.
+  - title: Nest API foundations
+    details: 'Resource queries, response projection, pagination, DTO metadata and OpenAPI come from @querry-kit/nest.'
+  - title: Headless Nuxt data flow
+    details: '@querry-kit/nuxt owns typed REST clients and durable table state without prescribing a visual component library.'
+  - title: Ready-made table controls
+    details: '@querry-kit/nuxt-ui provides the toolbar, filters, sorting, column preferences and pagination around any Nuxt UI table.'
 ---
 
-<section id="repositories" class="repository-section">
-<h2>Repositories</h2>
-<p>
-Querry Kit is organized as small, focused open-source repositories. Each package handles one part of predictable query handling for NestJS APIs.
-</p>
+<section id="libraries" class="repository-section">
+<h2>Three libraries, one implementation path</h2>
+<p>Workboard deliberately uses the current three-package architecture: one Nest API, one Nuxt web application and no compatibility packages.</p>
 
-<div class="repository-grid">
-<article class="repository-card">
-<div>
-<h3>@querry-kit/nest-util</h3>
-<p>
-General-purpose NestJS utilities for query parsing, nested query object creation, request body normalization, object diffs, validation error mapping, and Swagger helpers.
-</p>
-<ul>
-<li>Parse and normalize request query values</li>
-<li>Map validation errors into stable API responses</li>
-<li>Reuse decorators and response helpers in Nest controllers</li>
-</ul>
+<div class="repository-grid three-columns">
+<article class="repository-card"><div><h3>@querry-kit/nest</h3><p>Build documented Nest resources with DTO-backed field selection, relation includes, pagination and response projection.</p><ul><li><code>ResourceQuery</code> for list and detail flows</li><li><code>QueryTransformPipe</code> and fields validation</li><li>Swagger metadata for usable API docs</li></ul></div><div class="repository-actions"><a href="https://github.com/querry-kit/nest">GitHub</a><a href="https://querry-kit.github.io/nest/">Docs</a></div></article>
+<article class="repository-card"><div><h3>@querry-kit/nuxt</h3><p>Keep API clients and table mechanics typed, portable and independent of a specific Nuxt component suite.</p><ul><li><code>createApiClient</code> for versioned API access</li><li><code>useModuleApi</code> for typed resource methods</li><li><code>useTable</code> for query and persistence state</li></ul></div><div class="repository-actions"><a href="https://github.com/querry-kit/nuxt">GitHub</a><a href="https://querry-kit.github.io/nuxt/">Docs</a></div></article>
+<article class="repository-card"><div><h3>@querry-kit/nuxt-ui</h3><p>Add a polished, customizable control layer to a Nuxt UI data table.</p><ul><li>Toolbar with filtering and sorting</li><li>Persisted column order and visibility</li><li>Localized pagination components</li></ul></div><div class="repository-actions"><a href="https://github.com/querry-kit/nuxt-ui">GitHub</a><a href="https://querry-kit.github.io/nuxt-ui/">Docs</a></div></article>
 </div>
-<div class="repository-actions">
-<a href="https://github.com/querry-kit/nest-util">GitHub</a>
-<a href="https://querry-kit.github.io/nest-util/">Docs</a>
-</div>
-</article>
+</section>
 
-<article class="repository-card">
-<div>
-<h3>@querry-kit/nest-prisma-query</h3>
-<p>
-Generic NestJS query helpers for Prisma-compatible delegates, pagination DTOs, Swagger response metadata, and optional CASL Prisma access filters.
-</p>
-<ul>
-<li>Wrap Prisma delegates with a typed <code>QueryService</code></li>
-<li>Use pagination DTOs with class-validator, class-transformer, and Swagger</li>
-<li>Merge app access rules with caller filters for protected reads</li>
-</ul>
-</div>
-<div class="repository-actions">
-<a href="https://github.com/querry-kit/nest-prisma-query">GitHub</a>
-<a href="https://querry-kit.github.io/nest-prisma-query/">Docs</a>
-</div>
-</article>
+<section id="workboard" class="example-section">
+<h2>Workboard reference application</h2>
+<p>One API and one web workspace, backed by PostgreSQL, a Prisma schema and meaningful domain relations.</p>
 
-<article class="repository-card">
-<div>
-<h3>@querry-kit/nest-fields-query</h3>
-<p>
-DTO-backed field projection utilities for parsing nested fields expressions, validating projections, deriving relation includes, and shaping API responses.
-</p>
-<ul>
-<li>Parse nested <code>fields</code> query expressions</li>
-<li>Validate projections against DTO schemas</li>
-<li>Project response objects and build relation includes</li>
-</ul>
+<div class="example-grid one-column">
+<article class="example-card"><p class="example-kicker">Delivery operations</p><h3>Workboard</h3><p>A product team organizes workspaces, projects and tasks. Members live in workspaces; labels are shared by many tasks.</p><div class="relation-flow"><span>Workspace</span><b>→</b><span>Project</span><b>→</b><span>Task</span><b>↔</b><span>Label</span></div><ul><li>Prisma models, PostgreSQL Compose setup and an idempotent seed</li><li>Nest modules, DTOs, Query Kit projections and Swagger</li><li>Nuxt table state, toolbar and pagination</li></ul><p class="example-path"><code>examples/workboard/{api,web}</code></p></article>
 </div>
-<div class="repository-actions">
-<a href="https://github.com/querry-kit/nest-fields-query">GitHub</a>
-<a href="https://querry-kit.github.io/nest-fields-query/">Docs</a>
-</div>
-</article>
-</div>
+
+<div class="run-panel"><div><h3>Run the stack</h3><p>Local package links exercise the actual three library checkouts.</p></div><pre><code>pnpm install
+cd examples/workboard/api && cp .env.example .env
+docker compose up -d && pnpm db:push && pnpm db:seed
+pnpm --filter @querry-kit/example-workboard-api dev
+pnpm --filter @querry-kit/example-workboard-web dev</code></pre></div>
 </section>

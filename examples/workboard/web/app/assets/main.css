@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+.page-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 5rem;
+}
+.hero {
+  max-width: 780px;
+}
+.hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+.hero p {
+  color: var(--ui-text-muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.eyebrow {
+  color: var(--ui-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+}
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin: 3rem 0;
+  background: var(--ui-border);
+  border: 1px solid var(--ui-border);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.overview div {
+  padding: 1rem 1.25rem;
+  background: var(--ui-bg);
+}
+.overview span {
+  display: block;
+  color: var(--ui-text-muted);
+  font-size: 0.8rem;
+}
+.overview strong,
+.overview a {
+  display: block;
+  margin-top: 0.2rem;
+  font-weight: 650;
+}
+.panel {
+  padding: 1.25rem;
+  border: 1px solid var(--ui-border);
+  border-radius: 1rem;
+  background: var(--ui-bg-elevated);
+}
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+.panel-heading h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+.panel-heading p {
+  color: var(--ui-text-muted);
+  margin: 0.35rem 0 1rem;
+}
+@media (max-width: 640px) {
+  .overview {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,7 +5,7 @@ const withBase = (path: string) => `${base.replace(/\/$/, '')}${path}`;
 
 export default defineConfig({
   title: 'Querry Kit',
-  description: 'Composable, type-safe query tooling for NestJS APIs.',
+  description: 'A complete reference application for Querry Kit Nest and Nuxt libraries.',
   base,
   cleanUrls: true,
   head: [
@@ -16,18 +16,19 @@ export default defineConfig({
       'meta',
       {
         property: 'og:description',
-        content: 'Composable, type-safe query tooling for NestJS APIs.'
-      }
+        content: 'A complete reference application for Querry Kit Nest and Nuxt libraries.',
+      },
     ],
-    ['meta', { property: 'og:image', content: withBase('/logo/querry-kit-wordmark.svg') }]
+    ['meta', { property: 'og:image', content: withBase('/logo/querry-kit-wordmark.svg') }],
   ],
   themeConfig: {
     logo: '/logo/querry-kit-logo.svg',
     siteTitle: 'Querry Kit',
     nav: [
-      { text: 'Repositories', link: '#repositories' },
-      { text: 'GitHub', link: 'https://github.com/querry-kit' }
+      { text: 'Libraries', link: '#libraries' },
+      { text: 'Workboard', link: '#workboard' },
+      { text: 'GitHub', link: 'https://github.com/querry-kit' },
     ],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/querry-kit' }]
-  }
+    socialLinks: [{ icon: 'github', link: 'https://github.com/querry-kit' }],
+  },
 });

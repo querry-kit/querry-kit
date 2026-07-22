@@ -1,0 +1,10 @@
+node_modules
+dist
+.nuxt
+.output
+coverage
+generated
+examples/*/api/prisma
+docs/.vitepress/.temp
+docs/.vitepress/dist
+pnpm-lock.yaml

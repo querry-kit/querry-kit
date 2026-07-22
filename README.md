@@ -1,60 +1,72 @@
 # Querry Kit
 
-Composable, type-safe query tooling for NestJS APIs.
+Querry Kit ist eine Sammlung zusammenpassender Bausteine für relationale,
+typsichere NestJS-APIs und Nuxt-Oberflächen. Dieses Repository ist der Einstieg
+in das Projekt und enthält eine vollständige, lokal ausführbare Referenzanwendung.
 
-Querry Kit provides focused open-source packages for parsing and validating
-queries, selecting response fields, resolving relation includes, normalizing
-request data, building Prisma-backed query services, and reducing repetitive API
-infrastructure code.
+## Die drei Kern-Repositories
 
-## Organization landing page
+| Repository                                                     | Aufgabe in den Beispielen                                                                                                      |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| [`@querry-kit/nest`](https://github.com/querry-kit/nest)       | NestJS-Controller-Helfer, `ResourceQuery`, DTO-basierte `fields`-Projektionen, Pagination, Query-Pipes und Swagger-Dekoratoren |
+| [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt)       | Axios-Client, typisierte Resource-Clients und die headless Tabellen-Composable `useTable`                                      |
+| [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) | Nuxt-Modul mit Toolbar, Filtern, Sortierung, Spaltenoptionen und Pagination für Query-Kit-Tabellen                             |
 
-The Querry Kit GitHub organization landing page is built with VitePress and
-published through GitHub Pages:
+## Referenzanwendung: Workboard
+
+Ein Arbeitsbereich für Produktteams. Das Datenmodell verbindet:
+
+- `Workspace` → `Project` → `Task` (zwei 1:n-Relationen)
+- `Workspace` → `Member` (1:n)
+- `Task` ↔ `Label` (n:m)
+
+Die Nest-API folgt einer produktionsnahen Struktur mit `config`, `prisma` und
+domänenspezifischen `modules`. Sie verwendet das eigene Prisma-Modell aus
+`examples/workboard/api/prisma/schema.prisma`; die Nuxt-App lädt die
+Projektliste mit `useTable` und bindet `QuerryKitTableToolbar` sowie
+`QuerryKitTablePagination` ein.
+
+## Schnellstart
+
+Voraussetzung: Node.js 24 und pnpm 11. Die drei Kern-Repositories müssen als
+Geschwisterverzeichnisse neben diesem Checkout vorhanden sein (wie in der
+Querry-Kit-Organisation). Die Beispielpakete verwenden bewusst `link:`-Specs,
+damit jede Änderung an den Bibliotheken unmittelbar in den Referenzapps landet.
+
+```sh
+pnpm install
+
+cd examples/workboard/api
+cp .env.example .env
+docker compose up -d
+pnpm prisma:generate && pnpm db:push && pnpm db:seed
+
+# Terminal 1 und 2: API und Web
+pnpm --filter @querry-kit/example-workboard-api dev
+pnpm --filter @querry-kit/example-workboard-web dev
+```
+
+| Anwendung | API                     | Web                     | Swagger                      |
+| --------- | ----------------------- | ----------------------- | ---------------------------- |
+| Workboard | `http://localhost:3101` | `http://localhost:3201` | `http://localhost:3101/docs` |
+
+Für eine getrennt bereitgestellte API setzt das jeweilige Web-Paket
+`NUXT_PUBLIC_API_BASE=https://api.example.test`.
+
+## Validierung
+
+```sh
+pnpm docs:build
+pnpm examples:check
+pnpm examples:build
+```
+
+Für die lokale Datenbank bringt das Beispiel einen PostgreSQL-Compose-Service,
+ein Prisma-Schema und einen idempotenten Seed mit.
+
+## Website
+
+Die VitePress-Übersicht wird nach GitHub Pages veröffentlicht:
 
 - Website: <https://querry-kit.github.io/querry-kit/>
-- Organization: <https://github.com/querry-kit>
-
-It presents Querry Kit as composable, type-safe query tooling for NestJS APIs
-and links the individual package repositories with short descriptions.
-
-## Packages
-
-### [`@querry-kit/nest-util`](https://github.com/querry-kit/nest-util)
-
-General-purpose NestJS utilities for:
-
-- Query value parsing
-- Nested query object creation
-- Request body normalization
-- Object diffs
-- Validation error mapping
-- Swagger decorators and response helpers
-
-### [`@querry-kit/nest-fields-query`](https://github.com/querry-kit/nest-fields-query)
-
-Field projection utilities for:
-
-- Parsing nested `fields` expressions
-- Validating projections against DTO schemas
-- Building relation includes
-- Projecting API response objects
-- Generating schemas from Swagger-decorated DTOs
-
-### [`@querry-kit/nest-prisma-query`](https://github.com/querry-kit/nest-prisma-query)
-
-Generic NestJS query helpers for Prisma-compatible delegates:
-
-- Typed `QueryService` methods for common read operations
-- Pagination request and response DTOs
-- Swagger helpers for paginated responses
-- Query object parsing through `@querry-kit/nest-util`
-- Optional CASL Prisma adapter for access-controlled reads
-
-## Design goals
-
-- Type-safe APIs
-- Small and focused packages
-- Framework-friendly integration
-- Minimal repetitive controller code
-- Predictable query behavior
+- Organisation: <https://github.com/querry-kit>
