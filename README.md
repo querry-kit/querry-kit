@@ -59,11 +59,11 @@ For a separately deployed API, set `NUXT_PUBLIC_API_BASE=https://api.example.tes
 ## 📖 Documentation
 
 - [Querry Kit overview](https://querry-kit.github.io/querry-kit/)
-- [@querry-kit/nest documentation](https://querry-kit.github.io/nest/)
-- [@querry-kit/nuxt documentation](https://querry-kit.github.io/nuxt/)
-- [@querry-kit/nuxt-ui documentation](https://querry-kit.github.io/nuxt-ui/)
+- [@querry-kit/nest documentation](https://querry-kit.github.io/querry-kit/docs/nest/)
+- [@querry-kit/nuxt documentation](https://querry-kit.github.io/querry-kit/docs/nuxt/)
+- [@querry-kit/nuxt-ui documentation](https://querry-kit.github.io/querry-kit/docs/nuxt-ui/)
 
-Run the VitePress website locally:
+Run the central Nuxt documentation website locally:
 
 ```sh
 pnpm docs:dev
@@ -74,6 +74,8 @@ Build the website:
 ```sh
 pnpm docs:build
 ```
+
+The documentation is a statically generated Nuxt 4 application in `apps/docs`. It contains the canonical documentation for `@querry-kit/nest`, `@querry-kit/nuxt`, and `@querry-kit/nuxt-ui` under `/docs/nest`, `/docs/nuxt`, and `/docs/nuxt-ui`.
 
 ## 🛠 Development
 

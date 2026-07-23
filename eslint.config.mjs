@@ -3,6 +3,10 @@ import prettier from 'eslint-config-prettier';
 import vue from 'eslint-plugin-vue';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const rootDirectory = dirname(fileURLToPath(import.meta.url));
 
 export default tseslint.config(
   {
@@ -23,11 +27,14 @@ export default tseslint.config(
     files: ['**/*.{ts,vue}'],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
-      parserOptions: { parser: tseslint.parser },
+      parserOptions: {
+        parser: tseslint.parser,
+        tsconfigRootDir: rootDirectory,
+      },
     },
   },
   {
-    files: ['examples/*/web/**/*.{ts,vue}'],
+    files: ['examples/*/web/**/*.{ts,vue}', 'apps/docs/**/*.{ts,vue}'],
     languageOptions: {
       globals: {
         defineNuxtConfig: 'readonly',
@@ -36,7 +43,26 @@ export default tseslint.config(
         ref: 'readonly',
         useNuxtApp: 'readonly',
         useRuntimeConfig: 'readonly',
+        computed: 'readonly',
+        createError: 'readonly',
+        queryCollection: 'readonly',
+        queryCollectionNavigation: 'readonly',
+        queryCollectionSearchSections: 'readonly',
+        useAppConfig: 'readonly',
+        useAsyncData: 'readonly',
+        useColorMode: 'readonly',
+        useHead: 'readonly',
+        useRoute: 'readonly',
+        useSeoMeta: 'readonly',
+        useState: 'readonly',
+        watch: 'readonly',
       },
+    },
+  },
+  {
+    files: ['apps/docs/**/*.vue'],
+    rules: {
+      'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
     },
   },
   {

@@ -1,8 +1,13 @@
 allowBuilds:
   '@prisma/engines': true
   '@scarf/scarf': false
+  better-sqlite3: true
   esbuild: true
   prisma: true
   vue-demi: false
+minimumReleaseAgeExclude:
+  - '@querry-kit/nuxt-ui@2.0.1'
+  - '@querry-kit/nuxt@0.0.5'
 packages:
+  - apps/*
   - examples/*/*

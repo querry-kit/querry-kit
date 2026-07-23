@@ -5,5 +5,9 @@ dist
 coverage
 docs/.vitepress/.temp
 docs/.vitepress/cache
+apps/docs/.nuxt
+apps/docs/.output
+apps/docs/.data
+apps/docs/test-results
 examples/*/api/src/generated
 examples/*/api/.env
