@@ -2,7 +2,7 @@
 
 `QTableOptions` manages the column-order, visibility, and pinning models without requiring a particular table adapter. The application applies the emitted models to its own table.
 
-<DemosTableOptions />
+<DemosTableOptions></DemosTableOptions>
 
 ![Open column-options popover](/docs/nuxt-ui/components/table-options-popover.png)
 

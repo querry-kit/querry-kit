@@ -2,7 +2,7 @@
 
 `QTableToolbar` arranges a breadcrumb, create region, search field, and the three table controls. It does not fetch data, perform filtering, or own table state; it forwards the models supplied by the application.
 
-<DemosTableToolbar />
+<DemosTableToolbar></DemosTableToolbar>
 
 ![Default toolbar](/docs/nuxt-ui/components/table-toolbar-default.png)
 

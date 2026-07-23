@@ -11,6 +11,14 @@ const packagePages = [
   'docs/nuxt-ui/components/pagination',
 ];
 
+const tableControlContent = [
+  { path: 'docs/nuxt-ui/components/toolbar', heading: 'Models and regions' },
+  { path: 'docs/nuxt-ui/components/sorting', heading: 'Inputs and state' },
+  { path: 'docs/nuxt-ui/components/filtering', heading: 'Inputs and state' },
+  { path: 'docs/nuxt-ui/components/options', heading: 'Inputs and state' },
+  { path: 'docs/nuxt-ui/components/pagination', heading: 'Inputs and behavior' },
+] as const;
+
 test('package navigation, sidebars and table demos are available', async ({ page }, testInfo) => {
   await page.goto('docs/nuxt-ui/components/toolbar');
   if (testInfo.project.name === 'desktop') {
@@ -83,6 +91,20 @@ test('theme picker updates and resets the documentation theme', async ({ page })
   await expect(page.getByRole('button', { name: 'red' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: 'zinc' })).toHaveAttribute('aria-pressed', 'true');
 });
+
+test('surround navigation remains available after a trailing-slash reload', async ({ page }) => {
+  await page.goto('docs/nuxt-ui/components/toolbar/');
+  const surround = page.getByRole('main');
+  await expect(surround.getByRole('link', { name: 'Getting Started' })).toBeVisible();
+  await expect(surround.getByRole('link', { name: 'Sorting' })).toBeVisible();
+});
+
+for (const { path, heading } of tableControlContent) {
+  test(`renders content after the demo on ${path}`, async ({ page }) => {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { name: heading })).toBeVisible();
+  });
+}
 
 for (const path of packagePages) {
   test(`renders ${path}`, async ({ page }) => {

@@ -2,7 +2,7 @@
 
 `QTablePagination` is a standalone footer for page-based APIs. It emits page and page-size changes; the application fetches the corresponding data.
 
-<DemosTablePagination />
+<DemosTablePagination></DemosTablePagination>
 
 ![Default pagination](/docs/nuxt-ui/components/table-pagination-default.png)
 

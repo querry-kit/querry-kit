@@ -121,7 +121,8 @@ export const getDocumentationPackage = (id: string): DocumentationPackage | unde
   documentationPackages.find((packageItem) => packageItem.id === id);
 
 export const getSurroundingPages = (packageItem: DocumentationPackage, currentPath: string) => {
+  const normalizedCurrentPath: string = currentPath.replace(/\/+$/, '') || '/';
   const items = packageItem.groups.flatMap((group) => group.items);
-  const index = items.findIndex((item) => item.path === currentPath);
+  const index = items.findIndex((item) => item.path === normalizedCurrentPath);
   return { previous: index > 0 ? items[index - 1] : undefined, next: index >= 0 ? items[index + 1] : undefined };
 };

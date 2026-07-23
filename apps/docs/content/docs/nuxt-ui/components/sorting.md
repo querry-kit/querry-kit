@@ -2,7 +2,7 @@
 
 `QTableSorting` edits an ordered `v-model:sorting` list. It owns only the user interaction; the consuming application turns the emitted `{ id, desc }` entries into an API query or table sort.
 
-<DemosTableSorting />
+<DemosTableSorting></DemosTableSorting>
 
 ![Empty sorting popover](/docs/nuxt-ui/components/table-sorting-popover.png)
 

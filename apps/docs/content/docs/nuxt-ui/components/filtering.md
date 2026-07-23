@@ -2,7 +2,7 @@
 
 `QTableFiltering` edits a Query Kit-compatible `Filtering` value. It owns the editor state and emits immutable replacements; the application serializes the result for its API.
 
-<DemosTableFiltering />
+<DemosTableFiltering></DemosTableFiltering>
 
 ![Empty filtering popover](/docs/nuxt-ui/components/table-filtering-popover.png)
 
