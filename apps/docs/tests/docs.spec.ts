@@ -68,6 +68,14 @@ test('theme picker updates and resets the documentation theme', async ({ page })
   await expect(page.getByRole('button', { name: 'orange' }).locator('[data-slot="color-chip"]')).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(page.getByRole('button', { name: 'zinc' }).locator('[data-slot="color-chip"]')).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(page.getByRole('button', { name: 'red' }).locator('[data-slot="color-chip"]')).toHaveAttribute('style', /--color-light:\s*var\(--color-red-500\)/);
+  await page.getByRole('button', { name: 'dark' }).click();
+  const themeIcon = page.getByRole('button', { name: 'Theme settings' }).locator('[data-slot="leadingIcon"]');
+  const redChip = page.getByRole('button', { name: 'red' }).locator('[data-slot="color-chip"]');
+  const [themeIconColor, redChipColor] = await Promise.all([
+    themeIcon.evaluate((element) => getComputedStyle(element).color),
+    redChip.evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+  expect(themeIconColor).toBe(redChipColor);
   await page.getByRole('button', { name: 'violet' }).click();
   await expect(page.getByRole('button', { name: 'violet' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: 'Reset theme' })).toBeVisible();
