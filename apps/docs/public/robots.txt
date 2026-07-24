@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://querry-kit.github.io/querry-kit/sitemap.xml

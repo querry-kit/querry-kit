@@ -1,8 +1,22 @@
 import { documentationRoutes } from './app/utils/docs';
 
+const appBaseURL = process.env.NUXT_APP_BASE_URL ?? '/querry-kit/';
+const siteURL = 'https://querry-kit.github.io';
+const sitemapHomeURL = new URL(appBaseURL, `${siteURL}/`).href;
+
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui', '@nuxt/content', '@nuxt/fonts', '@querry-kit/nuxt-ui'],
+  modules: ['@nuxtjs/sitemap', '@nuxt/ui', '@nuxt/content', '@nuxt/fonts', '@querry-kit/nuxt-ui'],
   css: ['~/assets/main.css'],
+  icon: {
+    provider: 'server',
+    serverBundle: {
+      collections: ['lucide', 'tabler'],
+    },
+    clientBundle: {
+      scan: true,
+    },
+    fallbackToApi: false,
+  },
   fonts: {
     defaults: {
       weights: [400, 500, 600, 700],
@@ -18,11 +32,25 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2026-07-23',
   app: {
-    baseURL: process.env.NUXT_APP_BASE_URL ?? '/querry-kit/',
+    baseURL: appBaseURL,
+    head: {
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: `${appBaseURL}favicon.svg` }],
+    },
+  },
+  site: {
+    name: 'Querry Kit',
+    url: siteURL,
+  },
+  sitemap: {
+    excludeAppSources: true,
+    urls: [{ loc: sitemapHomeURL }, ...documentationRoutes],
+    discoverImages: false,
+    zeroRuntime: true,
   },
   nitro: {
     prerender: {
-      crawlLinks: true,
+      concurrency: 1,
+      crawlLinks: false,
       routes: documentationRoutes,
     },
   },

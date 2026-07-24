@@ -93,14 +93,19 @@ const surroundLinks = computed<ContentSurroundLink[] | undefined>(() => {
     next && { title: next.text, path: next.path },
   ] as unknown as ContentSurroundLink[];
 });
+const toContentNavigationLinks = (items: DocumentationPackage['groups'][number]['items']): ContentNavigationLink[] =>
+  items.map((item) => ({
+    title: item.text,
+    path: item.path,
+    icon: item.icon,
+    children: item.items ? toContentNavigationLinks(item.items) : undefined,
+  }));
 const navigationItems = computed<ContentNavigationLink[]>(() =>
   packageItem.value.groups.map((group) => ({
     title: group.text,
     path: group.items[0]?.path ?? route.path,
-    children: group.items.map((item) => ({
-      title: item.text,
-      path: item.path,
-    })),
+    icon: group.icon,
+    children: toContentNavigationLinks(group.items),
   })),
 );
 const navigationOpen = ref<boolean>(false);

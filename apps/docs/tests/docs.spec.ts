@@ -99,6 +99,35 @@ test('surround navigation remains available after a trailing-slash reload', asyn
   await expect(surround.getByRole('link', { name: 'Sorting' })).toBeVisible();
 });
 
+test('Nuxt API reference exposes nested sections and an individual symbol page', async ({ page }, testInfo) => {
+  await page.goto('docs/nuxt/api/table/use-table');
+  await expect(page.getByRole('heading', { name: 'useTable', exact: true })).toBeVisible();
+
+  if (testInfo.project.name === 'mobile') {
+    await page.getByRole('button', { name: 'Navigation' }).click();
+    await expect(page.getByRole('dialog').getByRole('link', { name: 'useTable', exact: true })).toBeVisible();
+  } else {
+    const navigation = page.getByRole('navigation', { name: '@querry-kit/nuxt navigation' });
+    await expect(navigation.getByRole('link', { name: 'useTable', exact: true })).toBeVisible();
+    await expect(navigation.getByRole('link', { name: 'UseTableOptions', exact: true })).toBeVisible();
+  }
+});
+
+test('publishes crawl and favicon assets', async ({ page }) => {
+  await page.goto('robots.txt');
+  await expect(page.locator('body')).toContainText('User-agent: *');
+  await expect(page.locator('body')).toContainText('Allow: /');
+  await expect(page.locator('body')).toContainText('Sitemap: https://querry-kit.github.io/querry-kit/sitemap.xml');
+
+  await page.goto('docs/nuxt');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
+
+  const sitemapResponse = await page.request.get('sitemap.xml');
+  expect(sitemapResponse.status()).toBe(200);
+  await expect(sitemapResponse.text()).resolves.toContain('https://querry-kit.github.io/docs/nuxt');
+});
+
 for (const { path, heading } of tableControlContent) {
   test(`renders content after the demo on ${path}`, async ({ page }) => {
     await page.goto(path);

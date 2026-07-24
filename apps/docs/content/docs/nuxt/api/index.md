@@ -4,13 +4,13 @@ description: 'API overview for @querry-kit/nuxt.'
 
 # API Reference
 
-`@querry-kit/nuxt` exposes a small set of framework-neutral runtime primitives. Applications provide their own Axios instance, authentication, routing, storage, endpoint map, and visual components.
+`@querry-kit/nuxt` exposes framework-neutral runtime primitives. Applications provide their own Axios instance, authentication, routing, storage, endpoint map, and visual components.
 
 ```ts
 import { createApiClient, useModuleApi } from '@querry-kit/nuxt/api';
 import { useTable } from '@querry-kit/nuxt/table';
 import { useAutocomplete } from '@querry-kit/nuxt/autocomplete';
-import type { EndpointMap, TableColumn } from '@querry-kit/nuxt/types';
+import type { EndpointMap, TableColumnInput } from '@querry-kit/nuxt/types';
 ```
 
 ## Main Areas
@@ -29,16 +29,19 @@ import type { EndpointMap, TableColumn } from '@querry-kit/nuxt/types';
 | ------------------------------- | ---------------------------------------------------------------- |
 | `@querry-kit/nuxt`              | Re-exports all public runtime functions.                         |
 | `@querry-kit/nuxt/api`          | `createApiClient`, `useModuleApi`, and client types.             |
-| `@querry-kit/nuxt/table`        | `useTable` and `UseTableOptions`.                                |
+| `@querry-kit/nuxt/table`        | `useTable`; its options type is exported through `./types`.       |
 | `@querry-kit/nuxt/autocomplete` | `useAutocomplete` and `UseAutocompleteOptions`.                  |
 | `@querry-kit/nuxt/types`        | Endpoint, response, table, persistence, and route-ref contracts. |
 | `@querry-kit/nuxt/utils`        | Serialization and Query Kit state helpers.                       |
 
-## Reference Pages
+## Reference groups
 
-- [Client and Endpoints](/docs/nuxt/api/client)
-- [useTable](/docs/nuxt/api/table)
-- [useAutocomplete](/docs/nuxt/api/autocomplete)
-- [Backend Compatibility](/docs/nuxt/api/query-kit)
+Every exported type and function has its own reference page.
+
+- [API](/docs/nuxt/api/api): Axios client and endpoint methods
+- [Autocomplete](/docs/nuxt/api/autocomplete): autocomplete options and composable
+- [Table](/docs/nuxt/api/table): table options and composable
+- [Types](/docs/nuxt/api/types): endpoint, response, table, persistence, and route contracts
+- [Utils](/docs/nuxt/api/utils): serialization and Query Kit state helpers
 
 Before wiring a composable, confirm the application backend implements the [controller contract](/docs/nuxt/guide/controller-contract).

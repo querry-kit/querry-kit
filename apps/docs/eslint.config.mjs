@@ -3,6 +3,10 @@ import prettier from 'eslint-config-prettier';
 import vue from 'eslint-plugin-vue';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const configDirectory = dirname(fileURLToPath(import.meta.url));
 
 const nuxtGlobals = {
   computed: 'readonly',
@@ -35,7 +39,10 @@ export default tseslint.config(
     files: ['**/*.{ts,vue}'],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node, ...nuxtGlobals },
-      parserOptions: { parser: tseslint.parser },
+      parserOptions: {
+        parser: tseslint.parser,
+        tsconfigRootDir: configDirectory,
+      },
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
