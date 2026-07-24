@@ -30,7 +30,7 @@ export const documentationPackages: DocumentationPackage[] = [
         icon: 'i-lucide-book-open',
         items: [
           { text: 'Getting Started', path: page('nest', '/guide/getting-started'), icon: 'i-lucide-rocket' },
-          { text: 'Example App', path: page('nest', '/guide/example-app'), icon: 'i-lucide-panels-top-left' },
+          { text: 'Complete API Example', path: page('nest', '/guide/example-app'), icon: 'i-lucide-panels-top-left' },
           { text: 'NestJS main.ts', path: page('nest', '/guide/main-bootstrap'), icon: 'i-lucide-terminal' },
           { text: 'CRUD Controller', path: page('nest', '/guide/crud-controller'), icon: 'i-lucide-database' },
         ],
@@ -48,8 +48,7 @@ export const documentationPackages: DocumentationPackage[] = [
         icon: 'i-lucide-braces',
         items: [
           { text: 'Overview', path: page('nest', '/api'), icon: 'i-lucide-layout-dashboard' },
-          { text: 'Fields', path: page('nest', '/api/fields'), icon: 'i-lucide-list-filter' },
-          { text: 'DTO Schema', path: page('nest', '/api/fields/dto-schema'), icon: 'i-lucide-file-json-2' },
+          { text: 'Fields and DTO Schema', path: page('nest', '/api/fields'), icon: 'i-lucide-list-filter' },
           { text: 'Query Service', path: page('nest', '/api/query-service'), icon: 'i-lucide-database-zap' },
           { text: 'DTOs and Pagination', path: page('nest', '/api/dtos-pagination'), icon: 'i-lucide-list-restart' },
           { text: 'CASL', path: page('nest', '/api/casl'), icon: 'i-lucide-shield-check' },
@@ -86,71 +85,11 @@ export const documentationPackages: DocumentationPackage[] = [
         icon: 'i-lucide-braces',
         items: [
           { text: 'Overview', path: page('nuxt', '/api'), icon: 'i-lucide-layout-dashboard' },
-          {
-            text: 'API',
-            path: page('nuxt', '/api/api'),
-            icon: 'i-lucide-plug',
-            items: [
-              { text: 'ApiVersion', path: page('nuxt', '/api/api/api-version'), icon: 'i-lucide-git-branch' },
-              { text: 'CreateApiClientOptions', path: page('nuxt', '/api/api/create-api-client-options'), icon: 'i-lucide-settings-2' },
-              { text: 'createApiClient', path: page('nuxt', '/api/api/create-api-client'), icon: 'i-lucide-circle-plus' },
-              { text: 'useModuleApi', path: page('nuxt', '/api/api/use-module-api'), icon: 'i-lucide-box' },
-              { text: 'Backend Compatibility', path: page('nuxt', '/api/query-kit'), icon: 'i-lucide-link' },
-            ],
-          },
-          {
-            text: 'Autocomplete',
-            path: page('nuxt', '/api/autocomplete'),
-            icon: 'i-lucide-search',
-            items: [
-              { text: 'UseAutocompleteOptions', path: page('nuxt', '/api/autocomplete/use-autocomplete-options'), icon: 'i-lucide-settings-2' },
-              { text: 'useAutocomplete', path: page('nuxt', '/api/autocomplete/use-autocomplete'), icon: 'i-lucide-search-check' },
-            ],
-          },
-          {
-            text: 'Table',
-            path: page('nuxt', '/api/table'),
-            icon: 'i-lucide-table-2',
-            items: [
-              { text: 'UseTableOptions', path: page('nuxt', '/api/table/use-table-options'), icon: 'i-lucide-settings-2' },
-              { text: 'useTable', path: page('nuxt', '/api/table/use-table'), icon: 'i-lucide-table-properties' },
-            ],
-          },
-          {
-            text: 'Types',
-            path: page('nuxt', '/api/types'),
-            icon: 'i-lucide-brackets',
-            items: [
-              { text: 'EndpointDefinition', path: page('nuxt', '/api/types/endpoint-definition'), icon: 'i-lucide-route' },
-              { text: 'EndpointMap', path: page('nuxt', '/api/types/endpoint-map'), icon: 'i-lucide-map' },
-              { text: 'PaginatedResponse', path: page('nuxt', '/api/types/paginated-response'), icon: 'i-lucide-list-restart' },
-              { text: 'PaginationMeta', path: page('nuxt', '/api/types/pagination-meta'), icon: 'i-lucide-list-ordered' },
-              { text: 'QueryParameters', path: page('nuxt', '/api/types/query-parameters'), icon: 'i-lucide-list-filter' },
-              { text: 'FilteringField', path: page('nuxt', '/api/types/filtering-field'), icon: 'i-lucide-filter' },
-              { text: 'FilteringState', path: page('nuxt', '/api/types/filtering-state'), icon: 'i-lucide-sliders-horizontal' },
-              { text: 'RoutePageRef', path: page('nuxt', '/api/types/route-page-ref'), icon: 'i-lucide-waypoints' },
-              { text: 'SortingRule', path: page('nuxt', '/api/types/sorting-rule'), icon: 'i-lucide-arrow-down-up' },
-              { text: 'StorageLike', path: page('nuxt', '/api/types/storage-like'), icon: 'i-lucide-hard-drive' },
-              { text: 'TableColumnInput', path: page('nuxt', '/api/types/table-column-input'), icon: 'i-lucide-columns-3' },
-              { text: 'TableColumn', path: page('nuxt', '/api/types/table-column'), icon: 'i-lucide-columns-2' },
-            ],
-          },
-          {
-            text: 'Utils',
-            path: page('nuxt', '/api/utils'),
-            icon: 'i-lucide-wrench',
-            items: [
-              { text: 'andWhere', path: page('nuxt', '/api/utils/and-where'), icon: 'i-lucide-circle-plus' },
-              { text: 'filteringToWhere', path: page('nuxt', '/api/utils/filtering-to-where'), icon: 'i-lucide-filter' },
-              { text: 'isEqual', path: page('nuxt', '/api/utils/is-equal'), icon: 'i-lucide-equal' },
-              { text: 'mergeQuery', path: page('nuxt', '/api/utils/merge-query'), icon: 'i-lucide-git-merge' },
-              { text: 'parseJson', path: page('nuxt', '/api/utils/parse-json'), icon: 'i-lucide-file-json-2' },
-              { text: 'pathsToFieldsQuery', path: page('nuxt', '/api/utils/paths-to-fields-query'), icon: 'i-lucide-list-tree' },
-              { text: 'serializeQuery', path: page('nuxt', '/api/utils/serialize-query'), icon: 'i-lucide-braces' },
-              { text: 'sortingToOrderBy', path: page('nuxt', '/api/utils/sorting-to-order-by'), icon: 'i-lucide-arrow-down-up' },
-              { text: 'unflatten', path: page('nuxt', '/api/utils/unflatten'), icon: 'i-lucide-align-justify' },
-            ],
-          },
+          { text: 'API', path: page('nuxt', '/api/api'), icon: 'i-lucide-plug' },
+          { text: 'Autocomplete', path: page('nuxt', '/api/autocomplete'), icon: 'i-lucide-search' },
+          { text: 'Table', path: page('nuxt', '/api/table'), icon: 'i-lucide-table-2' },
+          { text: 'Types', path: page('nuxt', '/api/types'), icon: 'i-lucide-brackets' },
+          { text: 'Utils', path: page('nuxt', '/api/utils'), icon: 'i-lucide-wrench' },
         ],
       },
     ],
@@ -186,6 +125,18 @@ export const documentationRoutes = documentationPackages.flatMap((packageItem) =
 
 // Kept outside the current sidebar so existing package-doc links remain valid.
 documentationRoutes.push(page('nest', '/api/decorators-pipes-utils'));
+
+const getNavigationIcons = (items: NavigationItem[]): string[] =>
+  items.flatMap((item) => [
+    ...(item.icon ? [item.icon] : []),
+    ...(item.items ? getNavigationIcons(item.items) : []),
+  ]);
+
+export const documentationIconNames = [
+  ...new Set(documentationPackages.flatMap((packageItem) =>
+    packageItem.groups.flatMap((group) => [group.icon, ...getNavigationIcons(group.items)]),
+  )),
+];
 
 export const getDocumentationPackage = (id: string): DocumentationPackage | undefined =>
   documentationPackages.find((packageItem) => packageItem.id === id);

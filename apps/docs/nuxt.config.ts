@@ -1,4 +1,4 @@
-import { documentationRoutes } from './app/utils/docs';
+import { documentationIconNames, documentationRoutes } from './app/utils/docs';
 
 const appBaseURL = process.env.NUXT_APP_BASE_URL ?? '/querry-kit/';
 const siteURL = 'https://querry-kit.github.io';
@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     },
     clientBundle: {
       scan: true,
+      icons: documentationIconNames.map((icon) => icon.replace(/^i-([a-z0-9]+)-/, '$1:')),
     },
     fallbackToApi: false,
   },

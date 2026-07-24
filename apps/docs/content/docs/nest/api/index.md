@@ -49,12 +49,11 @@ import { parseObject } from '@querry-kit/nest/object';
 
 ## Reference Pages
 
-- [Fields](/docs/nest/api/fields/)
-- [DTO Schema](/docs/nest/api/fields/dto-schema)
+- [Fields](/docs/nest/api/fields) including DTO schema generation
 - [Query Service](/docs/nest/api/query-service) and [complex direct QueryService examples](/docs/nest/api/query-service#complex-queries-without-resourcequery)
 - [DTOs and Pagination](/docs/nest/api/dtos-pagination)
 - [CASL](/docs/nest/api/casl)
 - [OpenAPI Decorators](/docs/nest/api/openapi)
-- [Decorators](/docs/nest/api/decorators/)
-- [Pipes](/docs/nest/api/pipes/)
+- [Decorators](/docs/nest/api/decorators)
+- [Pipes](/docs/nest/api/pipes)
 - [Object Utilities](/docs/nest/api/object-utils)

@@ -1,10 +1,10 @@
 ---
-description: 'Run and inspect the Books API example for @querry-kit/nest.'
+description: 'A complete, copyable NestJS resource API assembled from @querry-kit/nest building blocks.'
 ---
 
-# Example App
+# Complete API Example
 
-The repository includes a small in-memory NestJS app under `examples/books-api`. It is modeled after a real resource controller flow, but uses neutral `Book`, `Author`, and `Tag` data instead of application-specific CRM models.
+This example uses books, authors, and tags to show a complete resource API without relying on a separate repository example. The individual snippets are designed to be copied into an existing Nest application and adapted to its Prisma models and authorization rules.
 
 ## What It Shows
 
@@ -18,25 +18,119 @@ The repository includes a small in-memory NestJS app under `examples/books-api`.
 - `QueryTransformPipe`, `FieldsExceptionFilter`, and Swagger setup.
 - a complete CRUD controller with `GET`, `POST`, `PATCH`, and `DELETE`.
 
-## Run
+## DTOs
 
-```sh
-pnpm examples:check
-pnpm examples:build
-pnpm examples:start
+Expose only the fields that clients may select. `@ApiProperty` metadata gives `Fields` the schema it uses to validate and project the `fields` parameter.
+
+```ts
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+
+export class AuthorDTO {
+  @Expose()
+  @ApiProperty({ example: 'author-ada' })
+  id!: string;
+
+  @Expose()
+  @ApiProperty({ example: 'Ada Lovelace' })
+  name!: string;
+}
+
+export class BookDTO {
+  @Expose()
+  @ApiProperty({ example: 'book-1' })
+  id!: string;
+
+  @Expose()
+  @ApiProperty({ example: 'Practical Nest Queries' })
+  title!: string;
+
+  @Expose()
+  @ApiProperty({ type: () => AuthorDTO, required: false })
+  author?: AuthorDTO;
+
+  static fromModel(book: BookModel): BookDTO {
+    return Object.assign(new BookDTO(), {
+      id: book.id,
+      title: book.title,
+      author: book.author && Object.assign(new AuthorDTO(), book.author),
+    });
+  }
+}
 ```
 
-Swagger is available at:
+## Service
 
-```txt
-http://localhost:3000/docs
+Extend `QueryService` with the generated Prisma delegate and a type map for the model. If the endpoint is authorization-aware, provide the CASL subject and accessibility resolver here.
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { createCaslAccessibleWhere, QueryService, type BaseDelegateTypeMap } from '@querry-kit/nest';
+
+interface BookTypeMap extends BaseDelegateTypeMap {
+  select: Prisma.BookSelect;
+  include: Prisma.BookInclude;
+  whereInput: Prisma.BookWhereInput;
+  orderByWithRelationInput: Prisma.BookOrderByWithRelationInput;
+  whereUniqueInput: Prisma.BookWhereUniqueInput;
+  scalarFieldEnum: Prisma.BookScalarFieldEnum;
+  aggregateInputType: Prisma.AggregateBook;
+}
+
+@Injectable()
+export class BooksService extends QueryService<typeof PrismaService.prototype.book, BookTypeMap> {
+  constructor(prisma: PrismaService) {
+    super(prisma.book, {
+      subject: 'Book',
+      accessibleWhere: createCaslAccessibleWhere<AppAbility, 'Book'>({ action: 'read' }),
+    });
+  }
+}
 ```
 
-Use a different port when `3000` is already taken:
+The [CASL reference](/docs/nest/api/casl) shows the equivalent setup for enum-backed actions and write rules.
 
-```sh
-PORT=3100 pnpm examples:start
+## Controller
+
+Use `ResourceQuery` for read routes. It prepares includes, calls the service, maps models to DTOs, and applies the requested field projection.
+
+```ts
+@ApiTags('books')
+@Controller('books')
+export class BooksController {
+  constructor(private readonly booksService: BooksService) {}
+
+  @Get()
+  @ApiResourceQuery()
+  @ApiPaginatedResponse({ model: BookDTO })
+  async query(@Req() req: AuthenticatedRequest, @Query() query: QueryDTO<BookTypeMap>) {
+    return ResourceQuery.query({
+      service: this.booksService,
+      query,
+      schema: BookDTO,
+      ability: req.ability,
+      include: { author: true },
+      map: (book) => BookDTO.fromModel(book),
+    });
+  }
+
+  @Get(':id')
+  @ApiParamId({ description: 'Book ID' })
+  @ApiFieldsQuery()
+  async findById(@Param('id') id: string, @Req() req: AuthenticatedRequest, @Query() query: FindByIdDTO<BookTypeMap>) {
+    return ResourceQuery.findById({
+      service: this.booksService,
+      id,
+      query,
+      schema: BookDTO,
+      ability: req.ability,
+      map: (book) => BookDTO.fromModel(book),
+    });
+  }
+}
 ```
+
+For create, update, and delete routes, call `prepareFieldsQuery` before the domain operation and `Fields.project` on the mapped DTO. The [CRUD Controller](/docs/nest/guide/crud-controller) guide covers that shape.
 
 ## Routes
 
@@ -90,16 +184,10 @@ Content-Type: application/json
 }
 ```
 
-Every route accepts `fields`. Unknown DTO fields return HTTP 400 during fields validation. Invalid `select` and `include` keys return HTTP 400 in the demo delegate, matching the error surface a Prisma-backed `QueryService` exposes.
+Every route accepts `fields`. Unknown DTO fields return HTTP 400 during fields validation. Invalid Prisma `select` and `include` keys should likewise be reported as HTTP 400 by the service layer.
 
-## Source Layout
+## Bootstrap
 
-| File                        | Purpose                                                     |
-| --------------------------- | ----------------------------------------------------------- |
-| `books/book.dto.ts`         | Public DTOs and in-memory model types.                      |
-| `books/book.delegate.ts`    | Prisma-like in-memory delegate consumed by `QueryService`.  |
-| `books/books.service.ts`    | `QueryService` subclass with demo access filtering.         |
-| `books/books.controller.ts` | CRM-style controller using `ResourceQuery` and decorators.  |
-| `main.ts`                   | Swagger, fields errors, and query transformation bootstrap. |
+Register `QueryTransformPipe` and `FieldsExceptionFilter` once in the application bootstrap. The complete [NestJS `main.ts`](/docs/nest/guide/main-bootstrap) example includes validation and Swagger configuration.
 
-See the complete [NestJS main.ts](/docs/nest/guide/main-bootstrap) and [CRUD Controller](/docs/nest/guide/crud-controller) examples for copyable versions.
+With those pieces in place, the API remains application-owned: replace `BookDTO`, `BooksService`, the Prisma types, and the ability with the equivalents from your own domain.

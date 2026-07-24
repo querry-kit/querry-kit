@@ -4,7 +4,7 @@ description: 'Complete NestJS main.ts example for @querry-kit/nest.'
 
 # NestJS main.ts
 
-This bootstrap example mirrors the Books API example. It registers Query Kit's query parser, structured fields errors, and Swagger documentation.
+This bootstrap registers Query Kit's query parser, structured fields errors, validation, and Swagger documentation in a Nest application.
 
 ```ts
 import { ValidationPipe } from '@nestjs/common';
@@ -54,4 +54,4 @@ void bootstrap();
 - `ValidationPipe` handles DTO validation and transformation.
 - `FieldsExceptionFilter` serializes invalid `fields` query values as structured HTTP 400 responses.
 - `SwaggerModule.createDocument` works with `ApiPaginatedResponse`, `ApiErrorResponses`, and the DTO metadata used by fields schema generation.
-- `PORT` keeps the example easy to run when `3000` is already occupied.
+- Configure `PORT` when the application should listen on a port other than `3000`.

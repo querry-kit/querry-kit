@@ -99,17 +99,39 @@ test('surround navigation remains available after a trailing-slash reload', asyn
   await expect(surround.getByRole('link', { name: 'Sorting' })).toBeVisible();
 });
 
-test('Nuxt API reference exposes nested sections and an individual symbol page', async ({ page }, testInfo) => {
-  await page.goto('docs/nuxt/api/table/use-table');
+test('Nuxt API reference keeps each group on one page', async ({ page }, testInfo) => {
+  await page.goto('docs/nuxt/api/table');
+  await expect(page.getByRole('heading', { name: 'Table', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'useTable', exact: true })).toBeVisible();
 
   if (testInfo.project.name === 'mobile') {
     await page.getByRole('button', { name: 'Navigation' }).click();
-    await expect(page.getByRole('dialog').getByRole('link', { name: 'useTable', exact: true })).toBeVisible();
+    await expect(page.getByRole('dialog').getByRole('link', { name: 'Table', exact: true })).toBeVisible();
   } else {
     const navigation = page.getByRole('navigation', { name: '@querry-kit/nuxt navigation' });
-    await expect(navigation.getByRole('link', { name: 'useTable', exact: true })).toBeVisible();
-    await expect(navigation.getByRole('link', { name: 'UseTableOptions', exact: true })).toBeVisible();
+    await expect(navigation.getByRole('link', { name: 'Table', exact: true })).toBeVisible();
+    await expect(navigation.getByRole('link', { name: 'useTable', exact: true })).not.toBeVisible();
+  }
+});
+
+test('Nest complete API example is self-contained in the central docs', async ({ page }) => {
+  await page.goto('docs/nest/guide/example-app');
+  await expect(page.getByRole('heading', { name: 'Complete API Example', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'DTOs', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Service', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Controller', exact: true })).toBeVisible();
+  await expect(page.getByText('class BooksService', { exact: false })).toBeVisible();
+});
+
+test('Nest API reference keeps fields and DTO schema on one page', async ({ page }, testInfo) => {
+  await page.goto('docs/nest/api/fields');
+  await expect(page.getByRole('heading', { name: 'Fields', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'DTO Schema', exact: true })).toBeVisible();
+
+  if (testInfo.project.name === 'desktop') {
+    const navigation = page.getByRole('navigation', { name: '@querry-kit/nest navigation' });
+    await expect(navigation.getByRole('link', { name: 'Fields and DTO Schema', exact: true })).toBeVisible();
+    await expect(navigation.getByRole('link', { name: 'DTO Schema', exact: true })).not.toBeVisible();
   }
 });
 

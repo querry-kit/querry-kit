@@ -147,16 +147,8 @@ app.useGlobalPipes(
 
 `page` and `perPage` default to `1` and `10`, are converted to numbers, and are validated as integers.
 
-## Example App
+## Next Steps
 
-The repository includes an in-memory Books API that follows the same resource-controller flow with books, authors, and tags.
+The [Complete API Example](/docs/nest/guide/example-app) shows how the DTO, service, controller, and bootstrap fit together. It is self-contained in the documentation, so you can copy only the parts that match your application.
 
-```sh
-pnpm examples:check
-pnpm examples:build
-pnpm examples:start
-```
-
-Continue with the [Example App](/docs/nest/guide/example-app) guide for the route examples and source layout.
-
-The guide also includes complete reference snippets for a [NestJS `main.ts`](/docs/nest/guide/main-bootstrap) and a [CRUD Controller](/docs/nest/guide/crud-controller).
+Use the complete reference snippets for a [NestJS `main.ts`](/docs/nest/guide/main-bootstrap) and a [CRUD Controller](/docs/nest/guide/crud-controller) when wiring the pattern into an existing module.

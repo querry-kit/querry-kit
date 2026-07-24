@@ -36,7 +36,7 @@ import type { EndpointMap, TableColumnInput } from '@querry-kit/nuxt/types';
 
 ## Reference groups
 
-Every exported type and function has its own reference page.
+Each reference group is kept on one page, so related types and functions can be read together.
 
 - [API](/docs/nuxt/api/api): Axios client and endpoint methods
 - [Autocomplete](/docs/nuxt/api/autocomplete): autocomplete options and composable
