@@ -25,14 +25,14 @@ import type { EndpointMap, TableColumnInput } from '@querry-kit/nuxt/types';
 
 ## Public Imports
 
-| Import                          | Contents                                                         |
-| ------------------------------- | ---------------------------------------------------------------- |
-| `@querry-kit/nuxt`              | Re-exports all public runtime functions.                         |
-| `@querry-kit/nuxt/api`          | `createApiClient`, `useModuleApi`, and client types.             |
-| `@querry-kit/nuxt/table`        | `useTable`; its options type is exported through `./types`.       |
-| `@querry-kit/nuxt/autocomplete` | `useAutocomplete` and `UseAutocompleteOptions`.                  |
-| `@querry-kit/nuxt/types`        | Endpoint, response, table, persistence, and route-ref contracts. |
-| `@querry-kit/nuxt/utils`        | Serialization and Query Kit state helpers.                       |
+| Import                          | Contents                                                                            |
+| ------------------------------- | ----------------------------------------------------------------------------------- |
+| `@querry-kit/nuxt`              | Re-exports all public runtime functions.                                            |
+| `@querry-kit/nuxt/api`          | `createApiClient`, `useModuleApi`, and client types.                                |
+| `@querry-kit/nuxt/table`        | `useTable`; its options type is exported through `./types`.                         |
+| `@querry-kit/nuxt/autocomplete` | `useAutocomplete` and `UseAutocompleteOptions`.                                     |
+| `@querry-kit/nuxt/types`        | Endpoint, response, table, filter/sort field, persistence, and route-ref contracts. |
+| `@querry-kit/nuxt/utils`        | Serialization and Query Kit state helpers.                                          |
 
 ## Reference groups
 

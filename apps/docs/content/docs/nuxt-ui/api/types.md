@@ -1,18 +1,20 @@
 # Types and text customization
 
-Import public state types from the package root:
+Import public state types from the package types entrypoint:
 
 ```ts
 import {
   FilterFieldType,
   FilteringMode,
+  type ColumnPinning,
   type ColumnDefinition,
+  type FilterField,
   type Filtering,
   type SortingState,
-} from '@querry-kit/nuxt-ui';
+} from '@querry-kit/nuxt-ui/types';
 ```
 
-`SortingState` is an ordered list of `{ id, desc }`. `Filtering` combines `FilteringMode.Intersect` (`AND`) or `FilteringMode.Union` (`OR`) with typed filter entries. `ColumnDefinition` and `ColumnPinning` model the values accepted by column options.
+`SortingState` is an ordered list of `{ id, desc }`. `Filtering` combines `FilteringMode.Intersect` (`AND`) or `FilteringMode.Union` (`OR`) with typed filter entries. `FilterField` is the discriminated component configuration for boolean, number, enum and custom-select editors. `ColumnDefinition` and `ColumnPinning` model the values accepted by column options.
 
 ## Texts without i18n
 

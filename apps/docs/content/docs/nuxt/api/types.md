@@ -76,15 +76,35 @@ const query: QueryParameters = {
 
 ## Table state
 
+### `FilterFieldDefinition`
+
+```ts
+type FilterFieldDefinition<TType extends string = string, TMeta extends object = object> = TMeta & {
+  value: string;
+  label: string;
+  type: TType;
+};
+```
+
+A renderer-neutral description of a selectable filtering field. Use `TMeta` for application-specific details such as an options source or a custom control; the package does not depend on a UI library.
+
+### `FilteringFieldOperator`
+
+```ts
+type FilteringFieldOperator = 'in' | 'notIn' | 'equals' | 'not' | 'lt' | 'lte' | 'gt' | 'gte';
+```
+
+The operators supported by Query Kit's `where` convention. Consumers may use a narrower subset for a particular field editor.
+
 ### `FilteringField`
 
 ```ts
-interface FilteringField {
+interface FilteringField<TType extends string = string, TOperator extends string = string, TValue = unknown> {
   id: string;
   field: string;
-  type?: string;
-  operator?: string;
-  value?: unknown;
+  type?: TType;
+  operator?: TOperator;
+  value?: TValue;
 }
 ```
 
@@ -93,13 +113,21 @@ Describes one UI filter before it is converted to a Query Kit `where` payload. `
 ### `FilteringState`
 
 ```ts
-interface FilteringState {
-  operator: 'AND' | 'OR';
-  filters: FilteringField[];
+interface FilteringState<TField extends FilteringField = FilteringField> {
+  operator: FilteringMode;
+  filters: TField[];
 }
 ```
 
 The table's complete UI filtering state. `filteringToWhere` ignores filters without a `value` and combines the remaining conditions using `operator`.
+
+### `FilteringMode`
+
+```ts
+type FilteringMode = 'AND' | 'OR';
+```
+
+The boolean operator used to combine the filtering state entries.
 
 ### `RoutePageRef`
 
@@ -126,6 +154,17 @@ interface SortingRule {
 ```
 
 A TanStack-compatible sorting entry. The `id` may be a dotted field path; `desc: true` becomes `desc`, otherwise `sortingToOrderBy` emits `asc`.
+
+### `SortingField`
+
+```ts
+type SortingField<TMeta extends object = object> = TMeta & {
+  value: string;
+  label: string;
+};
+```
+
+A renderer-neutral description of a selectable sorting field. Add UI-specific metadata with `TMeta`.
 
 ### `StorageLike`
 
