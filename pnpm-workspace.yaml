@@ -8,6 +8,9 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@querry-kit/nuxt-ui@2.0.1'
   - '@querry-kit/nuxt@0.0.5'
+overrides:
+  esbuild@0.27.7: 0.28.2
+  js-yaml@5.2.1: 5.2.2
 packages:
   - apps/*
   - examples/*/*
