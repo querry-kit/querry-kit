@@ -19,6 +19,7 @@
 | `breadcrumb-items`          | Items rendered by the default `UBreadcrumb`.                            |
 | `search-placeholder`        | Replaces only the default search placeholder.                           |
 | `texts`                     | Text overrides forwarded to the default child controls.                 |
+| `icons`                     | Nested icon overrides forwarded to the default child controls.          |
 | `shortcuts`                 | Enables or disables the default child-control shortcuts.                |
 | `ui`                        | Classes for the root, primary, and secondary regions.                   |
 

@@ -19,6 +19,7 @@
 | `icon`                      | `i-tabler-adjustments` | Trigger icon.                                                                 |
 | `shortcuts`                 | `true`                 | Enables <kbd>Shift</kbd> + <kbd>O</kbd>.                                      |
 | `texts`                     | —                      | Explicit text overrides, ahead of i18n and English defaults.                  |
+| `icons`                     | —                      | Nested Iconify-name overrides for every default icon.                          |
 | `ui.content`                | —                      | Extra classes for the Nuxt UI popover content.                                |
 
 Only IDs present in `column-order` are shown. A column with `enableHiding: false` keeps a disabled visibility switch.

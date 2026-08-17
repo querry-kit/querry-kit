@@ -11,6 +11,7 @@ import {
   type FilterField,
   type Filtering,
   type SortingState,
+  type TableIconOverrides,
 } from '@querry-kit/nuxt-ui/types';
 ```
 
@@ -44,6 +45,69 @@ Slots replace a complete display region when a text override is not enough. For 
 ```
 
 The toolbar exposes `breadcrumb`, `search`, `options`, and `new`; sorting, filtering, and options expose `trigger`, `header`, `items`, `item`, and `add` where applicable; pagination exposes `left`, `page-size`, `pagination`, and `right`.
+
+## Icons
+
+Pass `icons` to any icon-bearing table control, or to `QTableToolbar` to forward it to its default sorting, filtering, and column-option controls. Each value is a Nuxt UI/Iconify icon name. Partial overrides preserve every other package default; the existing flat `icon` prop on sorting, filtering, and options still takes priority for that control's trigger.
+
+The package defaults use Tabler, so the host application must install that Iconify collection:
+
+```sh
+pnpm add @iconify-json/tabler
+```
+
+Install an additional collection before using its icon names. For example, install Lucide before applying the Lucide overrides below:
+
+```sh
+pnpm add @iconify-json/lucide
+```
+
+```vue
+<QTableToolbar
+  v-model:search="search"
+  :icons="{
+    search: { input: 'i-lucide-search' },
+    sorting: { trigger: 'i-lucide-arrow-up-down', add: 'i-lucide-plus' },
+    filtering: { trigger: 'i-lucide-list-filter', intersect: 'i-lucide-list-filter-plus' },
+    options: { trigger: 'i-lucide-settings-2', pin: 'i-lucide-pin' },
+  }"
+/>
+```
+
+The prefix selects the collection, so the same API can use another icon pack. For example, after installing `@iconify-json/tabler`, use `i-tabler-*` names:
+
+```vue
+<QTableToolbar
+  v-model:search="search"
+  :icons="{
+    search: { input: 'i-tabler-search' },
+    sorting: { trigger: 'i-tabler-arrows-sort' },
+    filtering: { trigger: 'i-tabler-filter' },
+    options: { trigger: 'i-tabler-adjustments' },
+  }"
+/>
+```
+
+The complete `icons` shape is `TableIconOverrides` with these defaults:
+
+```ts
+{
+  search: { input: 'i-tabler-search' },
+  sorting: {
+    trigger: 'i-tabler-arrows-sort', header: 'i-tabler-arrows-sort', clear: 'i-tabler-cancel',
+    add: 'i-tabler-plus', ascending: 'i-tabler-sort-ascending', descending: 'i-tabler-sort-descending',
+    remove: 'i-tabler-x',
+  },
+  filtering: {
+    trigger: 'i-tabler-filter', header: 'i-tabler-filter-2', intersect: 'i-tabler-layers-intersect-2',
+    union: 'i-tabler-layers-union', clear: 'i-tabler-cancel', add: 'i-tabler-plus', remove: 'i-tabler-x',
+  },
+  options: {
+    trigger: 'i-tabler-adjustments', header: 'i-tabler-adjustments', pin: 'i-tabler-pin',
+    drag: 'i-tabler-grip-vertical',
+  },
+}
+```
 
 ## Host-app i18n keys
 

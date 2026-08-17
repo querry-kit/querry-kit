@@ -17,6 +17,7 @@
 | `icon`              | `i-tabler-filter` | Trigger icon.                                                                   |
 | `shortcuts`         | `true`            | Enables <kbd>Shift</kbd> + <kbd>F</kbd>.                                        |
 | `texts`             | —                 | Explicit text overrides, ahead of i18n and English defaults.                    |
+| `icons`             | —                 | Nested Iconify-name overrides for every default icon.                            |
 | `ui.content`        | —                 | Extra classes for the Nuxt UI popover content.                                  |
 
 The trigger changes to the primary color when filters are active. Disabled fields are excluded from the add selector.

@@ -3,10 +3,10 @@
 ## Install
 
 ```bash
-pnpm add @querry-kit/nuxt @querry-kit/nuxt-ui @nuxt/ui
+pnpm add @querry-kit/nuxt @querry-kit/nuxt-ui @nuxt/ui @iconify-json/tabler
 ```
 
-Register Nuxt UI before this module. Components read the host application's `querrykit.table.*` i18n keys when present and otherwise use English fallback strings.
+Register Nuxt UI before this module. The controls use Tabler icons by default, so install `@iconify-json/tabler` in the host application. Components read the host application's `querrykit.table.*` i18n keys when present and otherwise use English fallback strings.
 
 ```ts
 export default defineNuxtConfig({

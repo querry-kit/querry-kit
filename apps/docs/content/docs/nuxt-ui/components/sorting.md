@@ -17,6 +17,7 @@
 | `icon`            | `i-tabler-arrows-sort` | Trigger icon.                                                |
 | `shortcuts`       | `true`                 | Enables <kbd>Shift</kbd> + <kbd>S</kbd>.                     |
 | `texts`           | —                      | Explicit text overrides, ahead of i18n and English defaults. |
+| `icons`           | —                      | Nested Iconify-name overrides for every default icon.         |
 | `ui.content`      | —                      | Extra classes for the Nuxt UI popover content.               |
 
 Disabled fields and fields already in `sorting` are not offered by the default add selector. The trigger changes to the primary color when at least one sort is active.
