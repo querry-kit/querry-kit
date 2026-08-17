@@ -2,8 +2,11 @@ import { expect, test } from '@playwright/test';
 
 const packagePages = [
   'docs/nest',
+  'docs/nest/changelog',
   'docs/nuxt',
+  'docs/nuxt/changelog',
   'docs/nuxt-ui',
+  'docs/nuxt-ui/changelog',
   'docs/nuxt-ui/components/toolbar',
   'docs/nuxt-ui/components/sorting',
   'docs/nuxt-ui/components/filtering',
@@ -133,6 +136,14 @@ test('Nest API reference keeps fields and DTO schema on one page', async ({ page
     await expect(navigation.getByRole('link', { name: 'Fields and DTO Schema', exact: true })).toBeVisible();
     await expect(navigation.getByRole('link', { name: 'DTO Schema', exact: true })).not.toBeVisible();
   }
+});
+
+test('package changelogs are available from the central documentation', async ({ page }) => {
+  await page.goto('docs/nuxt/changelog');
+  await expect(page.getByRole('heading', { name: '@querry-kit/nuxt', exact: true })).toBeVisible();
+
+  await page.goto('docs/nuxt-ui/changelog');
+  await expect(page.getByRole('heading', { name: '@querry-kit/nuxt-ui', exact: true })).toBeVisible();
 });
 
 test('publishes crawl and favicon assets', async ({ page }) => {

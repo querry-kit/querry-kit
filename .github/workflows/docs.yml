@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  repository_dispatch:
+    types:
+      - package-changelog-updated
+  schedule:
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 
 permissions:

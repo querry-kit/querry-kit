@@ -9,5 +9,6 @@ apps/docs/.nuxt
 apps/docs/.output
 apps/docs/.data
 apps/docs/test-results
+apps/docs/content/docs/*/changelog.md
 examples/*/api/src/generated
 examples/*/api/.env

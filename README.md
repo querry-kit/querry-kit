@@ -77,6 +77,12 @@ pnpm docs:build
 
 The documentation is a statically generated Nuxt 4 application in `apps/docs`. It contains the canonical documentation for `@querry-kit/nest`, `@querry-kit/nuxt`, and `@querry-kit/nuxt-ui` under `/docs/nest`, `/docs/nuxt`, and `/docs/nuxt-ui`.
 
+### Package changelogs
+
+The docs build fetches the current `CHANGELOG.md` from each package repository. The generated content files are ignored, so they must not be committed. The docs workflow refreshes them on every deployment and every six hours.
+
+For an immediate update after a package release, configure the `QUERRY_KIT_DOCS_TOKEN` Actions secret in each package repository. The token must be permitted to send a repository-dispatch event to `querry-kit/querry-kit`; without it, the scheduled refresh remains the fallback.
+
 ## 🛠 Development
 
 ```sh
