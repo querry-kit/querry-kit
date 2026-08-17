@@ -4,10 +4,6 @@
 
 <DemosTablePagination></DemosTablePagination>
 
-![Default pagination](/docs/nuxt-ui/components/table-pagination-default.png)
-
-![Pagination with a custom footer](/docs/nuxt-ui/components/table-pagination-custom-footer.png)
-
 ## Inputs and behavior
 
 | Prop/model               | Default                   | Description                                                    |
