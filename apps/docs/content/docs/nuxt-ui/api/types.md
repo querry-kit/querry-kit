@@ -50,6 +50,25 @@ The toolbar exposes `breadcrumb`, `search`, `options`, and `new`; sorting, filte
 
 Pass `icons` to any icon-bearing table control, or to `QTableToolbar` to forward it to its default sorting, filtering, and column-option controls. Each value is a Nuxt UI/Iconify icon name. Partial overrides preserve every other package default; the existing flat `icon` prop on sorting, filtering, and options still takes priority for that control's trigger.
 
+### App-wide defaults
+
+Configure the icons used throughout an application in `app.config.ts`. Component-level `icons` overrides take precedence over these defaults, and the existing flat `icon` prop remains authoritative for a single control's trigger.
+
+```ts
+export default defineAppConfig({
+  querryKit: {
+    table: {
+      icons: {
+        search: { input: 'i-lucide-search' },
+        sorting: { trigger: 'i-lucide-arrow-up-down' },
+        filtering: { trigger: 'i-lucide-list-filter' },
+        options: { trigger: 'i-lucide-settings-2' },
+      },
+    },
+  },
+});
+```
+
 The package defaults use Tabler, so the host application must install that Iconify collection:
 
 ```sh
