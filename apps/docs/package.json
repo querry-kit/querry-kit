@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev",
+    "sync:changelogs": "node scripts/sync-package-changelogs.mjs",
+    "dev": "pnpm sync:changelogs && nuxt dev",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "nuxt typecheck",
-    "build": "nuxt generate",
+    "build": "pnpm sync:changelogs && nuxt generate",
     "preview": "nuxt preview",
-    "test": "NUXT_APP_BASE_URL=/ nuxt generate && playwright test"
+    "test": "pnpm sync:changelogs && NUXT_APP_BASE_URL=/ nuxt generate && playwright test"
   },
   "dependencies": {
     "@nuxt/content": "^3.15.1",
