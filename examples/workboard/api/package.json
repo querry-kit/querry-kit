@@ -11,7 +11,7 @@
     "db:seed": "tsx src/database/seed.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.28",
+    "@nestjs/common": "^11.1.29",
     "@nestjs/core": "^11.1.28",
     "@nestjs/platform-express": "^11.1.28",
     "@nestjs/swagger": "^11.4.6",
