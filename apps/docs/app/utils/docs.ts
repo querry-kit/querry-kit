@@ -92,6 +92,7 @@ export const documentationPackages: DocumentationPackage[] = [
           { text: 'Utils', path: page('nuxt', '/api/utils'), icon: 'i-lucide-wrench' },
         ],
       },
+      { text: 'Releases', icon: 'i-lucide-history', items: [{ text: 'Changelog', path: page('nuxt', '/changelog'), icon: 'i-lucide-history' }] },
     ],
   },
   {
@@ -114,6 +115,7 @@ export const documentationPackages: DocumentationPackage[] = [
         ],
       },
       { text: 'API Reference', icon: 'i-lucide-braces', items: [{ text: 'Types and Locales', path: page('nuxt-ui', '/api/types'), icon: 'i-lucide-languages' }] },
+      { text: 'Releases', icon: 'i-lucide-history', items: [{ text: 'Changelog', path: page('nuxt-ui', '/changelog'), icon: 'i-lucide-history' }] },
     ],
   },
 ];
