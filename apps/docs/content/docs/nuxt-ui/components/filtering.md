@@ -4,10 +4,6 @@
 
 <DemosTableFiltering></DemosTableFiltering>
 
-![Empty filtering popover](/docs/nuxt-ui/components/table-filtering-popover.png)
-
-![Configured filtering popover](/docs/nuxt-ui/components/table-filtering-configured-popover.png)
-
 ## Inputs and state
 
 | Prop/model          | Default           | Description                                                                     |

@@ -4,10 +4,6 @@
 
 <DemosTableOptions></DemosTableOptions>
 
-![Open column-options popover](/docs/nuxt-ui/components/table-options-popover.png)
-
-![Column pin actions](/docs/nuxt-ui/components/table-options-pin-popover.png)
-
 ## Inputs and state
 
 | Prop/model                  | Default                | Description                                                                   |

@@ -4,8 +4,6 @@
 
 <DemosTableToolbar></DemosTableToolbar>
 
-![Default toolbar](/docs/nuxt-ui/components/table-toolbar-default.png)
-
 ## Models and regions
 
 | Model/prop                  | Purpose                                                                 |

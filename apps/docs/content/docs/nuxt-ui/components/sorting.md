@@ -4,10 +4,6 @@
 
 <DemosTableSorting></DemosTableSorting>
 
-![Empty sorting popover](/docs/nuxt-ui/components/table-sorting-popover.png)
-
-![Configured sorting popover](/docs/nuxt-ui/components/table-sorting-configured-popover.png)
-
 ## Inputs and state
 
 | Prop/model        | Default                | Description                                                  |
