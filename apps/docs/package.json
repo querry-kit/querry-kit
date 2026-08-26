@@ -17,7 +17,7 @@
     "@nuxtjs/mdc": "^0.22.2",
     "@nuxtjs/sitemap": "^8.3.0",
     "@querry-kit/nuxt": "^0.2.3",
-    "@querry-kit/nuxt-ui": "^2.0.1",
+    "@querry-kit/nuxt-ui": "^3.2.1",
     "@tanstack/table-core": "^9.1.2",
     "@vueuse/core": "^14.3.0",
     "@vueuse/router": "^14.3.0",
