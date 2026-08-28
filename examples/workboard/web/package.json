@@ -8,7 +8,7 @@
     "build": "nuxt build"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.10.0",
+    "@nuxt/ui": "^4.11.0",
     "@querry-kit/nuxt": "link:../../../../nuxt",
     "@querry-kit/nuxt-ui": "link:../../../../nuxt-ui",
     "@tanstack/table-core": "^9.1.2",
