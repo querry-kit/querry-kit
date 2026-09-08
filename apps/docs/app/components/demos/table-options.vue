@@ -1,5 +1,5 @@
 <template>
-  <DemosDemoShell title="Live column options" description="Reorder, hide and pin columns while keeping state in this page.">
+  <DemosDemoShell title="Live column options" description="Drag columns between the left, unpinned, and right sections while keeping state in this page.">
     <div class="flex items-center gap-3">
       <QTableOptions
         v-model:column-order="columnOrder"
@@ -7,7 +7,7 @@
         v-model:column-pinning="columnPinning"
         :columns="columns"
       />
-      <code class="text-xs text-muted">{{ columnOrder.join(', ') }}</code>
+      <code class="text-xs text-muted">{{ columnOrder.join(', ') }} · {{ JSON.stringify(columnPinning) }}</code>
     </div>
   </DemosDemoShell>
 </template>

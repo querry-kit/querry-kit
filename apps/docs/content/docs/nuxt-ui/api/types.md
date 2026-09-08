@@ -123,7 +123,8 @@ The complete `icons` shape is `TableIconOverrides` with these defaults:
   },
   options: {
     trigger: 'i-tabler-adjustments', header: 'i-tabler-adjustments', pin: 'i-tabler-pin',
-    drag: 'i-tabler-grip-vertical',
+    unpin: 'i-tabler-pin-off', drag: 'i-tabler-grip-vertical',
+    visible: 'i-tabler-eye', hidden: 'i-tabler-eye-off',
   },
 }
 ```
@@ -174,8 +175,8 @@ Use this complete shape in an application locale file. The `texts` prop accepts 
       "options": {
         "title": "Table options",
         "pin": "Pin column",
-        "left": "Left",
-        "right": "Right",
+        "left": "Pin left",
+        "right": "Pin right",
         "center": "Unpin",
         "visibility": "Toggle column visibility"
       },

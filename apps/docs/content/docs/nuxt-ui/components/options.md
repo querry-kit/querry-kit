@@ -22,10 +22,8 @@ Only IDs present in `column-order` are shown. A column with `enableHiding: false
 
 ## Popover actions
 
-- **Reorder columns** — drag a row onto another row. The component emits a reordered `column-order` array.
+- **Reorder and pin columns** — drag a column into the left, middle, or right section. The left and right sections pin it; the middle section unpins it. The component emits matching `column-order` and `column-pinning` arrays.
 - **Show or hide a column** — toggle the switch. The component adds or removes its ID from `invisible-columns` unless hiding is disabled.
-- **Pin left or right** — open the pin action and choose **Left** or **Right**. The ID is removed from the other side first, then added to the selected side.
-- **Unpin** — choose **Unpin** to remove the ID from both pinning arrays.
 
 ```vue
 <QTableOptions
