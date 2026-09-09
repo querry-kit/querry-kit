@@ -8,9 +8,25 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@querry-kit/nuxt-ui@2.0.1'
   - '@querry-kit/nuxt@0.0.5'
+  - deepmerge-ts@8.0.0
+  - mysql2@3.22.0 || 3.23.1
+  - qs@6.15.4 || 6.16.0
+  - '@tiptap/core@3.30.4 || 3.30.5'
+  - fast-uri@3.1.6
+  - js-yaml@4.3.2
+  - svgo@4.1.0
+  - multer@2.3.0
 overrides:
+  '@tiptap/core@<3.30.5': ^3.30.5
+  deepmerge-ts@<8.0.0: ^8.0.0
   esbuild@0.27.7: 0.28.2
+  fast-uri@>=3.0.0 <3.1.6: ^3.1.6
   js-yaml@5.2.1: 5.2.2
+  js-yaml@>=4.0.0 <4.3.2: ^4.3.2
+  multer@<2.3.0: ^2.3.0
+  mysql2@<=3.23.0: ^3.23.1
+  qs@<6.16.0: ^6.16.0
+  svgo@>=4.0.0 <4.1.0: ^4.1.0
 packages:
   - apps/*
   - examples/*/*
