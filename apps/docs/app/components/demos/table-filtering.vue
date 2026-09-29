@@ -19,5 +19,16 @@ const filtering = ref<Filtering>({ operator: FilteringMode.Intersect, filters: [
 const fields: FilterField[] = [
   { value: 'active', label: 'Active projects', type: FilterFieldType.Boolean },
   { value: 'priority', label: 'Priority', type: FilterFieldType.Number },
+  {
+    value: 'status',
+    label: 'Status',
+    type: FilterFieldType.Enum,
+    values: [
+      { value: 'planned', label: 'Planned' },
+      { value: 'active', label: 'Active' },
+      { value: 'blocked', label: 'Blocked' },
+      { value: 'completed', label: 'Completed' },
+    ],
+  },
 ];
 </script>
