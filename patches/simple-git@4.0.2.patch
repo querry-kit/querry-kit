@@ -1,0 +1,13 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index f434ec5f34672a37dbd0d6ae3ff3c4b27f6abed5..2a364c2a9acb077da549401c7248e5e99d54942a 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -2890,6 +2890,7 @@ export {
+   xe as TaskConfigurationError,
+   Sn as grepQueryBuilder,
+   ko as pathspec,
+-  wo as simpleGit
++  wo as simpleGit,
++  wo as default
+ };
+ //# sourceMappingURL=index.mjs.map

@@ -8,19 +8,19 @@
     "build": "nuxt build"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.11.1",
+    "@nuxt/ui": "^4.11.3",
     "@querry-kit/nuxt": "link:../../../../nuxt",
     "@querry-kit/nuxt-ui": "link:../../../../nuxt-ui",
     "@tanstack/table-core": "^8.21.3",
     "@vueuse/core": "^14.4.0",
     "@vueuse/router": "^14.4.0",
     "axios": "^1.20.0",
-    "nuxt": "^4.5.2",
-    "vue": "^3.5.42",
-    "vue-router": "^5.3.1"
+    "nuxt": "^4.6.1",
+    "vue": "^3.5.43",
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.11"
+    "vue-tsc": "^3.3.13"
   }
 }

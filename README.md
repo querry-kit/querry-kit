@@ -87,9 +87,18 @@ For an immediate update after a package release, configure the `QUERRY_KIT_DOCS_
 
 ```sh
 pnpm lint
+pnpm docs:lint
+pnpm docs:typecheck
+pnpm docs:test
 pnpm docs:build
 pnpm examples:check
 pnpm examples:build
 ```
 
 The Workboard API includes a PostgreSQL Compose service, a Prisma schema, and an idempotent seed for local development.
+
+Documentation browser tests use the emulated browser's user agent to select the search shortcut (`Meta+K` on macOS, `Control+K` otherwise), independently of the test runner's operating system.
+
+Dependency maintenance updates supported versions and reuses the Nuxt UI security patches for the docs toolchain.
+
+The docs workspace pins fixed transitive dependencies and restores the legacy `simple-git` default export for Nuxt Devtools while retaining version 4 security guards.

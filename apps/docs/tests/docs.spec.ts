@@ -63,8 +63,8 @@ test('search opens with its keyboard shortcut', async ({ page }, testInfo) => {
     await page.getByRole('button', { name: 'Search' }).click();
   } else {
     await expect(page.getByRole('button', { name: 'Search' })).toBeVisible();
-    await page.waitForTimeout(100);
-    await page.keyboard.press(process.platform === 'darwin' ? 'Meta+K' : 'Control+K');
+    const macOS = await page.evaluate(() => /Macintosh;/.test(navigator.userAgent));
+    await page.keyboard.press(macOS ? 'Meta+K' : 'Control+K');
   }
   await expect(page.getByRole('dialog')).toBeVisible();
 });

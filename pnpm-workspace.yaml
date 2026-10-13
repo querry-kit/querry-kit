@@ -21,6 +21,9 @@ minimumReleaseAgeExclude:
   - '@nuxtjs/sitemap@8.5.1'
   - nuxtseo-shared@5.3.16
 overrides:
+  simple-git@>=3.15.0 <4.0.1: 4.0.2
+  source-map-js@>=1.0.0 <1.2.2: 1.2.2
+  compression@<1.8.2: ^1.8.2
   '@tiptap/core@<3.30.5': ^3.30.5
   deepmerge-ts@<8.0.0: ^8.0.0
   esbuild@0.27.7: 0.28.2
@@ -34,3 +37,8 @@ overrides:
 packages:
   - apps/*
   - examples/*/*
+
+patchedDependencies:
+  braces@3.0.3: patches/braces@3.0.3.patch
+  node-forge@1.4.0: patches/node-forge@1.4.0.patch
+  simple-git@4.0.2: patches/simple-git@4.0.2.patch
