@@ -3,7 +3,7 @@
 Install the core package and its peers:
 
 ```sh
-pnpm add @querry-kit/nuxt axios @tanstack/table-core @vueuse/core @vueuse/router vue vue-router
+pnpm add @querry-kit/nuxt axios @vueuse/core @vueuse/router vue vue-router
 ```
 
 Create the HTTP client in the consumer application, where runtime configuration and authentication belong:
@@ -45,3 +45,5 @@ await books.update('book-1', { title: 'New title' });
 `useModuleApi` exposes `query`, `get`, `findById`, `count`, `create`, `update`, and `delete`. Its endpoint argument accepts either `books` or `/books`; identifiers are URL encoded.
 
 Before integrating tables or autocompletes, verify that the backend exposes the required routes and `{ items, meta }` response shape in the [controller contract](/docs/nuxt/guide/controller-contract).
+
+TanStack Table is not a direct dependency of these composables; install the dependencies required by your chosen table renderer. Stored table preferences are validated and reset to defaults when malformed or unreadable. Autocomplete reacts to nested query mutations and stops loading when a pending selection is cleared.

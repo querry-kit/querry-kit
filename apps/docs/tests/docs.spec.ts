@@ -90,9 +90,23 @@ test('theme picker updates and resets the documentation theme', async ({ page })
   await page.getByRole('button', { name: 'violet' }).click();
   await expect(page.getByRole('button', { name: 'violet' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: 'Reset theme' })).toBeVisible();
+  await page.reload();
+  await page.getByRole('button', { name: 'Theme settings' }).click();
+  await expect(page.getByRole('button', { name: 'violet' })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Reset theme' }).click();
   await expect(page.getByRole('button', { name: 'red' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: 'zinc' })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('theme controls work when storage is unavailable', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(Storage.prototype, 'getItem', { value: () => { throw new Error('blocked'); } });
+    Object.defineProperty(Storage.prototype, 'setItem', { value: () => { throw new Error('blocked'); } });
+  });
+  await page.goto('docs/nest');
+  await page.getByRole('button', { name: 'Theme settings' }).click();
+  await page.getByRole('button', { name: 'violet' }).click();
+  await expect(page.getByRole('button', { name: 'violet' })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('surround navigation remains available after a trailing-slash reload', async ({ page }) => {

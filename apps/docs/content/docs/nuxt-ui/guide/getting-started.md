@@ -47,3 +47,5 @@ The controls emit immutable replacement values through their `v-model`s. This ke
 | Pagination     | <kbd>Shift</kbd> + arrow keys; add <kbd>Ctrl</kbd> for first/last page |
 
 Pass `:shortcuts="false"` to an individual component to disable its listener.
+
+Querry Kit table controls do not require a direct TanStack Table peer. Your table renderer (for example Nuxt UI) determines its supported TanStack version.
