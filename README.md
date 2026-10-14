@@ -102,3 +102,5 @@ Documentation browser tests use the emulated browser's user agent to select the 
 Dependency maintenance updates supported versions and reuses the Nuxt UI security patches for the docs toolchain.
 
 The docs workspace pins fixed transitive dependencies and restores the legacy `simple-git` default export for Nuxt Devtools while retaining version 4 security guards.
+
+The docs theme restores saved settings before persisting changes and works when browser storage is unavailable. Querry Kit packages do not require a direct TanStack Table peer; table renderers own their version. Query parsing and CASL field filtering reject prototype paths and respect explicit field denials.

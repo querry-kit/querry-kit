@@ -53,3 +53,5 @@ Avoid sending both dotted and nested variants for the same path; normal object a
 ## Validation
 
 The pipe normalizes values; it does not validate them. Compose it with Nest's `ValidationPipe` and DTO classes for request validation.
+
+Prototype-related path segments (`__proto__`, `constructor`, `prototype`) are ignored during query normalization. Dotted siblings merge into the same parent object. If paths conflict, the later assignment replaces the earlier value at that path.

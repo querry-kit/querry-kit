@@ -125,7 +125,7 @@ class ProjectDTO {
 }
 ```
 
-The helper first checks the special CASL field `all`. If it is not allowed, it checks every enumerable DTO field individually. Conditional CASL rules receive the DTO as a CASL `subject`, so they can inspect its values.
+The helper checks every enumerable DTO field individually, including explicit field denials after a general permission. The string `all` is not treated as a wildcard field. Conditional CASL rules receive the DTO as a CASL `subject`, so they can inspect its values.
 
 DTO field filtering protects the serialized response only. Keep passing the ability to `QueryService` or `ResourceQuery` as well so the Prisma query itself is restricted.
 

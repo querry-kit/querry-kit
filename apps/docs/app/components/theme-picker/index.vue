@@ -138,25 +138,38 @@ const colors = appConfig.ui.colors as { primary: string; neutral: string };
 const fontFamily = computed<string>(() => settings.value.font === 'System UI' ? 'ui-sans-serif, system-ui, sans-serif' : `'${settings.value.font}', ui-sans-serif, system-ui, sans-serif`);
 const hasChanges = computed<boolean>(() => Object.entries(defaults).some(([key, value]) => settings.value[key as keyof ThemeSettings] !== value));
 
+/** Applies the validated primary and neutral colors. */
 function applySettings() {
   colors.primary = settings.value.primary;
   colors.neutral = settings.value.neutral;
 }
 
+/**
+ * Selects a primary color and disables monochrome mode.
+ *
+ * @param {string} color Primary color name.
+ */
 function setPrimary(color: string) {
   settings.value.primary = color;
   settings.value.blackAsPrimary = false;
 }
 
+/** Restores default theme settings and system color mode. */
 function resetTheme() {
   settings.value = { ...defaults };
   colorMode.preference = 'system';
 }
 
+let restored = false;
+
 watch(settings, () => {
   applySettings();
-  if (import.meta.client) {
-    window.localStorage.setItem(storageKey, JSON.stringify(settings.value));
+  if (import.meta.client && restored) {
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(settings.value));
+    } catch {
+      // Browser storage is optional.
+    }
   }
 }, { deep: true, immediate: true });
 
@@ -164,11 +177,13 @@ onMounted(() => {
   try {
     const saved = JSON.parse(window.localStorage.getItem(storageKey) || '{}') as Partial<ThemeSettings>;
     const nextSettings = { ...defaults, ...saved };
-    if (primaryColors.includes(nextSettings.primary) && neutralColors.includes(nextSettings.neutral) && radiuses.includes(nextSettings.radius) && fonts.includes(nextSettings.font)) {
+    if (typeof nextSettings.blackAsPrimary === 'boolean' && primaryColors.includes(nextSettings.primary) && neutralColors.includes(nextSettings.neutral) && radiuses.includes(nextSettings.radius) && fonts.includes(nextSettings.font)) {
       settings.value = nextSettings;
     }
   } catch {
-    window.localStorage.removeItem(storageKey);
+    // Keep defaults when stored settings cannot be read.
+  } finally {
+    restored = true;
   }
 });
 
