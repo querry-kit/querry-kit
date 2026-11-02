@@ -1,5 +1,11 @@
 # @querry-kit/landing-page
 
+## 0.2.1
+
+### Patch Changes
+
+- f90b488: Align the dependency graph with the newly published VueUse-compatible Querry libraries. Scope legacy documentation-tool security overrides to their actual parent packages so modern application peers retain supported versions.
+
 ## 0.2.0
 
 ### Minor Changes
