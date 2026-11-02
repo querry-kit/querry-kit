@@ -1,6 +1,7 @@
 name: Docs
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -33,11 +34,23 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26.13.0
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Lint workspace
+        run: pnpm lint
+
+      - name: Typecheck documentation
+        run: pnpm docs:typecheck
+
+      - name: Install browser dependencies
+        run: pnpm --dir apps/docs exec playwright install --with-deps chromium
+
+      - name: Test documentation
+        run: pnpm docs:test
 
       - name: Build documentation
         run: pnpm docs:build
@@ -48,6 +61,7 @@ jobs:
           path: apps/docs/.output/public
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:

@@ -104,3 +104,7 @@ Dependency maintenance updates supported versions and reuses the Nuxt UI securit
 The docs workspace pins fixed transitive dependencies and restores the legacy `simple-git` default export for Nuxt Devtools while retaining version 4 security guards.
 
 The docs theme restores saved settings before persisting changes and works when browser storage is unavailable. Querry Kit packages do not require a direct TanStack Table peer; table renderers own their version. Query parsing and CASL field filtering reject prototype paths and respect explicit field denials.
+
+## Development toolchain
+
+Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets tracks the private documentation-site version; site packages are not published to npm. Pull requests run lint, type checks, documentation tests and the static build before deployment.
