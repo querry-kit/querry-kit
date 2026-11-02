@@ -1,5 +1,11 @@
 # @querry-kit/landing-page
 
+## 0.2.2
+
+### Patch Changes
+
+- 63b051f: Explicitly prerender the homepage alongside documentation routes so GitHub Pages serves a real index.html at the site root. Verify the generated static entrypoints in CI before uploading the Pages artifact.
+
 ## 0.2.1
 
 ### Patch Changes
