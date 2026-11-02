@@ -46,6 +46,9 @@ jobs:
       - name: Typecheck documentation
         run: pnpm docs:typecheck
 
+      - name: Install browser dependencies
+        run: pnpm --dir apps/docs exec playwright install --with-deps chromium
+
       - name: Test documentation
         run: pnpm docs:test
 
