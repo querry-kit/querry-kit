@@ -52,7 +52,7 @@ export default defineNuxtConfig({
     prerender: {
       concurrency: 1,
       crawlLinks: false,
-      routes: documentationRoutes,
+      routes: ['/', ...documentationRoutes],
     },
   },
 });

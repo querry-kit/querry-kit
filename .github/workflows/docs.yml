@@ -55,6 +55,12 @@ jobs:
       - name: Build documentation
         run: pnpm docs:build
 
+      - name: Verify static entrypoints
+        run: |
+          test -s apps/docs/.output/public/index.html
+          test -s apps/docs/.output/public/docs/nuxt/index.html
+          test -s apps/docs/.output/public/docs/nuxt-ui/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
