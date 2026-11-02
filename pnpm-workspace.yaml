@@ -8,6 +8,8 @@ allowBuilds:
   vue-demi: false
   workerd: true
 minimumReleaseAgeExclude:
+  - '@querry-kit/nuxt-ui@3.3.10'
+  - '@querry-kit/nuxt@0.2.10'
   - '@querry-kit/nuxt-ui@2.0.1'
   - '@querry-kit/nuxt@0.0.5'
   - deepmerge-ts@8.0.0
@@ -54,3 +56,10 @@ packages:
 
 patchedDependencies:
   braces@3.0.3: patches/braces@3.0.3.patch
+
+# unctx 3 requires these newer APIs; supply them in its own dependency context.
+packageExtensions:
+  unctx@3.0.1:
+    dependencies:
+      oxc-parser: 0.156.0
+      unplugin: 3.7.0
