@@ -2,7 +2,7 @@
   "name": "@querry-kit/landing-page",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.15.1",
+  "packageManager": "pnpm@11.28.9",
   "scripts": {
     "docs:dev": "pnpm --dir apps/docs dev",
     "docs:lint": "pnpm --dir apps/docs lint",
@@ -18,15 +18,23 @@
     "examples:build": "pnpm -r --filter './examples/**' build",
     "lint": "eslint . --config eslint.config.mjs --max-warnings=0",
     "lint:fix": "eslint . --config eslint.config.mjs --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset tag"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.12.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-vue": "^10.11.1",
-    "globals": "^17.13.0",
+    "eslint-plugin-vue": "^10.12.0",
+    "globals": "^17.14.0",
     "prettier": "^3.9.10",
-    "typescript-eslint": "^8.71.2"
+    "typescript-eslint": "^8.72.1",
+    "@changesets/cli": "^3.0.3"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=26.13.0 <27"
   }
 }
