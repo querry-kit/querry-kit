@@ -1,20 +1,23 @@
 {
   "name": "@querry-kit/example-workboard-api",
   "private": true,
+  "engines": {
+    "node": ">=26.13.0 <27"
+  },
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "typecheck": "tsc --noEmit",
-    "build": "tsup src/main.ts --format esm --target node24 --sourcemap",
+    "build": "tsup src/main.ts --format esm --target node26 --sourcemap",
     "prisma:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx src/database/seed.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^12.3.2",
-    "@nestjs/core": "^12.3.2",
-    "@nestjs/platform-express": "^12.3.2",
-    "@nestjs/swagger": "^12.0.5",
+    "@nestjs/common": "^12.3.3",
+    "@nestjs/core": "^12.3.3",
+    "@nestjs/platform-express": "^12.3.3",
+    "@nestjs/swagger": "^12.1.0",
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "@querry-kit/nest": "link:../../../../nest",

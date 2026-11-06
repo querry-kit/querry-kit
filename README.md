@@ -22,7 +22,7 @@ Querry Kit is a set of complementary building blocks for relational, type-safe N
 
 ## 📦 Install
 
-Prerequisites: Node.js 24 and pnpm 11. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
+Prerequisites: Node.js 26.13.0 LTS and the pnpm 11 version pinned in `package.json`. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
 
 ```sh
 pnpm install
@@ -109,6 +109,12 @@ The docs theme restores saved settings before persisting changes and works when 
 
 Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets tracks the private documentation-site version; site packages are not published to npm. Pull requests run lint, type checks, documentation tests and the static build before deployment.
 
+### Dependency maintenance
+
+Documentation and examples use Nuxt 4.6.4 and Vue 3.5.45; the Workboard API uses NestJS 12.3.3 and Swagger 12.1.0. Nuxt 4.6.4 tightens production error disclosure and Nitro caching rules; see the [upstream behavior changes](https://github.com/nuxt/nuxt/releases/tag/v4.6.4).
+
+Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
+
 ## Group-by feature preview
 
 The grouped-table demo consumes the new `useGroupedTable` export and the new grouping
@@ -127,8 +133,9 @@ pnpm docs:test
 
 These links affect only local dependencies. Before merging or deploying the docs
 feature branch, release the packages through their normal Changesets workflow, then
-update the docs `@querry-kit/nuxt` dependency to the new minor line and refresh both
-package entries in the lockfile. The existing `^0.2.10` range does not admit the next
-minor release of this pre-1.0 package. Keep the documentation PR blocked until those
+update the docs dependencies to the released `@querry-kit/nuxt` 1.x and
+`@querry-kit/nuxt-ui` 4.x lines, then refresh both package entries in the lockfile.
+The current ranges do not admit these Node.js 26 major releases. Nuxt UI must also
+declare compatibility with the Nuxt package 1.x peer before this pairing is installed. Keep the documentation PR blocked until those
 published dependencies can reproduce the local integration checks. No publication
 or deployment is performed by the feature implementation.
