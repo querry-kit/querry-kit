@@ -1,5 +1,9 @@
 # Getting started
 
+## Runtime requirements
+
+The next major release requires Node.js 26.13.0 or newer and drops Node.js 24 support. Upgrade application runtimes and CI before updating. Published package versions remain unchanged until the release workflow runs.
+
 ## Install
 
 ```bash

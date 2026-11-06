@@ -12,6 +12,8 @@ See the [Querry Kit overview](../../../README.md) for the complete API-and-web a
 
 ## 🚀 Run
 
+Use Node.js 26.13.0 LTS and the pnpm version pinned in the workspace root.
+
 Start the API and web app in separate terminals:
 
 ```sh

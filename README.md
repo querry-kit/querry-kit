@@ -22,7 +22,7 @@ Querry Kit is a set of complementary building blocks for relational, type-safe N
 
 ## 📦 Install
 
-Prerequisites: Node.js 24 and pnpm 11. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
+Prerequisites: Node.js 26.13.0 LTS and the pnpm 11 version pinned in `package.json`. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
 
 ```sh
 pnpm install
@@ -108,3 +108,9 @@ The docs theme restores saved settings before persisting changes and works when 
 ## Development toolchain
 
 Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets tracks the private documentation-site version; site packages are not published to npm. Pull requests run lint, type checks, documentation tests and the static build before deployment.
+
+### Dependency maintenance
+
+Documentation and examples use Nuxt 4.6.4 and Vue 3.5.45; the Workboard API uses NestJS 12.3.3 and Swagger 12.1.0. Nuxt 4.6.4 tightens production error disclosure and Nitro caching rules; see the [upstream behavior changes](https://github.com/nuxt/nuxt/releases/tag/v4.6.4).
+
+Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
