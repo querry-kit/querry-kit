@@ -115,27 +115,20 @@ Documentation and examples use Nuxt 4.6.4 and Vue 3.5.45; the Workboard API uses
 
 Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
 
-## Group-by feature preview
+## Group-by documentation
 
-The grouped-table demo consumes the new `useGroupedTable` export and the new grouping
-controls. Until the feature package releases are available, validate it against the
-matching sibling checkouts instead of the registry versions in the docs lockfile:
+The grouped-table demo uses the published `@querry-kit/nuxt` 1.x and
+`@querry-kit/nuxt-ui` 4.x packages from the lockfile. Node.js 26.13.0 or newer
+is required. No sibling package builds or local dependency links are needed
+for the documentation app.
 
 ```sh
-pnpm --dir ../nuxt build
-pnpm --dir ../nuxt-ui build
-ln -sfn "$(realpath ../nuxt)" apps/docs/node_modules/@querry-kit/nuxt
-ln -sfn "$(realpath ../nuxt-ui)" apps/docs/node_modules/@querry-kit/nuxt-ui
+pnpm install --frozen-lockfile
 pnpm docs:lint
 pnpm docs:typecheck
 pnpm docs:test
+pnpm docs:build
 ```
 
-These links affect only local dependencies. Before merging or deploying the docs
-feature branch, release the packages through their normal Changesets workflow, then
-update the docs dependencies to the released `@querry-kit/nuxt` 1.x and
-`@querry-kit/nuxt-ui` 4.x lines, then refresh both package entries in the lockfile.
-The current ranges do not admit these Node.js 26 major releases. Nuxt UI must also
-declare compatibility with the Nuxt package 1.x peer before this pairing is installed. Keep the documentation PR blocked until those
-published dependencies can reproduce the local integration checks. No publication
-or deployment is performed by the feature implementation.
+The interactive fixture uses synthetic records and an in-browser Axios adapter;
+its group counts and lazy loading are independent of production systems.

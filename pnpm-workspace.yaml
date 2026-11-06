@@ -10,6 +10,8 @@ allowBuilds:
   vue-demi: false
   workerd: true
 minimumReleaseAgeExclude:
+  - '@querry-kit/nuxt@1.0.0'
+  - '@querry-kit/nuxt-ui@4.0.0'
   - '@querry-kit/nuxt-ui@3.3.10'
   - '@querry-kit/nuxt@0.2.10'
   - '@querry-kit/nuxt-ui@2.0.1'
