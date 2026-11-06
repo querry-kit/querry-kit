@@ -20,7 +20,9 @@ interface ProjectTypeMap extends BaseDelegateTypeMap {
   orderByWithRelationInput: Prisma.ProjectOrderByWithRelationInput;
   whereUniqueInput: Prisma.ProjectWhereUniqueInput;
   scalarFieldEnum: Prisma.ProjectScalarFieldEnum;
-  aggregateInputType: Prisma.AggregateProject;
+  aggregateInputType: Prisma.ProjectAggregateArgs;
+  orderByWithAggregationInput: Prisma.ProjectOrderByWithAggregationInput;
+  scalarWhereWithAggregatesInput: Prisma.ProjectScalarWhereWithAggregatesInput;
 }
 
 @Injectable()
