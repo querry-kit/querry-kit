@@ -12,6 +12,8 @@ See the [Querry Kit overview](../../../README.md) for the complete API-and-web a
 
 ## 🚀 Run
 
+Use Node.js 26.13.0 LTS and the pnpm version pinned in the workspace root. TypeScript path aliases resolve relative to `tsconfig.json`; the removed `baseUrl` compiler option is not required.
+
 ```sh
 cp .env.example .env
 docker compose up -d

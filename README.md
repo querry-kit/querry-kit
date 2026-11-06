@@ -22,7 +22,7 @@ Querry Kit is a set of complementary building blocks for relational, type-safe N
 
 ## 📦 Install
 
-Prerequisites: Node.js 24 and pnpm 11. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
+Prerequisites: Node.js 26.13.0 LTS and the pnpm 11 version pinned in `package.json`. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
 
 ```sh
 pnpm install
