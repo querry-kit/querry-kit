@@ -187,3 +187,7 @@ Use this complete shape in an application locale file. The `texts` prop accepts 
   }
 }
 ```
+
+## Grouping controls
+
+`GroupingField` shares the selectable-field metadata shape. `QTableGrouping` uses ordered string field IDs. Import group tree and path types (`GroupNode`, `GroupPath`, `GroupValue`) from `@querry-kit/nuxt/types` when using `useGroupedTable`. Grouping labels use `querrykit.table.grouping`; see [Grouping](/docs/nuxt-ui/components/grouping) for text/icon keys and controlled group components.

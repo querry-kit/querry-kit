@@ -114,3 +114,21 @@ Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changeset
 Documentation and examples use Nuxt 4.6.4 and Vue 3.5.45; the Workboard API uses NestJS 12.3.3 and Swagger 12.1.0. Nuxt 4.6.4 tightens production error disclosure and Nitro caching rules; see the [upstream behavior changes](https://github.com/nuxt/nuxt/releases/tag/v4.6.4).
 
 Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
+
+## Group-by documentation
+
+The grouped-table demo uses the published `@querry-kit/nuxt` 1.x and
+`@querry-kit/nuxt-ui` 4.x packages from the lockfile. Node.js 26.13.0 or newer
+is required. No sibling package builds or local dependency links are needed
+for the documentation app.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm docs:lint
+pnpm docs:typecheck
+pnpm docs:test
+pnpm docs:build
+```
+
+The interactive fixture uses synthetic records and an in-browser Axios adapter;
+its group counts and lazy loading are independent of production systems.
