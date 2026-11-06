@@ -40,3 +40,7 @@ The toolbar renders each default control only when it receives the necessary mod
   </template>
 </QTableToolbar>
 ```
+
+## Grouping
+
+Pass `groupableFields` and `v-model:grouping` to show `QTableGrouping`. The `options` slot also receives `grouping`. See [Grouping](/docs/nuxt-ui/components/grouping) for lazy-loading group controls.

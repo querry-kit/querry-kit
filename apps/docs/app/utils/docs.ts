@@ -108,6 +108,7 @@ export const documentationPackages: DocumentationPackage[] = [
         icon: 'i-lucide-sliders-horizontal',
         items: [
           { text: 'Table Toolbar', path: page('nuxt-ui', '/components/toolbar'), icon: 'i-lucide-panels-top-left' },
+          { text: 'Grouping', path: page('nuxt-ui', '/components/grouping'), icon: 'i-lucide-list-tree' },
           { text: 'Sorting', path: page('nuxt-ui', '/components/sorting'), icon: 'i-lucide-arrow-down-up' },
           { text: 'Filtering', path: page('nuxt-ui', '/components/filtering'), icon: 'i-lucide-filter' },
           { text: 'Column Options', path: page('nuxt-ui', '/components/options'), icon: 'i-lucide-columns-3' },

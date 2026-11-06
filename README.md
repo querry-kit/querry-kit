@@ -108,3 +108,27 @@ The docs theme restores saved settings before persisting changes and works when 
 ## Development toolchain
 
 Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets tracks the private documentation-site version; site packages are not published to npm. Pull requests run lint, type checks, documentation tests and the static build before deployment.
+
+## Group-by feature preview
+
+The grouped-table demo consumes the new `useGroupedTable` export and the new grouping
+controls. Until the feature package releases are available, validate it against the
+matching sibling checkouts instead of the registry versions in the docs lockfile:
+
+```sh
+pnpm --dir ../nuxt build
+pnpm --dir ../nuxt-ui build
+ln -sfn "$(realpath ../nuxt)" apps/docs/node_modules/@querry-kit/nuxt
+ln -sfn "$(realpath ../nuxt-ui)" apps/docs/node_modules/@querry-kit/nuxt-ui
+pnpm docs:lint
+pnpm docs:typecheck
+pnpm docs:test
+```
+
+These links affect only local dependencies. Before merging or deploying the docs
+feature branch, release the packages through their normal Changesets workflow, then
+update the docs `@querry-kit/nuxt` dependency to the new minor line and refresh both
+package entries in the lockfile. The existing `^0.2.10` range does not admit the next
+minor release of this pre-1.0 package. Keep the documentation PR blocked until those
+published dependencies can reproduce the local integration checks. No publication
+or deployment is performed by the feature implementation.

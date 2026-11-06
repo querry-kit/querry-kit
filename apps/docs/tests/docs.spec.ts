@@ -113,7 +113,7 @@ test('surround navigation remains available after a trailing-slash reload', asyn
   await page.goto('docs/nuxt-ui/components/toolbar/');
   const surround = page.getByRole('main');
   await expect(surround.getByRole('link', { name: 'Getting Started' })).toBeVisible();
-  await expect(surround.getByRole('link', { name: 'Sorting' })).toBeVisible();
+  await expect(surround.locator('a[data-slot="link"][href="/docs/nuxt-ui/components/grouping"]')).toBeVisible();
 });
 
 test('Nuxt API reference keeps each group on one page', async ({ page }, testInfo) => {
