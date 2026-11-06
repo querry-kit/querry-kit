@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     },
     clientBundle: {
       scan: true,
-      icons: documentationIconNames.map((icon) => icon.replace(/^i-([a-z0-9]+)-/, '$1:')),
+      icons: [...documentationIconNames, 'i-tabler-list-tree', 'i-tabler-chevron-up', 'i-tabler-chevron-down', 'i-tabler-chevron-right', 'i-tabler-plus', 'i-tabler-x'].map((icon) => icon.replace(/^i-([a-z0-9]+)-/, '$1:')),
     },
     fallbackToApi: false,
   },

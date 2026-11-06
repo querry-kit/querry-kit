@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
 test('nested groups show complete counts and load records independently', async ({ page }, testInfo) => {
+  const missingIcons: string[] = [];
+  page.on('response', (response) => {
+    if (response.url().includes('/api/_nuxt_icon/') && response.status() === 404) missingIcons.push(response.url());
+  });
   await page.goto('docs/nuxt-ui/components/grouping');
   const demo = page.getByTestId('grouping-demo');
   const done = demo.getByRole('button', { name: 'Done 42 items', exact: true });
@@ -27,6 +31,7 @@ test('nested groups show complete counts and load records independently', async 
   await expect(demo.getByRole('button', { name: 'Open 42 items', exact: true })).toHaveCount(0);
   const overflow = await demo.evaluate((element) => element.scrollWidth > element.clientWidth + 1);
   expect(overflow).toBe(false);
+  expect(missingIcons).toEqual([]);
 });
 
 test('grouping selection supports clearing and reordering', async ({ page }) => {
