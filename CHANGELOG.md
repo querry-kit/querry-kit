@@ -1,5 +1,11 @@
 # @querry-kit/nuxt-ui
 
+## 4.1.0
+
+### Minor Changes
+
+- 772de56: Reorder grouping fields with draggable, keyboard-accessible handles. The grouping popover adds a persistent field form, a clear button in the header, and the same responsive minimum width as the filter popover.
+
 ## 4.0.0
 
 ### Major Changes
