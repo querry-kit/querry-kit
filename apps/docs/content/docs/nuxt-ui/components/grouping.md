@@ -2,11 +2,32 @@
 
 <DemosTableGrouping></DemosTableGrouping>
 
+## Pagination and batch loading
+
+Pass `loading: {}` to `useGroupedTable` to start in Pagination. Bind its `loadingMode`
+to the global `QTablePagination` and set `grouped` while grouping fields are active.
+Use the global footer to change the mode and page size.
+
+- In Pagination, render a footer inside every expanded leaf. Bind the page and total
+  from `getItemPage(node.path)` and handle `update:page` with `loadItemsPage(node.path, page)`.
+  Pass `:shortcuts="false"` for leaf footers and `:page-sizes="[]"` for a shared page size.
+- In Infinite scroll, render `QTableGroupLoadMore` below each expanded leaf's rows,
+  with `node.hasMore` and `node.loading`. On `load`, call `loadMoreItems(node.path)`.
+  Configure `initialGroupItems` and `groupLoadMoreItems` under `loading` to pick the two
+  batch sizes. Visible leaf headers preload even when collapsed. Set
+  `preloadGroupItems: false` to defer the initial request until expansion.
+
+The root and intermediate group lists can continue using `loadMoreGroups()`.
+When the user clears grouping, connect the flat footer to `getItemPage([])`,
+`loadItemsPage([], page)`, and `loadMoreItems([])`, using the root branch for
+its row count, loading, error, and continuation props.
+
 ## Server-backed grouping controls
 
 Use `QTableGrouping` with `v-model:grouping` (an ordered string array) and
 `fields` (`{ value, label, disabled? }[]`). Selected and disabled fields are excluded
-from the add selector. Arrow buttons reorder levels; remove and clear actions emit
+from the add selector. Drag a field's reorder handle or use the arrow keys on it
+to reorder levels. Remove and clear actions emit
 new state. The control does not fetch data. `QTableToolbar` accepts the same model
 and `groupableFields` for optional integration.
 
