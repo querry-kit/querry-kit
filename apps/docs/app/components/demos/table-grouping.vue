@@ -25,10 +25,11 @@
           @load="table.loadMoreItems(leaf.path)"
         />
       </DefineLeaf>
-      <div class="flex items-center justify-between gap-2">
-        <QTableGrouping v-model:grouping="table.grouping.value" :fields="groupableFields" />
-        <UButton variant="ghost" label="Refresh groups" @click="table.refresh()" />
-      </div>
+      <QTableToolbar v-model:grouping="table.grouping.value" :groupable-fields="groupableFields">
+        <template #new>
+          <UButton variant="ghost" label="Refresh groups" @click="table.refresh()" />
+        </template>
+      </QTableToolbar>
       <p class="text-sm text-muted">Synthetic in-browser API fixture. No production data or live database.</p>
       <template v-for="node in table.groups.value" :key="node.key">
         <QTableGroup

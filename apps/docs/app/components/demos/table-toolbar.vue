@@ -31,7 +31,7 @@ import type {
 import { FilterFieldType, FilteringMode } from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
 
 const search = ref<string>('');
-const grouping = ref<string[]>([]);
+const grouping = ref<string[]>(['status', 'owner']);
 const sorting = ref<SortingState>([]);
 const filtering = ref<Filtering>({ operator: FilteringMode.Intersect, filters: [] });
 const columnOrder = ref<string[]>(['name', 'status', 'owner']);

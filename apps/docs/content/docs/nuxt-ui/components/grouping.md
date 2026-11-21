@@ -54,9 +54,9 @@ its row count, loading, error, and continuation props.
 
 Use `QTableGrouping` with `v-model:grouping` (an ordered string array) and
 `fields` (`{ value, label, disabled? }[]`). Selected and disabled fields are excluded
-from the add selector. Drag a field's reorder handle or use the arrow keys on it
-to reorder levels. Remove and clear actions emit
-new state. The control does not fetch data. `QTableToolbar` accepts the same model
+from the add selector. Select a field and press **Add grouping** to append it.
+The add form stays visible with its controls disabled when no fields are available.
+Drag the handle or press Up or Down on it to reorder levels. Remove and clear actions emit new state. The control does not fetch data. `QTableToolbar` accepts the same model
 and `groupableFields` for optional integration.
 
 `QTableGroup` takes `label`, `count`, `expanded`, optional `loading`/`error`, `texts`,
@@ -69,7 +69,7 @@ by the parent; the trigger reports `aria-expanded` and native button keyboard be
 Use it independently for the root, nested group lists, and leaf records.
 
 ```vue
-<QTableGrouping v-model:grouping="table.grouping.value" :fields="groupableFields" />
+<QTableToolbar v-model:grouping="table.grouping.value" :groupable-fields="groupableFields" />
 <QTableGroup
   v-for="node in table.groups.value"
   :key="node.key"
@@ -97,6 +97,151 @@ loaded record counts, when connected to `useGroupedTable` from `@querry-kit/nuxt
 The application still owns table markup, columns, records, authentication, and API routes.
 
 See the [text and icon reference](/docs/nuxt-ui/guide/getting-started#text-and-icon-reference) for all group labels and icon defaults. Supply field labels in the app locale. Override `grouping.null` for the renderer’s empty group value.
+
+## Expandable table with counts, sums, and preloaded rows
+
+<DemosTableGroupTotals></DemosTableGroupTotals>
+
+The outer `UTable` displays one row per status with the project count and the sum of estimated hours.
+Select any cell in a group row, or press Enter or Space when the row has focus, to toggle its details.
+The chevron provides the same action and announces the expanded state. The `expanded` slot renders a nested
+`UTable` with the preloaded detail rows. A dash indicates that every estimate in a group is missing.
+
+The demo uses synthetic records. In an application, pass your configured Axios client as the `api` prop.
+The list and [`group-by` route](/docs/nest/api/query-service#scalar-grouping) should use the same access
+rules. Allow grouping by `status` and summing `estimatedHours` for callers with permission to read those fields.
+
+```vue
+<template>
+  <UAlert
+    v-if="error"
+    color="error"
+    title="Could not load projects"
+    :actions="[{ label: 'Retry', onClick: () => refresh() }]"
+  />
+  <UTable
+    v-else
+    v-model:expanded="expanded"
+    :data="groups ?? []"
+    :columns="columns"
+    :get-row-id="(group) => group.status"
+    :expanded-options="{ getRowCanExpand: (row) => row.original.rows.length > 0 }"
+    :loading="status === 'pending'"
+    empty="No active projects."
+    caption="Projects grouped by status"
+    :ui="{ caption: 'sr-only', td: 'align-middle [&[colspan]]:p-0', tr: 'data-[selectable=true]:cursor-pointer' }"
+    @select="(_, row) => row.getCanExpand() && row.toggleExpanded()"
+  >
+    <template #status-cell="{ row }">
+      <div class="flex items-center gap-2">
+        <UButton
+          v-if="row.getCanExpand()"
+          size="xs"
+          variant="ghost"
+          color="neutral"
+          :icon="row.getIsExpanded() ? 'i-tabler-chevron-down' : 'i-tabler-chevron-right'"
+          :aria-label="`Projects: ${row.original.status}`"
+          :aria-expanded="row.getIsExpanded()"
+          @click.stop="row.toggleExpanded()"
+        />
+        <UBadge color="neutral" variant="subtle" :label="row.original.status" />
+      </div>
+    </template>
+    <template #expanded="{ row }">
+      <UTable
+        :data="row.original.rows"
+        :columns="detailColumns"
+        :caption="`Project details: ${row.original.status}`"
+        :ui="{ root: 'bg-elevated/40 ps-4', caption: 'sr-only' }"
+      />
+    </template>
+  </UTable>
+</template>
+
+<script setup lang="ts">
+import type { TableColumn } from '@nuxt/ui';
+import { useModuleApi } from '@querry-kit/nuxt/api';
+import type { EndpointDefinition, EndpointMap } from '@querry-kit/nuxt/types';
+import type { ExpandedState } from '@tanstack/table-core';
+import type { AxiosInstance } from 'axios';
+
+type Project = {
+  id: string;
+  title: string;
+  status: string;
+  estimatedHours: number | null;
+};
+
+type GroupTotal = {
+  status: string;
+  _count: { _all: number };
+  _sum: { estimatedHours: number | null };
+};
+
+type ProjectGroup = GroupTotal & { rows: Project[] };
+type Endpoints = EndpointMap & { projects: EndpointDefinition<Project> };
+
+const props = defineProps<{ api: AxiosInstance }>();
+const projects = useModuleApi<Endpoints, 'projects'>(props.api, 'projects');
+const columns: TableColumn<ProjectGroup>[] = [
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'count', accessorFn: (group) => group._count._all, header: 'Projects' },
+  { id: 'hours', accessorFn: (group) => group._sum.estimatedHours ?? '—', header: 'Estimated hours' },
+];
+const detailColumns: TableColumn<Project>[] = [
+  { accessorKey: 'title', header: 'Project' },
+  { id: 'hours', accessorFn: (project) => project.estimatedHours ?? '—', header: 'Estimated hours' },
+];
+const expanded = ref<ExpandedState>({});
+const where = { archived: false };
+const perPage = 25;
+
+/**
+ * Loads all matching project records in stable order before displaying groups.
+ *
+ * @returns {Promise<Project[]>} Project rows across all list pages.
+ */
+async function loadRows(): Promise<Project[]> {
+  const orderBy = { id: 'asc' };
+  const first = await projects.query({ where, orderBy, page: 1, perPage });
+  const rows = [...first.data.items];
+
+  for (let page = 2; page <= first.data.meta.pageCount; page += 1) {
+    const result = await projects.query({ where, orderBy, page, perPage });
+    rows.push(...result.data.items);
+  }
+
+  return rows;
+}
+
+const {
+  data: groups,
+  status,
+  error,
+  refresh,
+} = await useAsyncData<ProjectGroup[]>(
+  'project-groups',
+  async () => {
+    const [{ data: totals }, rows] = await Promise.all([
+      projects.groupBy<GroupTotal>({
+        by: ['status'],
+        where,
+        orderBy: { status: 'asc' },
+        _count: { _all: true },
+        _sum: { estimatedHours: true },
+      }),
+      loadRows(),
+    ]);
+    const rowsByStatus = Map.groupBy(rows, (row) => row.status);
+
+    return totals.map((total) => ({ ...total, rows: rowsByStatus.get(total.status) ?? [] }));
+  },
+  { lazy: true, server: false },
+);
+</script>
+```
+
+Use this approach for a small, bounded result set. It fetches every detail page before rendering the totals, so expansion makes no further requests. For larger result sets, use the independently paged leaf groups in the first demo, or use its Infinite scroll mode to preload only the first batch per visible leaf.
 
 ## Replace grouped table regions
 

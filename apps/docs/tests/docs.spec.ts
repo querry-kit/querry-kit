@@ -32,6 +32,16 @@ test('package navigation, sidebars and table demos are available', async ({ page
   }
   await expect(page.locator('header').getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/querry-kit');
   await expect(page.getByText('Live toolbar')).toBeVisible();
+  const trigger = page.getByRole('button', { name: 'Group by', exact: true });
+  await trigger.click();
+  const groupingField = page.getByRole('combobox', { name: 'Select grouping field' });
+  await groupingField.click();
+  await page.getByRole('option', { name: 'Project name', exact: true }).click();
+  await page.getByRole('button', { name: 'Add grouping', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Reorder Project name', exact: true })).toBeVisible();
+  await expect(groupingField).toBeDisabled();
+  await page.keyboard.press('Escape');
+  await expect(groupingField).toBeHidden();
   if (testInfo.project.name === 'mobile') {
     await page.getByRole('button', { name: 'Navigation' }).click();
     await expect(page.getByRole('dialog').getByRole('link', { name: 'Table Toolbar' })).toBeVisible();
