@@ -30,3 +30,10 @@ Changing the page size emits `update:items-per-page` and clamps the current page
 | `page-size`  | `itemsPerPage`, `setItemsPerPage`                        | The page-size selector.      |
 | `pagination` | `page`, `pageCount`, `first`, `previous`, `next`, `last` | The page navigation control. |
 | `right`      | `page`, `pageCount`                                      | A trailing footer region.    |
+
+## Replace the summary
+
+`#summary` receives `start`, `end`, and `totalItems`. Use it to replace just
+the range text while retaining the page-size picker and navigation. The default
+summary uses `pagination.summary` and the page-size picker uses
+`pagination.pageSize` as its accessible name.

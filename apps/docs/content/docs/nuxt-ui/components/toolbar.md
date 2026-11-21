@@ -48,3 +48,16 @@ Set `filter-context-active` to highlight the filter trigger when an application-
 ## Grouping
 
 Pass `groupableFields` and `v-model:grouping` to show `QTableGrouping`. The `options` slot also receives `grouping`. See [Grouping](/docs/nuxt-ui/components/grouping) for lazy-loading group controls.
+
+## Replace the toolbar layout
+
+`#layout` receives `isSmall` and the `breadcrumb`, `search`, `options`, and
+`actions` render components. Place them in your own layout with
+`<component :is="…" />`. Without the slot, the toolbar keeps its desktop and
+mobile layouts.
+
+Use `#grouping`, `#sorting`, `#filtering`, and `#column-options` to replace
+individual controls inside the default options region. Each slot receives its
+current model and setters. For example, `#filtering` receives `filtering`,
+`fields`, and `setFiltering`. The existing `#options` slot replaces the
+whole control region.

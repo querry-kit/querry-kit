@@ -70,3 +70,13 @@ const projectField = {
 The application supplies the endpoint, field path, and optional selection limit.
 The lookup also works outside the filter toolbar with an array `v-model`, a
 `source`, and an accessible label.
+
+## Customize lookup content
+
+`QTableFilterLookup` accepts `#selection` for the trigger content, `#option` for
+option content, `#empty` for the empty list, and `#error` for request errors.
+The option slot receives `item`, `index`, and `selected`. The selection slot
+receives `selection`, `items`, `open`, and `update`. The empty slot receives
+`searchTerm` and `loading`. The error slot receives `searchError`,
+`selectionError`, and `retry`. Nuxt UI retains keyboard navigation and option
+selection around the custom content.

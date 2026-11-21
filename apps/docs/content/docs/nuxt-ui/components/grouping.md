@@ -81,3 +81,26 @@ All labels live under `querrykit.table.grouping` for host i18n. `texts.grouping`
 `trigger`, `up`, `down`, `remove`, `add`, `expanded`, and `collapsed` using existing
 component/app-config/default precedence. Field labels and null-value labels are
 application-owned; use the same locale as the rest of the table.
+
+## Replace grouped table regions
+
+`QTableGrouping` offers `#trigger`, `#header`, `#clear`, `#items`, `#item`,
+and `#add`. The default popover still handles activation of a custom trigger.
+The item slot receives the field, its label, index, drag-handle class,
+`move(index, direction)`, and `remove(field)`. The add slot receives
+`availableFields` and `add(field)`.
+
+Use the grouped renderer's scoped slots to retain its table state and actions.
+
+| Region | Slots |
+| --- | --- |
+| Column headings | `column-header` with sort state and `toggleSort` |
+| Group heading | `group-toggle`, `group-value`, `group-count` |
+| Root request states | `loading`, `empty`, `error` |
+| Expanded group | `branch`, `branch-controls`, `branch-error` |
+| Footers | `group-footer`, `pagination`, `footer-start`, `footer-end` |
+
+Bind `triggerProps` from `#group-toggle` to a native button so keyboard
+activation and the row click both work. `#pagination` receives page state and
+actions for the flat table and each expanded leaf. Use its `path` to tell them
+apart. The `footer-start` and `footer-end` slots appear in both default footers.

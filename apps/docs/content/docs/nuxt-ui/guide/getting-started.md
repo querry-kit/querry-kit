@@ -53,3 +53,20 @@ The controls emit immutable replacement values through their `v-model`s. This ke
 Pass `:shortcuts="false"` to an individual component to disable its listener.
 
 Querry Kit table controls do not require a direct TanStack Table peer. Your table renderer (for example Nuxt UI) determines its supported TanStack version.
+
+## Translate table controls
+
+The table controls resolve explicit `texts` overrides, the host application's
+`querrykit.table.*` messages, and English defaults in that order. Bind a reactive
+`texts` object to change overrides while a component is mounted. Field names,
+column headers, and resource labels come from the consuming application.
+
+Filter rows use `filtering.operatorField` and `filtering.valueField` as separate
+accessible names. Both accept `{field}`. Use `filtering.operators` for the visible
+symbols and `filtering.operatorDescriptions` for their spoken descriptions.
+
+Grouped row labels accept `{label}`, `{count}`, `{formattedCount}`, and
+`{countLabel}`. The translator receives the numeric count for plural selection.
+When the host exposes `$n`, counts and pagination numbers use that formatter.
+Set the locale on `UApp` for the underlying Nuxt UI search, empty-state, and
+page navigation messages.
