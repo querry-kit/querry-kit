@@ -4,6 +4,32 @@
 
 The Group by icon uses the primary color when a grouping is active.
 
+### Render groups as table rows
+
+`QTableGrouped` renders the state returned by `useGroupedTable`. Start the query with
+`table.initialize()` when the view mounts. Supply the current visible columns and use
+`available-columns` when a grouped column can be hidden in the saved layout.
+
+```vue
+<QTableGrouped
+  :table="table"
+  :columns="visibleColumns"
+  :available-columns="allColumns"
+  :get-id="(item) => item.id"
+  label="Tasks"
+>
+  <template #cell="{ item, field }">{{ item[field] }}</template>
+</QTableGrouped>
+```
+
+Add the package's `dist/runtime` directory as a Tailwind `@source` in your
+application's stylesheet. Use a path relative to that stylesheet.
+
+Each column needs an `id` and `header`. The renderer handles expansion, server sorting,
+branch paging, and infinite loading. Use `group-value` and `group-cell` to customize group
+rows, `leading` and `leading-header` for selection controls, and `branch` with `show-branch`
+for extra content under expanded groups. The `footer-start` slot can hold a loading-mode switch.
+
 ## Server-backed grouping controls
 
 Use `QTableGrouping` with `v-model:grouping` (an ordered string array) and
