@@ -67,7 +67,10 @@ import logo from '~/assets/querry-kit-logo.svg';
 
 const route = useRoute();
 const isDocumentationRoute = computed<boolean>(() => route.path.startsWith('/docs/'));
-const primaryNavigationItems: NavigationMenuItem[] = [{ label: 'Docs', to: '/docs/nest' }];
+const primaryNavigationItems: NavigationMenuItem[] = [
+  { label: 'Docs', to: '/docs/nest' },
+  { label: 'Example', to: '/example' },
+];
 const packageNavigationItems = computed<NavigationMenuItem[]>(() => documentationPackages.map((item) => {
   const path = `/docs/${item.id}`;
 

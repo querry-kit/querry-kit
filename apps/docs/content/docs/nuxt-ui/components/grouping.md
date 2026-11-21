@@ -104,3 +104,57 @@ Bind `triggerProps` from `#group-toggle` to a native button so keyboard
 activation and the row click both work. `#pagination` receives page state and
 actions for the flat table and each expanded leaf. Use its `path` to tell them
 apart. The `footer-start` and `footer-end` slots appear in both default footers.
+
+## Component reference
+
+### QTableGrouping
+
+Requires an ordered `v-model:grouping` (`string[]`) and `fields: readonly GroupingField[]`. It emits `update:grouping` with field IDs. `texts` and `icons` are optional overrides. `ui.popover` and `ui.content` accept extra classes for the desktop popover and the control content. A toolbar switches the panel to a dialog on small screens.
+
+| Slot | Scope | Fallback |
+| --- | --- | --- |
+| `trigger` | `open: boolean`, `active: boolean`, `setOpen(open: boolean)` | Grouping icon button. |
+| `header` | `grouping`, `clear()` | Icon and heading. |
+| `clear` | `grouping`, `clear()` | Clear action when grouped. |
+| `items` | `grouping`, `move(index, direction)`, `remove(field)`, `setGrouping(fields)` | Draggable ordered list. |
+| `item` | `field`, `label`, `index`, `move`, `remove`, `handleClass` | Row with keyboard reorder and removal actions. |
+| `add` | `availableFields`, `add(field)` | Field picker and add button. |
+
+### QTableGroup and QTableGroupLoadMore
+
+`QTableGroup` requires `label: string`, `count: number` and `expanded: boolean`. Optional `loading: boolean` and `error: unknown` control expanded status. `texts` and `icons` override defaults. Its `toggle` and `retry` events have no payload. `trigger` receives `label`, `count`, `expanded`, and `toggle()`, with an accessible disclosure button as fallback. The button's `header` slot receives the same data except `toggle`, with the localized label and count as fallback. The unnamed slot renders expanded content. `loading` is unscoped and renders a status by default. `error` receives `error` and `retry()` and renders a retry alert by default.
+
+`QTableGroupLoadMore` requires `hasMore: boolean`. It accepts optional `loading: boolean`, `error: unknown`, and `texts`. Its unnamed slot receives `hasMore`, `loading`, `error`, `attrs`, and `load()`. It renders when the branch has another batch or a request failed. The default button forwards attributes, disables itself while loading, and says Load more or Retry. The `load` event has no payload.
+
+### QTableGrouped
+
+| Prop | Type and default | Behavior |
+| --- | --- | --- |
+| `table` | Required `GroupedTableState<TItem>` | Reactive rows, group state, requests, pagination, and sorting. |
+| `columns` | Required readonly `GroupedTableColumn[]` | Displayed columns. |
+| `available-columns` | Optional readonly `GroupedTableColumn[]` | Supplies headers for grouping fields absent from displayed columns. Defaults to displayed columns. |
+| `get-id` | Required `(item: TItem) => string \| number` | Stable record key. |
+| `label` | Required `string` | Accessible table name. |
+| `flexible-column` | Optional column ID | Column that fills available space in grouped mode. Defaults to the first displayed column. |
+| `show-branch` | Optional `boolean` | Enables the branch-content slot above branch actions when supplied. |
+| `ui` | Optional Nuxt UI Table `ui` | Styles the underlying table. |
+| `texts`, `icons` | Optional shared overrides | Localized labels and Iconify icons. |
+
+| Slot | Scope | Fallback |
+| --- | --- | --- |
+| `cell` | `field`, `item` | Record field value. |
+| `column-header` | `field`, `label`, `sort`, optional `toggleSort(event)` | Sortable heading button or plain heading. |
+| `leading-header`, `leading` | `items` in the header, optional `item` or `node` in rows | Empty. Adding these slots reserves a leading control column. |
+| `group-toggle` | `node`, `triggerProps` | Accessible disclosure button. Spread `triggerProps` on a button when replacing it. |
+| `group-value`, `group-count` | `node`, plus formatted `label` for `group-count` | Group value and count, rendered inside the default disclosure. |
+| `group-cell` | `node`, `field` | Empty cell outside the grouping label, useful for aggregates. |
+| `branch` | `node` | Empty branch content. |
+| `branch-controls` | `node`, `leaf`, `load()` | Request more groups or records where supported. |
+| `branch-error` | `node`, `error`, `retry()` | Branch retry alert. |
+| `loading`, `empty` | `grouped`, `label` | Loading indicator or localized empty label. |
+| `error` | `error`, `label`, `retry()` | Root retry alert. |
+| `group-footer` | `expanded`, `loading`, `hasMore`, `toggleAll()`, `loadMore()` | Group footer with root actions. |
+| `footer-start`, `footer-end` | None | Empty regions on either side of the default footer. |
+| `pagination` | `GroupedTablePaginationSlot` | Numbered pages or load-more controls for flat rows and expanded leaves. A custom slot replaces the default pagination region. |
+
+The renderer invokes the supplied table actions and has no additional component events. `GroupedTablePaginationSlot.path` is empty for flat records. It also exposes `page`, `totalItems`, `itemsPerPage`, `loadedItems`, `loading`, `error`, `infinite`, `hasMore`, `setPage(page)`, `setItemsPerPage(size)`, and `loadMore()`.

@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     excludeAppSources: true,
-    urls: [{ loc: sitemapHomeURL }, ...documentationRoutes],
+    urls: [{ loc: sitemapHomeURL }, '/example', ...documentationRoutes],
     discoverImages: false,
     zeroRuntime: true,
   },
@@ -52,7 +52,7 @@ export default defineNuxtConfig({
     prerender: {
       concurrency: 1,
       crawlLinks: false,
-      routes: ['/', ...documentationRoutes],
+      routes: ['/', '/example', ...documentationRoutes],
     },
   },
 });

@@ -159,3 +159,19 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
+
+## Grouped selection
+
+`useGroupedSelection<TItem>(getId)` is available from `@querry-kit/nuxt` and `@querry-kit/nuxt/table`. Supply a function returning a stable string ID or `undefined` for an unselectable row. Group choices cover unloaded pages. More specific group rules and explicit row choices take precedence.
+
+| Result | Behavior |
+| --- | --- |
+| `selectedCount` | Computed count using complete group totals and explicit exceptions. |
+| `isSelected(item)` | Reads the current selection for an individual row. |
+| `groupState(node)` | Returns `true`, `false` or `'indeterminate'` for the branch checkbox. |
+| `selectItems(items, checked)` | Sets row selections and records differences from inherited group state. |
+| `selectGroup(node, checked)` | Sets the branch and replaces prior overrides within it. |
+| `getSelection()` | Returns explicit `includedGroups`, `excludedGroups`, `ids` and `excludedIds`. |
+| `clearSelection()` | Removes all selections. Use it when the data scope changes or an operation completes. |
+
+For server bulk actions, validate IDs, paths, filters and current access permissions in the endpoint. Compute the target set on the server before applying changes.

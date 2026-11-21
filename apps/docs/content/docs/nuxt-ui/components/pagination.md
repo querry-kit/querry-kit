@@ -37,3 +37,11 @@ Changing the page size emits `update:items-per-page` and clamps the current page
 the range text while retaining the page-size picker and navigation. The default
 summary uses `pagination.summary` and the page-size picker uses
 `pagination.pageSize` as its accessible name.
+
+## Loading modes and summary slot
+
+`v-model:loading-mode` is optional and accepts `'pagination'` or `'infinite'`. Omit it for numbered pages without a mode switch. A switch emits `update:loadingMode`. The other models emit `update:page` and `update:itemsPerPage`.
+
+For flat infinite lists, bind `loaded-items: number` (defaults to zero), `has-more: boolean`, `loading: boolean` and `error: unknown`. The last three are optional and disabled or unset by default. The footer requests another batch near the viewport and also provides a manual action. Handle `load-more` without arguments, including when the user retries after an error. `grouped: boolean` defaults to false. Enable it to retain only global page size and mode controls while the grouped renderer manages branch controls.
+
+The `summary` slot receives numeric `start`, `end` and `totalItems`. It defaults to the displayed page range or loaded count for flat infinite mode. The outer `left` slot replaces this entire region. `page-size` defaults to the size picker, `pagination` to numbered navigation in flat pagination mode, and `right` to an empty region.

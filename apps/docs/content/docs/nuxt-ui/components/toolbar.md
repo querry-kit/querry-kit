@@ -13,11 +13,17 @@ Below the toolbar’s `sm` breakpoint (640 px by default), each table control op
 | Model/prop                  | Purpose                                                                 |
 | --------------------------- | ----------------------------------------------------------------------- |
 | `v-model:search`            | Free-text value. An empty default input emits `undefined`.              |
+| `v-model:grouping` | Optional ordered `string[]` of grouping field IDs. |
 | `v-model:sorting`           | Forwarded to the default sorting control when `sortable-fields` exists. |
 | `v-model:filtering`         | Forwarded to the default filtering control when `filter-fields` exists. |
 | `v-model:column-order`      | Enables default column options together with its other models.          |
 | `v-model:invisible-columns` | Hidden IDs for default column options.                                  |
 | `v-model:column-pinning`    | Pinning state for default column options.                               |
+| `groupable-fields` | Optional `GroupingField[]` for the grouping control. |
+| `sortable-fields` | Optional `SortingField[]` for the sorting control. |
+| `filter-fields` | Optional `FilterField[]` for the filtering control. |
+| `filter-context-active` | Optional boolean for the application-owned filter; defaults to false when omitted. |
+| `column-definitions` | Optional `ColumnDefinition[]` for column options. |
 | `breadcrumb-items`          | Items rendered by the default `UBreadcrumb`.                            |
 | `search-placeholder`        | Replaces only the default search placeholder.                           |
 | `texts`                     | Text overrides forwarded to the default child controls.                 |
@@ -34,7 +40,7 @@ The toolbar renders each default control only when it receives the necessary mod
 | `breadcrumb`     | `items`                               | The breadcrumb region.                                                          |
 | `new`            | —                                     | Create or bulk-action controls.                                                 |
 | `search`         | `search`, `setSearch`                 | The search field or search behavior.                                            |
-| `options`        | `sorting`, `filtering`, `columnOrder` | The complete group of table controls.                                           |
+| `options`        | `sorting`, `filtering`, `grouping`, `columnOrder` | The complete group of table controls.                                           |
 | `filter-context` | —                                     | Adds controls above the rules in the filter panel.                            |
 | `filter-item`    | `filter`, `field`, `remove`, `update` | Customizes a filter row. Fields without slot content keep their default editor. |
 
@@ -65,3 +71,15 @@ individual controls inside the default options region. Each slot receives its
 current model and setters. For example, `#filtering` receives `filtering`,
 `fields`, and `setFiltering`. The existing `#options` slot replaces the
 whole control region.
+
+The `search` model is a string or `undefined`. Its setter accepts a string, a number (converted to a string), or `undefined` (clear). Unbound models are omitted by default. The `shortcuts` flag defaults to each child control's default (`true`), and `ui` accepts optional CSS class strings.
+
+| Region slot | Additional scope | Default |
+| --- | --- | --- |
+| `layout` | `isSmall: boolean` and four Vue render components | Two rows on small screens and one on wider screens. |
+| `grouping` | `grouping`, `fields`, `setGrouping(value: string[])` | A grouping control when bound with available fields. |
+| `sorting` | `sorting`, `fields`, `setSorting(value: SortingState)` | A sorting control when bound with available fields. |
+| `filtering` | `filtering`, `fields`, `setFiltering(value: Filtering)` | A filtering control, including the filter slots below. |
+| `column-options` | `columns`, `columnOrder`, `invisibleColumns`, `columnPinning`, `setColumnOrder`, `setInvisibleColumns`, `setColumnPinning` | Column options when definitions and all three models are bound. |
+
+`filter-context` and `filter-item` forward the corresponding filtering slots. `new` and `filter-context` have empty fallbacks. With no custom breadcrumb, a supplied item list is passed to Nuxt UI's breadcrumb. The default search is a labeled input whenever its model has a value. Each model emits its matching `update:<model>` event. `clear-filters` takes no arguments.
