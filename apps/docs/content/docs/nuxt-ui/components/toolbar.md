@@ -1,8 +1,12 @@
 # Table toolbar
 
-`QTableToolbar` arranges a breadcrumb, create region, search field, and the three table controls. It does not fetch data, perform filtering, or own table state; it forwards the models supplied by the application.
+`QTableToolbar` arranges a breadcrumb, create region, search field, and the grouping, sorting, filtering, and column controls. It does not fetch data, perform filtering, or own table state; it forwards the models supplied by the application.
 
 <DemosTableToolbar></DemosTableToolbar>
+
+## Small screens
+
+Below the toolbar’s `sm` breakpoint (640 px by default), each table control opens in a modal dialog. The header and footer stay visible while the body scrolls. Use the footer’s **Close** button or press Escape to dismiss the dialog. Translate the button with `querrykit.table.toolbar.close` or override it using `texts.toolbar.close`. On wider screens, the controls open in popovers.
 
 ## Models and regions
 
@@ -31,7 +35,7 @@ The toolbar renders each default control only when it receives the necessary mod
 | `new`            | —                                     | Create or bulk-action controls.                                                 |
 | `search`         | `search`, `setSearch`                 | The search field or search behavior.                                            |
 | `options`        | `sorting`, `filtering`, `columnOrder` | The complete group of table controls.                                           |
-| `filter-context` | —                                     | Adds controls above the rules in the filter popover.                            |
+| `filter-context` | —                                     | Adds controls above the rules in the filter panel.                            |
 | `filter-item`    | `filter`, `field`, `remove`, `update` | Customizes a filter row. Fields without slot content keep their default editor. |
 
 Set `filter-context-active` to highlight the filter trigger when an application-owned filter is active. Handle `clear-filters` to reset the controls in `filter-context` alongside the rule list.
