@@ -24,12 +24,12 @@ Below the toolbar’s `sm` breakpoint (640 px by default), each table control op
 | `filter-fields` | Optional `FilterField[]` for the filtering control. |
 | `filter-context-active` | Optional boolean for the application-owned filter; defaults to false when omitted. |
 | `column-definitions` | Optional `ColumnDefinition[]` for column options. |
-| `breadcrumb-items`          | Items rendered by the default `UBreadcrumb`.                            |
+| `breadcrumb-items`          | Optional `Record<string, unknown>[]` rendered by the default `UBreadcrumb`.                            |
 | `search-placeholder`        | Replaces only the default search placeholder.                           |
 | `texts`                     | Text overrides forwarded to the default child controls.                 |
 | `icons`                     | Nested icon overrides forwarded to the default child controls.          |
 | `shortcuts`                 | Enables or disables the default child-control shortcuts.                |
-| `ui`                        | Classes for the root, primary, and secondary regions.                   |
+| `ui`                        | Optional `{ root?: string, primary?: string, secondary?: string }` CSS classes.                   |
 
 The toolbar renders each default control only when it receives the necessary model and field/column definitions. It is therefore safe to use it for a search-only or partially configurable table.
 

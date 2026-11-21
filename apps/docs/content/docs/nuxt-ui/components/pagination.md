@@ -59,9 +59,4 @@ Override the mode, loaded count, and load/retry labels via `texts.pagination` or
 
 ## Replace the summary
 
-`#summary` receives `start`, `end`, and `totalItems`. Use it to replace just
-the range text while retaining the page-size picker and navigation. The default
-summary uses `pagination.summary` and the page-size picker uses
-`pagination.pageSize` as its accessible name.
-
-The `summary` slot receives numeric `start`, `end` and `totalItems`. It defaults to the page range or loaded count for flat infinite mode. The outer `left` slot replaces the entire summary region. The three models emit their matching `update:<model>` events.
+`#summary` receives numeric `start`, `end` and `totalItems`. It defaults to the localized page range or loaded count for flat infinite mode. `#left` replaces the entire summary region. The three models emit their matching `update:<model>` events. The default page-size picker uses `pagination.pageSize` as its accessible name. The trailing `right` slot is empty by default.
