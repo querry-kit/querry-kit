@@ -217,7 +217,7 @@ async summary(@Req() req: RequestWithAbility) {
       _count: true,
       _min: { publishedAt: true },
       _max: { publishedAt: true },
-    }),
+    }, req.ability),
     this.booksService.count({ where }, req.ability),
   ]);
 
@@ -242,7 +242,7 @@ When the service was created with `subject` and `accessibleWhere`, all read help
 }
 ```
 
-This applies to `findOne`, `findMany`, `findById`, `findUnique` with ability, `query`, and `count`. `aggregate` intentionally does not accept an ability parameter in V1; pass an already constrained `where` object when you expose aggregate endpoints.
+This applies to `findOne`, `findMany`, `findById`, `findUnique`, `query`, `count`, `aggregate`, and `groupBy` when called with an ability. Aggregate and grouping routes should receive the same ability as the leaf queries.
 
 ## Query Parsing
 
@@ -307,6 +307,8 @@ For exact scalar group keys (for example string `"001"`, `"true"`, or `"null"`),
 configure the service with `preserveJsonWhereTypes: true`. Send `where` as a JSON
 string for both grouping and leaf requests. When using `QueryTransformPipe`, enable
 its matching opt-in: `new QueryTransformPipe({ preserveJsonWhereTypes: true })`.
+
+Pass an ability as the second argument to `aggregate(options, ability)` to apply the same row scope as `groupBy` and `count`. The service honors `preserveJsonWhereTypes` for aggregate filters.
 Its default legacy coercion would otherwise erase key types before the service.
 Configure the HTTP adapter's query parser for bracket notation, for example
 `app.getHttpAdapter().getInstance().set('query parser', value => qs.parse(value))`
@@ -322,3 +324,9 @@ Offset pagination has no snapshot guarantee during concurrent writes; refresh th
 view after mutations. Relations and date intervals are outside this feature.
 
 Grouping keys consumed by the table must be JSON scalar values: strings, numbers, booleans, or null. Dates retain their normal ISO JSON encoding; Decimal-like values serialize to numbers. Binary and BigInt keys require application-owned encoding and filter conversion.
+
+## Configuration contracts
+
+- `AccessibleWhereResolver<TAbility, TSubject>` accepts the active ability and service subject and returns the access predicate.
+- `QueryServiceOptions` configures `subject`, the optional `accessibleWhere` resolver, `errorLogger.error` for unexpected failures, and `preserveJsonWhereTypes` (off by default).
+- `ResourceQueryOptions` requires a query-capable `service`, controller `query`, field `schema` and async or synchronous `map(model, ability?)`. Optional `ability`, `include` and `fields` configure access and projection. `ResourceFindByIdOptions` adds the required string `id`.

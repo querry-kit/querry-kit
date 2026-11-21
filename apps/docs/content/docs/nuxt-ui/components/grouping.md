@@ -2,6 +2,34 @@
 
 <DemosTableGrouping></DemosTableGrouping>
 
+The Group by icon uses the primary color when a grouping is active.
+
+### Render groups as table rows
+
+`QTableGrouped` renders the state returned by `useGroupedTable`. Start the query with
+`table.initialize()` when the view mounts. Supply the current visible columns and use
+`available-columns` when a grouped column can be hidden in the saved layout.
+
+```vue
+<QTableGrouped
+  :table="table"
+  :columns="visibleColumns"
+  :available-columns="allColumns"
+  :get-id="(item) => item.id"
+  label="Tasks"
+>
+  <template #cell="{ item, field }">{{ item[field] }}</template>
+</QTableGrouped>
+```
+
+Add the package's `dist/runtime` directory as a Tailwind `@source` in your
+application's stylesheet. Use a path relative to that stylesheet.
+
+Each column needs an `id` and `header`. The renderer handles expansion, server sorting,
+branch paging, and infinite loading. Use `group-value` and `group-cell` to customize group
+rows, `leading` and `leading-header` for selection controls, and `branch` with `show-branch`
+for extra content under expanded groups. The `footer-start` slot can hold a loading-mode switch.
+
 ## Pagination and batch loading
 
 Pass `loading: {}` to `useGroupedTable` to start in Pagination. Bind its `loadingMode`
@@ -68,9 +96,81 @@ for retry and continuation. Group headers display full matching record counts, n
 loaded record counts, when connected to `useGroupedTable` from `@querry-kit/nuxt`.
 The application still owns table markup, columns, records, authentication, and API routes.
 
-All labels live under `querrykit.table.grouping` for host i18n. `texts.grouping` supports
-`title`, `field`, `add`, `remove`, `clear`, `moveUp`, `moveDown`, `count` (with `{count}`),
-`loading`, `error`, `retry`, `loadMore`, `empty`, and `null`. `icons.grouping` supports
-`trigger`, `up`, `down`, `remove`, `add`, `expanded`, and `collapsed` using existing
-component/app-config/default precedence. Field labels and null-value labels are
-application-owned; use the same locale as the rest of the table.
+See the [text and icon reference](/docs/nuxt-ui/guide/getting-started#text-and-icon-reference) for all group labels and icon defaults. Supply field labels in the app locale. Override `grouping.null` for the renderer’s empty group value.
+
+## Replace grouped table regions
+
+`QTableGrouping` offers `#trigger`, `#header`, `#clear`, `#items`, `#item`,
+and `#add`. The default popover still handles activation of a custom trigger.
+The item slot receives the field, its label, index, drag-handle class,
+`move(index, direction)`, and `remove(field)`. The add slot receives
+`availableFields` and `add(field)`.
+
+Use the grouped renderer's scoped slots to retain its table state and actions.
+
+| Region | Slots |
+| --- | --- |
+| Column headings | `column-header` with sort state and `toggleSort` |
+| Group heading | `group-toggle`, `group-value`, `group-count` |
+| Root request states | `loading`, `empty`, `error` |
+| Expanded group | `branch`, `branch-controls`, `branch-error` |
+| Footers | `group-footer`, `pagination`, `footer-start`, `footer-end` |
+
+Bind `triggerProps` from `#group-toggle` to a native button so keyboard
+activation and the row click both work. `#pagination` receives page state and
+actions for the flat table and each expanded leaf. Use its `path` to tell them
+apart. The `footer-start` and `footer-end` slots appear in both default footers.
+
+## Component reference
+
+### QTableGrouping
+
+Requires an ordered `v-model:grouping` (`string[]`) and `fields: readonly GroupingField[]`. It emits `update:grouping` with field IDs. `texts` and `icons` are optional overrides. `ui.popover` and `ui.content` accept extra classes for the desktop popover and the control content. A toolbar switches the panel to a dialog on small screens.
+
+| Slot | Scope | Fallback |
+| --- | --- | --- |
+| `trigger` | `open: boolean`, `active: boolean`, `setOpen(open: boolean)` | Grouping icon button. |
+| `header` | `grouping`, `clear()` | Icon and heading. |
+| `clear` | `grouping`, `clear()` | Clear action when grouped. |
+| `items` | `grouping`, `move(index, direction)`, `remove(field)`, `setGrouping(fields)` | Draggable ordered list. |
+| `item` | `field`, `label`, `index`, `move`, `remove`, `handleClass` | Row with keyboard reorder and removal actions. |
+| `add` | `availableFields`, `add(field)` | Field picker and add button. |
+
+### QTableGroup and QTableGroupLoadMore
+
+`QTableGroup` requires `label: string`, `count: number` and `expanded: boolean`. Optional `loading: boolean` and `error: unknown` control expanded status. `texts` and `icons` override defaults. Its `toggle` and `retry` events have no payload. `trigger` receives `label`, `count`, `expanded`, and `toggle()`, with an accessible disclosure button as fallback. The button's `header` slot receives the same data except `toggle`, with the localized label and count as fallback. The unnamed slot renders expanded content. `loading` is unscoped and renders a status by default. `error` receives `error` and `retry()` and renders a retry alert by default.
+
+`QTableGroupLoadMore` requires `hasMore: boolean`. It accepts optional `loading: boolean`, `error: unknown`, and `texts`. Its unnamed slot receives `hasMore`, `loading`, `error`, `attrs`, and `load()`. It renders when the branch has another batch or a request failed. The default button forwards attributes, disables itself while loading, and says Load more or Retry. The `load` event has no payload.
+
+### QTableGrouped
+
+| Prop | Type and default | Behavior |
+| --- | --- | --- |
+| `table` | Required `GroupedTableState<TItem>` | Reactive rows, group state, requests, pagination, and sorting. |
+| `columns` | Required readonly `GroupedTableColumn[]` | Displayed columns. |
+| `available-columns` | Optional readonly `GroupedTableColumn[]` | Supplies headers for grouping fields absent from displayed columns. Defaults to displayed columns. |
+| `get-id` | Required `(item: TItem) => string \| number` | Stable record key. |
+| `label` | Required `string` | Accessible table name. |
+| `flexible-column` | Optional column ID | Column that fills available space in grouped mode. Defaults to the first displayed column. |
+| `show-branch` | Optional `boolean` | Enables the branch-content slot above branch actions when supplied. |
+| `ui` | Optional Nuxt UI Table `ui` | Styles the underlying table. |
+| `texts`, `icons` | Optional shared overrides | Localized labels and Iconify icons. |
+
+| Slot | Scope | Fallback |
+| --- | --- | --- |
+| `cell` | `field`, `item` | Record field value. |
+| `column-header` | `field`, `label`, `sort`, optional `toggleSort(event)` | Sortable heading button or plain heading. |
+| `leading-header`, `leading` | `items` in the header, optional `item` or `node` in rows | Empty. Adding these slots reserves a leading control column. |
+| `group-toggle` | `node`, `triggerProps` | Accessible disclosure button. Spread `triggerProps` on a button when replacing it. |
+| `group-value`, `group-count` | `node`, plus formatted `label` for `group-count` | Group value and count, rendered inside the default disclosure. |
+| `group-cell` | `node`, `field` | Empty cell outside the grouping label, useful for aggregates. |
+| `branch` | `node` | Empty branch content. |
+| `branch-controls` | `node`, `leaf`, `load()` | Request more groups or records where supported. |
+| `branch-error` | `node`, `error`, `retry()` | Branch retry alert. |
+| `loading`, `empty` | `grouped`, `label` | Loading indicator or localized empty label. |
+| `error` | `error`, `label`, `retry()` | Root retry alert. |
+| `group-footer` | `expanded`, `loading`, `hasMore`, `toggleAll()`, `loadMore()` | Group footer with root actions. |
+| `footer-start`, `footer-end` | None | Empty regions on either side of the default footer. |
+| `pagination` | `GroupedTablePaginationSlot` | Numbered pages or load-more controls for flat rows and expanded leaves. A custom slot replaces the default pagination region. |
+
+The renderer invokes the supplied table actions and has no additional component events. `GroupedTablePaginationSlot.path` is empty for flat records. It also exposes `page`, `totalItems`, `itemsPerPage`, `loadedItems`, `loading`, `error`, `infinite`, `hasMore`, `setPage(page)`, `setItemsPerPage(size)`, and `loadMore()`.

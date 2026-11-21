@@ -15,8 +15,8 @@
 | `icon`                      | `i-tabler-adjustments` | Trigger icon.                                                                 |
 | `shortcuts`                 | `true`                 | Enables <kbd>Shift</kbd> + <kbd>O</kbd>.                                      |
 | `texts`                     | —                      | Explicit text overrides, ahead of i18n and English defaults.                  |
-| `icons`                     | —                      | Nested Iconify-name overrides for every default icon.                          |
-| `ui.content`                | —                      | Extra classes for the Nuxt UI popover content.                                |
+| `icons`                     | —                      | Nested Iconify-name overrides for every default icon.                         |
+| `ui.content`                | —                      | Extra classes for the control panel content.                                |
 
 Only IDs present in `column-order` are shown. A column with `enableHiding: false` keeps a disabled visibility switch.
 
@@ -24,6 +24,7 @@ Only IDs present in `column-order` are shown. A column with `enableHiding: false
 
 - **Reorder and pin columns** — drag a column into the left, middle, or right section. The left and right sections pin it; the middle section unpins it. The component emits matching `column-order` and `column-pinning` arrays.
 - **Show or hide a column** — toggle the switch. The component adds or removes its ID from `invisible-columns` unless hiding is disabled.
+- **Reset layout** — use the red reset icon to restore the order declared in `columns`, show all columns, and clear pinning. The icon appears only when the layout differs from those defaults.
 
 ```vue
 <QTableOptions
@@ -39,8 +40,10 @@ Only IDs present in `column-order` are shown. A column with `enableHiding: false
 | Slot      | Useful slot props                                       |
 | --------- | ------------------------------------------------------- |
 | `trigger` | `open`, `toggle`                                        |
-| `header`  | `columns`                                               |
+| `header`  | `columns`, `canReset`, `reset`                          |
 | `items`   | `columns`, `move`, `toggleVisibility`, `pin`            |
 | `item`    | `column`, `index`, `visible`, `pin`, `toggleVisibility` |
 
 The slots let an application replace the whole list or a row while retaining the component's immutable state updates.
+
+The trigger opens the panel. The header shows the reset action when a layout differs from its defaults. The default list divides pinned and unpinned columns, supports drag and drop, and renders visibility and pinning actions per item. Use `move(from, to)` with indices, `toggleVisibility(id)`, and `pin(id, side)` at list level. The item actions bind the current column. A pin side of `left` or `right` pins the column and `center` unpins it. The three models emit their matching `update:<model>` events. A toolbar switches the panel to a dialog on small screens.

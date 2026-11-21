@@ -99,7 +99,7 @@ The Workboard API includes a PostgreSQL Compose service, a Prisma schema, and an
 
 Documentation browser tests use the emulated browser's user agent to select the search shortcut (`Meta+K` on macOS, `Control+K` otherwise), independently of the test runner's operating system.
 
-Dependency maintenance updates supported versions and reuses the Nuxt UI security patches for the docs toolchain.
+Dependency maintenance updates supported versions and reuses the Nuxt UI security patches for the docs toolchain. The workspace also pins patched versions of Effect for Prisma and of glob, minimatch, and node-forge for the toolchain.
 
 The docs workspace pins fixed transitive dependencies and restores the legacy `simple-git` default export for Nuxt Devtools while retaining version 4 security guards.
 

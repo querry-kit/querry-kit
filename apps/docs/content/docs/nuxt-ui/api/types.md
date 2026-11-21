@@ -191,3 +191,31 @@ Use this complete shape in an application locale file. The `texts` prop accepts 
 ## Grouping controls
 
 `GroupingField` shares the selectable-field metadata shape. `QTableGrouping` uses ordered string field IDs. Import group tree and path types (`GroupNode`, `GroupPath`, `GroupValue`) from `@querry-kit/nuxt/types` when using `useGroupedTable`. Grouping labels use `querrykit.table.grouping`; see [Grouping](/docs/nuxt-ui/components/grouping) for text/icon keys and controlled group components.
+
+## Filter and sorting types
+
+| Export | Meaning |
+| --- | --- |
+| `SortingField` | Selectable `{ value: string, label: string, disabled?: boolean }`. `GroupingField` uses the same shape. |
+| `FilterFieldBase` | Field metadata with a `FilterFieldType`, ID, label, and optional disabled flag. |
+| `FilterFieldBoolean` | Boolean editor, initialized with `true`. |
+| `FilterFieldNumber` | Numeric editor, initialized to equality with `0`. |
+| `FilterFieldEnum` | Enum editor with required `values: FilterChoice[]` and an optional replacement Vue component. |
+| `FilterFieldSelect` | Select editor with a required Vue component and optional `componentProps`. The filter owns the value and update handlers. |
+| `FilterChoice` | `{ value: string \| number, label: string }`. |
+| `FilterLookupSource` | Async `search(term)` and `resolve(values)` returning arrays of choices. Empty terms load initial options. |
+| `FilteringField` | One query rule with ID, field name, type, operator and a scalar or array value. |
+| `FilteringFieldOperator` | `in`, `notIn`, `equals`, `not`, `lt`, `lte`, `gt`, or `gte`. Import the constant for named members such as `NotEquals`. |
+
+## Grouped renderer types
+
+| Export | Shape |
+| --- | --- |
+| `GroupedTablePath` | Readonly sequence of equality predicates, each with a string `field` and a string, number, boolean or null `value`. |
+| `GroupedTableBranch<TItem>` | `children`, `items`, `loading`, `error` and `hasMore`. |
+| `GroupedTableNode<TItem>` | Branch plus `key`, `path`, `field`, `value`, `count`, optional `sum`, `expanded` and `loaded`. Counts and sums represent the full matching group. |
+| `GroupedTableColumn` | `id`, `header`, optional pixel `width`, `align: 'left' \| 'right'`, `sortable` and `groupedCellClass`. |
+| `GroupedTableState<TItem>` | `root`; refs for `groups`, `allGroupsExpanded`, `grouping`, `loadingMode`, `sorting`, `columnPinning` and `itemsPerPage`; actions for toggling groups, loading groups or items, and reading and requesting pages. `useGroupedTable` satisfies this contract. |
+| `GroupedTablePaginationSlot` | State and actions for the grouped renderer's pagination slot. See [Grouping](/docs/nuxt-ui/components/grouping) for every field. |
+
+`TableIconKey` contains the dot-delimited icon paths. `TableIcons` describes the complete default icon tree, and `TableIconOverrides` accepts a partial tree of replacement strings. `TableTextKey`, `TableTexts`, and `TableTextOverrides` describe the corresponding text paths, defaults and partial override tree. The module's `QuerryKitNuxtUiOptions` exposes `autoImports?: boolean` (default `true`). `QuerryKitAppConfig` adds optional `table.icons: TableIconOverrides` under `appConfig.querryKit`.

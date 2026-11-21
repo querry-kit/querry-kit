@@ -38,3 +38,9 @@ findOne() {}
 ```
 
 The generated 400 response contains both `invalidResourceQuery` and `test` examples, so both names are selectable in Swagger UI.
+
+## Decorator option types
+
+`ApiParamIdOptions` accepts optional `name` (default `id`) and `description`. `ApiResourceQueryOptions.pagination` includes page and per-page parameters. `ApiPaginatedResponseOptions<T>` requires a `model` DTO and accepts Swagger response options except `schema` and `type`.
+
+`ApiErrorResponsesOptions` accepts optional code lists and descriptions for bad requests, unauthorized and forbidden requests, missing resources, conflicts, rate limits, and internal server errors. Set `internalServerError` to include the generic 500 response. A `Code` is a string or a tuple of code and custom message. These decorator-specific types are available from `@querry-kit/nest/decorators`.

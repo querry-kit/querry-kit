@@ -56,3 +56,12 @@ Override the mode, loaded count, and load/retry labels via `texts.pagination` or
 | `page-size`  | `itemsPerPage`, `setItemsPerPage`                        | The page-size selector.      |
 | `pagination` | `page`, `pageCount`, `first`, `previous`, `next`, `last` | The page navigation control. |
 | `right`      | `page`, `pageCount`                                      | A trailing footer region.    |
+
+## Replace the summary
+
+`#summary` receives `start`, `end`, and `totalItems`. Use it to replace just
+the range text while retaining the page-size picker and navigation. The default
+summary uses `pagination.summary` and the page-size picker uses
+`pagination.pageSize` as its accessible name.
+
+The `summary` slot receives numeric `start`, `end` and `totalItems`. It defaults to the page range or loaded count for flat infinite mode. The outer `left` slot replaces the entire summary region. The three models emit their matching `update:<model>` events.

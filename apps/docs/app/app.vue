@@ -14,7 +14,9 @@ import type { ContentNavigationItem } from '@nuxt/content';
 type DocsSearchSections = Awaited<ReturnType<typeof queryCollectionSearchSections>>;
 
 const { data: navigation } = await useAsyncData<ContentNavigationItem[]>('content-navigation', () =>
-  queryCollectionNavigation('docs'),
+  Promise.all([queryCollectionNavigation('docs'), queryCollectionNavigation('example')]).then((collections) => collections.flat()),
 );
-const { data: files } = await useAsyncData<DocsSearchSections>('content-search', () => queryCollectionSearchSections('docs'));
+const { data: files } = await useAsyncData<DocsSearchSections>('content-search', () =>
+  Promise.all([queryCollectionSearchSections('docs'), queryCollectionSearchSections('example')]).then((collections) => collections.flat()),
+);
 </script>

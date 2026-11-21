@@ -188,3 +188,16 @@ for (const path of packagePages) {
     await expect(page.locator('main')).toBeVisible();
   });
 }
+
+test('Example is reachable from the primary navigation and can be opened directly', async ({ page }, testInfo) => {
+  await page.goto('/');
+  if (testInfo.project.name === 'mobile') await page.locator('header [data-slot="toggle"]').click();
+  const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
+  await navigation.getByRole('link', { name: 'Example', exact: true }).click();
+  await expect(page).toHaveURL(/\/example$/);
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Workboard example' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Docker Compose quick start' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Run the development stack locally' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'dashboard', exact: true })).toHaveAttribute('href', 'http://127.0.0.1:3201');
+});

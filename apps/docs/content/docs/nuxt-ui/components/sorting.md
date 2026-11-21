@@ -14,7 +14,7 @@
 | `shortcuts`       | `true`                 | Enables <kbd>Shift</kbd> + <kbd>S</kbd>.                     |
 | `texts`           | —                      | Explicit text overrides, ahead of i18n and English defaults. |
 | `icons`           | —                      | Nested Iconify-name overrides for every default icon.         |
-| `ui.content`      | —                      | Extra classes for the Nuxt UI popover content.               |
+| `ui.content`      | —                      | Extra classes for the control panel content.               |
 
 Disabled fields and fields already in `sorting` are not offered by the default add selector. The trigger changes to the primary color when at least one sort is active.
 
@@ -37,7 +37,9 @@ Disabled fields and fields already in `sorting` are not offered by the default a
 | `trigger` | `open`, `toggle`, `active`                     |
 | `header`  | `sorting`, `clear`                             |
 | `items`   | `sorting`, `remove`, `toggleDirection`, `move` |
-| `item`    | `sort`, `index`, `remove`, `toggleDirection`   |
+| `item`    | `sort`, `index`, `remove`, `toggleDirection`, `showDragHandle`   |
 | `add`     | `availableFields`, `add`                       |
 
 Use a slot when the default region needs to be replaced, not merely renamed. Use `texts` for labels and accessible names.
+
+The default trigger opens the panel. The header includes a clear action, the list renders draggable rules, each item shows the direction and removal actions, and the add row offers unused fields. The `items` actions accept a field ID for removal or direction and two indices for `move(from, to)`. The per-item actions take no arguments. `add(id)` adds an ascending rule if the field is not already used. Changes emit `update:sorting`. A toolbar switches the panel to a dialog on small screens.
