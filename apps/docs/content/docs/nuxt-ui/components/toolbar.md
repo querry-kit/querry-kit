@@ -25,12 +25,16 @@ The toolbar renders each default control only when it receives the necessary mod
 
 ## Slots
 
-| Slot         | Slot props                            | Use it to replace                     |
-| ------------ | ------------------------------------- | ------------------------------------- |
-| `breadcrumb` | `items`                               | The breadcrumb region.                |
-| `new`        | —                                     | Create or bulk-action controls.       |
-| `search`     | `search`, `setSearch`                 | The search field or search behavior.  |
-| `options`    | `sorting`, `filtering`, `columnOrder` | The complete group of table controls. |
+| Slot             | Slot props                            | Use it to replace                                                               |
+| ---------------- | ------------------------------------- | ------------------------------------------------------------------------------- |
+| `breadcrumb`     | `items`                               | The breadcrumb region.                                                          |
+| `new`            | —                                     | Create or bulk-action controls.                                                 |
+| `search`         | `search`, `setSearch`                 | The search field or search behavior.                                            |
+| `options`        | `sorting`, `filtering`, `columnOrder` | The complete group of table controls.                                           |
+| `filter-context` | —                                     | Adds controls above the rules in the filter popover.                            |
+| `filter-item`    | `filter`, `field`, `remove`, `update` | Customizes a filter row. Fields without slot content keep their default editor. |
+
+Set `filter-context-active` to highlight the filter trigger when an application-owned filter is active. Handle `clear-filters` to reset the controls in `filter-context` alongside the rule list.
 
 ```vue
 <QTableToolbar v-model:search="search">

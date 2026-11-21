@@ -43,3 +43,5 @@ The trigger changes to the primary color when filters are active. Disabled field
 | `add`     | `fields`, `add`                       |
 
 Use the `item` slot for an entirely custom per-field editor; use a field's `component` when only its value input differs.
+
+Use the `context` slot for application-owned filters above the rule list, such as a project selector. Set `context-active` when a selection is active and handle the `clear` event to reset it alongside the rule list.

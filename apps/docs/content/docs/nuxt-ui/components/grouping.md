@@ -2,6 +2,8 @@
 
 <DemosTableGrouping></DemosTableGrouping>
 
+The Group by icon uses the primary color when a grouping is active.
+
 ## Server-backed grouping controls
 
 Use `QTableGrouping` with `v-model:grouping` (an ordered string array) and
