@@ -57,7 +57,13 @@ Set `filter-context-active` to highlight the filter trigger when an application-
 
 ## Grouping
 
-Pass `groupableFields` and `v-model:grouping` to show `QTableGrouping`. The `options` slot also receives `grouping`. See [Grouping](/docs/nuxt-ui/components/grouping) for lazy-loading group controls.
+Bind `v-model:grouping` and pass selectable fields through `groupable-fields` to show the grouping control. Omit the fields or pass an empty array to hide it. A bound empty grouping array lets users select their first group. The `options` slot also receives `grouping`.
+
+```vue
+<QTableToolbar v-model:grouping="table.grouping.value" :groupable-fields="groupableFields" />
+```
+
+See [Grouping](/docs/nuxt-ui/components/grouping) for the live grouping examples.
 
 ## Replace the toolbar layout
 
