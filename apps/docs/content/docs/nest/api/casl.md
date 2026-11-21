@@ -138,3 +138,7 @@ return filterCaslFields(dto, RoleSubject.PROJECT, ability, { action: RoleAction.
 ## CASL Prisma Versions
 
 `createCaslAccessibleWhere` supports CASL Prisma subject maps and the newer `accessibleBy(...).ofType(subject)` shape. The package does not export an ability factory; applications keep their own CASL module, subjects, actions, and user context.
+
+## Exported configuration and metadata
+
+`PolicyHandler<TAbility>` returns a boolean for the current ability. `CHECK_POLICIES_KEY` is the metadata key used by the policy decorator and guard. `CaslAccessibleWhereOptions` supplies the action used by the resolver. `CaslFieldAbility` describes an ability that can check an action, subject and field. `CaslDtoFilterOptions` configures the action and whether to drop empty relation objects after filtering.

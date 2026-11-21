@@ -67,15 +67,21 @@ await table.initialize();
 | `columnOrder`, `columnVisibility`, `columnPinning` | Persisted renderer metadata. |
 | `columns`, `fields`, `queryParams` | Derived visible columns, fields projection, and outgoing request. |
 | `items`, `totalItems`, `totalPages`, `loading`, `error` | Current response and request state. |
+| `loadingMode`, `hasMore`, `loadMore()` | Switch row loading mode, check continuation, and append or retry in Infinite scroll. |
 | `initialize()` | Syncs the initial page, fetches, then runs `onInitialized`. |
 | `refresh()` | Fetches the current request; only the latest response is accepted. |
 | `updateRow(row)` | Shallow-merges the matching row without refetching. |
 
+Flat tables start in Pagination. Pass `initialMode: 'infinite'` to start in Infinite
+scroll. Switching modes resets the rows to page 1. `loadMore()` appends the next
+page and retries the same page if the request fails. The route page stays at 1
+while infinite batches are appended.
+
 ## Server-backed nested groups
 
 `useGroupedTable` loads complete groups independently of ordinary list pagination.
-Each header shows the count of all matching accessible records. Child groups and
-leaf records load only when opened; each branch has its own continuation state.
+Each header shows the count of all matching accessible records, and each branch
+has its own continuation state. Child groups load when opened.
 
 ```ts
 import { useGroupedTable } from '@querry-kit/nuxt';
@@ -134,6 +140,18 @@ Callbacks `onInitialized`, `onRefreshed` (the branch's accumulated records), and
 `onError` are optional. A unique `identityKey` defaults to `id` and provides a stable
 record-sort tie-breaker. Group keys default to ascending and follow the active sort direction when the same field is sorted. Sorting other fields reloads leaf records while preserving expanded groups.
 
+Pass `loading: {}` to opt in to the mode switch and independent leaf pagination.
+`getItemPage(path)` exposes the leaf's reactive page and total, and
+`loadItemsPage(path, page)` requests a specific page. An empty path addresses the
+ungrouped root. In Infinite scroll, `loadMoreItems(path)` appends rows while each
+branch retains independent request state.
+
+Set `loading.initialGroupItems` and `loading.groupLoadMoreItems` to control the first
+and subsequent batches. Both default to `itemsPerPage`. Visible leaves preload
+their first batch by default. Set `loading.preloadGroupItems` to `false` to start
+loading when the leaf opens. Set `loading.initialMode` to `'infinite'` to start in
+that mode. Omit `loading` to keep the original lazy append behavior.
+
 The API client also exposes `groupBy<TResult>(query)`, returning an Axios response
 whose data is `TResult[]`, from `GET /:resource/group-by`. A request uses bracket
 notation for `by`, ordering and selectors; `where` is JSON encoded to preserve
@@ -159,3 +177,19 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
+
+## Grouped selection
+
+`useGroupedSelection<TItem>(getId)` is available from `@querry-kit/nuxt` and `@querry-kit/nuxt/table`. Supply a function returning a stable string ID or `undefined` for an unselectable row. Group choices cover unloaded pages. More specific group rules and explicit row choices take precedence.
+
+| Result | Behavior |
+| --- | --- |
+| `selectedCount` | Computed count using complete group totals and explicit exceptions. |
+| `isSelected(item)` | Reads the current selection for an individual row. |
+| `groupState(node)` | Returns `true`, `false` or `'indeterminate'` for the branch checkbox. |
+| `selectItems(items, checked)` | Sets row selections and records differences from inherited group state. |
+| `selectGroup(node, checked)` | Sets the branch and replaces prior overrides within it. |
+| `getSelection()` | Returns explicit `includedGroups`, `excludedGroups`, `ids` and `excludedIds`. |
+| `clearSelection()` | Removes all selections. Use it when the data scope changes or an operation completes. |
+
+For server bulk actions, validate IDs, paths, filters and current access permissions in the endpoint. Compute the target set on the server before applying changes.

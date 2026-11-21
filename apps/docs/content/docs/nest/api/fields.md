@@ -112,3 +112,9 @@ const fields = getDtoFields(UserDTO);
 ```
 
 `getDtoFields` returns the Swagger-decorated property names for a DTO class. DTOs without Swagger property metadata return an empty array.
+
+## Schema and parser types
+
+- `FieldSchemaNode` is `true` for a scalar field or `{ relation: true, fields: FieldSchema }` for a nested relation. `SchemaOrDto` accepts a field schema or a Swagger-decorated class. `resolveFieldSchema(schemaOrDto)` from `@querry-kit/nest/fields` normalizes either input to a schema.
+- `FieldsParseOptions` accepts optional `allowNested`, existing `include` and `requireIncludeForRelations`. `PrepareFieldsQueryOptions` adds optional `preserveJsonWhereTypes`. `PreparedFieldsQuery<TQuery>` contains the normalized `query` and optional validated `projection`.
+- `FieldsBadRequestResponse` contains the fixed message `Invalid fields query parameter`, `details`, and optional `path` and `position`. `ApiFieldsQueryOptions` overrides Swagger `query` and `badRequest` metadata.

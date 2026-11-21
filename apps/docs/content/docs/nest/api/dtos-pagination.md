@@ -172,3 +172,11 @@ parser) **before** schema validation. For example, validate
 `UserQuerySchema.parse(parseQueryObject(rawQuery))`. In NestJS, normalization must
 run before `ZodValidationPipe`. Do not apply normalization blindly to scalar
 `fields` strings such as `"123"`, which the generic parser converts to numbers.
+
+## Delegate and pagination types
+
+`BaseDelegate` describes the data delegate operations. `Delegate<T>` maps those signatures to a concrete delegate. `BaseDelegateTypeMap` lists the model's query input types, and `DelegateTypeMap<T>` resolves a specific model's argument types. `QueryOptionsMap` connects operation names with the corresponding inputs.
+
+`GroupByTypeMap` adds typed aggregate ordering and scalar `having` inputs. `GroupByDelegate` is the separate adapter capability for grouping. `GroupByDTO` documents and validates group inputs. See [Query Service](/docs/nest/api/query-service#scalar-grouping) for accepted selectors and paging constraints.
+
+`PageMetaDTOParams` configures HTTP pagination metadata. From the core subpath, `PageMetaParams` supplies the equivalent framework-neutral input to `PageMeta`, and `PaginatedResponse<T>` describes the metadata and items returned by a query.

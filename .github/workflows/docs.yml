@@ -58,6 +58,7 @@ jobs:
       - name: Verify static entrypoints
         run: |
           test -s apps/docs/.output/public/index.html
+          test -s apps/docs/.output/public/example/index.html
           test -s apps/docs/.output/public/docs/nuxt/index.html
           test -s apps/docs/.output/public/docs/nuxt-ui/index.html
 

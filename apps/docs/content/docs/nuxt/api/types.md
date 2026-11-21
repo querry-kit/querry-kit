@@ -208,3 +208,11 @@ const columns: Ref<readonly TableColumn<Book, { label: string }>[]> = ref([
   { id: 'author', fields: ['name'], label: 'Author' },
 ]);
 ```
+
+## Grouping and loading
+
+`TableLoadingMode` is `'pagination' | 'infinite'`. `GroupValue` is a string, number, boolean or null. `GroupPathEntry` contains a `field: string` and typed `value: GroupValue`. A `GroupPath` is a read-only list of entries from the root to the selected group.
+
+`GroupingField` defines an offered field's `value`, `label` and optional `disabled`. `GroupBranch<TItem>` holds child groups, leaf items, loading and error state, and `hasMore`. `GroupNode<TItem>` extends it with a stable key, path, current field/value, total count, optional sums, and the `expanded` and `loaded` flags. `GroupItemPage` exposes the committed `page`, `totalItems` and an optional `requestedPage` for an in-flight or failed request.
+
+`UseGroupedTableOptions` extends `UseTableOptions` without `routePage` or `initialMode`. It requires `groupableFields` and accepts `defaultGrouping` (empty when no saved preference exists), `persistExpansion` (false), `groupBatchSize` (25), optional `groupSumFields`, and optional `loading`. The `GroupedTableLoadingOptions` object controls `initialMode` (pagination), `initialGroupItems` and `groupLoadMoreItems` (both default to page size), and `preloadGroupItems` (true in infinite mode).

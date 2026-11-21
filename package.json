@@ -24,14 +24,14 @@
     "release": "changeset tag"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-vue": "^10.12.0",
+    "eslint-plugin-vue": "^10.12.1",
     "globals": "^17.14.0",
-    "prettier": "^3.9.10",
-    "typescript-eslint": "^8.72.1",
-    "@changesets/cli": "^3.0.3"
+    "prettier": "^3.10.1",
+    "typescript-eslint": "^8.73.0"
   },
   "version": "0.2.2",
   "engines": {

@@ -1,6 +1,6 @@
 # Pagination
 
-`QTablePagination` is a standalone footer for page-based APIs. It emits page and page-size changes; the application fetches the corresponding data.
+`QTablePagination` shows numbered pages and can offer an Infinite scroll mode. The application supplies the rows and handles the footer's requests.
 
 <DemosTablePagination></DemosTablePagination>
 
@@ -10,8 +10,14 @@
 | ------------------------ | ------------------------- | -------------------------------------------------------------- |
 | `v-model:page`           | required                  | One-based current page.                                        |
 | `v-model:items-per-page` | required                  | Current page size.                                             |
-| `total-items`            | `0`                       | Total available rows. Hides the summary when zero.             |
-| `page-sizes`             | `[1, 2, 10, 25, 50, 100]` | Selectable page sizes.                                         |
+| `v-model:loading-mode`   | omitted                   | Shows a switch when set to `'pagination'` or `'infinite'`.     |
+| `total-items`            | `0`                       | Total available rows. Hides the numbered summary when zero.    |
+| `page-sizes`             | `[1, 2, 10, 25, 50, 100]` | Selectable page sizes. Use `[]` to hide the default selector. |
+| `loaded-items`           | `0`                       | Loaded rows in the flat Infinite scroll summary.              |
+| `has-more`               | `false`                   | Whether the flat table has more rows to load.                  |
+| `loading`                | `false`                   | A request is pending. Pauses loading and numbered navigation. |
+| `error`                  | —                         | Flat Infinite scroll error. Pauses the observer and offers retry. |
+| `grouped`                | `false`                   | Use the footer for the grouped table's mode and page size.      |
 | `summary`                | localized                 | Replaces only the `Showing {start}–{end} of {total}` template. |
 | `texts`                  | —                         | Explicit text overrides, ahead of i18n and English defaults.   |
 | `shortcuts`              | `true`                    | Enables keyboard page navigation.                              |
@@ -22,6 +28,26 @@ Changing the page size emits `update:items-per-page` and clamps the current page
 - <kbd>Shift</kbd> + <kbd>←</kbd> / <kbd>→</kbd> moves one page.
 - <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd> / <kbd>→</kbd> moves to the first or last page.
 
+## Infinite scroll
+
+Bind the footer to [`useTable`](/docs/nuxt/api/table) to switch modes and append rows. The footer emits `load-more` when it nears the viewport and when the user activates **Load more** or **Retry**.
+
+```vue
+<QTablePagination
+  v-model:page="table.page.value"
+  v-model:items-per-page="table.itemsPerPage.value"
+  v-model:loading-mode="table.loadingMode.value"
+  :loaded-items="table.items.value.length"
+  :total-items="table.totalItems.value"
+  :has-more="table.hasMore.value"
+  :loading="table.loading.value"
+  :error="table.error.value"
+  @load-more="table.loadMore()"
+/>
+```
+
+Override the mode, loaded count, and load/retry labels via `texts.pagination` or host translations under `querrykit.table.pagination`. Use `mode`, `paginated`, `infinite`, `loaded` (with `{count}` and `{total}`), `loadMore`, `loading`, `error`, and `retry`. See [Grouping](/docs/nuxt-ui/components/grouping) for per-group controls.
+
 ## Slots
 
 | Slot         | Slot props                                               | Use it to replace            |
@@ -30,3 +56,7 @@ Changing the page size emits `update:items-per-page` and clamps the current page
 | `page-size`  | `itemsPerPage`, `setItemsPerPage`                        | The page-size selector.      |
 | `pagination` | `page`, `pageCount`, `first`, `previous`, `next`, `last` | The page navigation control. |
 | `right`      | `page`, `pageCount`                                      | A trailing footer region.    |
+
+## Replace the summary
+
+`#summary` receives numeric `start`, `end` and `totalItems`. It defaults to the localized page range or loaded count for flat infinite mode. `#left` replaces the entire summary region. The three models emit their matching `update:<model>` events. The default page-size picker uses `pagination.pageSize` as its accessible name. The trailing `right` slot is empty by default.

@@ -2,6 +2,7 @@
   <DemosDemoShell title="Live toolbar" description="Search and open the table controls. This is the shipped component, not a mockup.">
     <QTableToolbar
       v-model:search="search"
+      v-model:grouping="grouping"
       v-model:sorting="sorting"
       v-model:filtering="filtering"
       v-model:column-order="columnOrder"
@@ -9,6 +10,7 @@
       v-model:column-pinning="columnPinning"
       :column-definitions="columns"
       :sortable-fields="sortableFields"
+      :groupable-fields="sortableFields"
       :filter-fields="filterFields"
       :breadcrumb-items="[{ label: 'Projects' }]"
     >
@@ -29,6 +31,7 @@ import type {
 import { FilterFieldType, FilteringMode } from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
 
 const search = ref<string>('');
+const grouping = ref<string[]>([]);
 const sorting = ref<SortingState>([]);
 const filtering = ref<Filtering>({ operator: FilteringMode.Intersect, filters: [] });
 const columnOrder = ref<string[]>(['name', 'status', 'owner']);
