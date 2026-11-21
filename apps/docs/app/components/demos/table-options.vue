@@ -1,5 +1,8 @@
 <template>
-  <DemosDemoShell title="Live column options" description="Drag columns between the left, unpinned, and right sections while keeping state in this page.">
+  <DemosDemoShell
+    title="Live column options"
+    description="Reorder, hide, or pin a column to reveal the red Reset layout icon."
+  >
     <div class="flex items-center gap-3">
       <QTableOptions
         v-model:column-order="columnOrder"

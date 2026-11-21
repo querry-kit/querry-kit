@@ -43,3 +43,30 @@ The trigger changes to the primary color when filters are active. Disabled field
 | `add`     | `fields`, `add`                       |
 
 Use the `item` slot for an entirely custom per-field editor; use a field's `component` when only its value input differs.
+
+Use the `context` slot for application-owned filters above the rule list, such as a project selector. Set `context-active` when a selection is active and handle the `clear` event to reset it alongside the rule list.
+
+### Searchable lookup filters
+
+Use `QTableFilterLookup` as the component for a `select` field. Supply a
+`FilterLookupSource` through `componentProps`. The source exposes `search(term)`
+for matching choices and `resolve(values)` for selected labels, including values
+from bookmarked filters. Each method returns `{ value, label }` choices. An empty
+search loads the initial choices.
+
+```ts
+import { QTableFilterLookup } from '#components';
+import type { FilterField } from '@querry-kit/nuxt-ui/types';
+
+const projectField = {
+  type: 'select',
+  value: 'project.id',
+  label: 'Project',
+  component: QTableFilterLookup,
+  componentProps: { source: projectLookup, maxSelections: 100 },
+} satisfies FilterField;
+```
+
+The application supplies the endpoint, field path, and optional selection limit.
+The lookup also works outside the filter toolbar with an array `v-model`, a
+`source`, and an accessible label.
