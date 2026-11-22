@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { selectAccount } from '../../apps/app/test/demo-account';
+import { selectAccount } from '../../apps/web/test/demo-account';
 
 for (const width of [375, 1280]) {
   test(

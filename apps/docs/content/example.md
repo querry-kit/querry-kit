@@ -24,7 +24,7 @@ Install Git and Docker with Compose. Clone the monorepo and start the full stack
 
 ```sh
 git clone https://github.com/querry-kit/querry-kit.git
-cd querry-kit/examples/workboard
+cd querry-kit/example
 docker compose up -d --build --wait
 ```
 
@@ -47,7 +47,7 @@ docker compose -f compose.dev.yml up -d --wait
 pnpm --filter @workboard/api start
 ```
 
-The API uses the workspace packages, applies migrations and seeds an empty database, then listens on `127.0.0.1:3101`. Open another terminal in `examples/workboard` and start Nuxt:
+The API uses the workspace packages, applies migrations and seeds an empty database, then listens on `127.0.0.1:3101`. Open another terminal in `example` and start Nuxt:
 
 ```sh
 pnpm --filter @workboard/app dev
@@ -59,4 +59,4 @@ Use the same dashboard and API reference links. To stop development, exit both a
 docker compose -f compose.dev.yml down
 ```
 
-For local library development, alternate ports, and CI commands, see the [Workboard README](https://github.com/querry-kit/querry-kit/tree/main/examples/workboard#readme). See the [Nest](/docs/nest), [Nuxt](/docs/nuxt), and [Nuxt UI](/docs/nuxt-ui) references for the integration APIs.
+For local library development, alternate ports, and CI commands, see the [Workboard README](https://github.com/querry-kit/querry-kit/tree/main/example#readme). See the [Nest](/docs/nest), [Nuxt](/docs/nuxt), and [Nuxt UI](/docs/nuxt-ui) references for the integration APIs.

@@ -71,8 +71,8 @@ packages:
 - packages/nuxt
 - packages/nuxt-ui
 - apps/docs
-- examples/workboard/apps/*
-- examples/workboard/libs/contracts
+- example/apps/*
+- example/libs/contracts
 patchedDependencies:
   braces@3.0.3: patches/braces@3.0.3.patch
 packageExtensions:

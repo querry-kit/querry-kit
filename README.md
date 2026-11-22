@@ -31,7 +31,7 @@ pnpm build
 
 ## 🧩 Usage
 
-[Workboard](examples/workboard/README.md) runs PostgreSQL, a Nest/Fastify API and a Nuxt dashboard for account-scoped projects and tasks. From `examples/workboard/`, run `docker compose up -d --build --wait`; open the [dashboard](http://127.0.0.1:3201) or [OpenAPI reference](http://127.0.0.1:3201/docs). The same README describes running the API and app on the host with a separate development database.
+[Workboard](example/README.md) runs PostgreSQL, a Nest/Fastify API and a Nuxt dashboard for account-scoped projects and tasks. From `example/`, run `docker compose up -d --build --wait`; open the [dashboard](http://127.0.0.1:3201) or [OpenAPI reference](http://127.0.0.1:3201/docs). The same README describes running the API and app on the host with a separate development database.
 
 For the original workspace/member/task/label graph and its UUID API, see the [project projection lesson](apps/docs/content/docs/nest/guide/example-app.md#historical-workboard-project-projection).
 
