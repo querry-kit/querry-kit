@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@nuxt/ui": "^4.13.0",
-    "@querry-kit/nuxt": "^0.2.10",
-    "@querry-kit/nuxt-ui": "^3.3.10",
+    "@querry-kit/nuxt": "^1.1.1",
+    "@querry-kit/nuxt-ui": "^4.2.0",
     "@tanstack/table-core": "^9.3.1",
     "@vueuse/core": "^15.0.0",
     "@vueuse/router": "^15.0.0",
     "axios": "^1.21.1",
     "nuxt": "^4.6.4",
-    "vue": "^3.5.45",
+    "vue": "^3.5.46",
     "vue-router": "^5.5.1"
   },
   "devDependencies": {

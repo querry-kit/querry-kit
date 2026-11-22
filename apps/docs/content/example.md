@@ -7,6 +7,17 @@ description: Run the Querry Kit Workboard locally with Docker Compose or develop
 
 Workboard combines a NestJS/Fastify API, PostgreSQL, shared Zod contracts, and a Nuxt dashboard. Explore the Projects and Tasks tables, account-scoped reads, searchable filters, sorting, grouping and aggregates, or create and update demo records.
 
+## Try the dashboard
+
+The responsive toolbar described here is in the development version of Workboard and Nuxt UI. To try it before release, use the [local-package setup](https://github.com/querry-kit/example#develop-against-local-querry-kit-packages) with the matching checkouts. The standalone Docker quick start below uses the example's pinned package revisions.
+
+Open **Tasks** or **Projects**. Both start with 10 rows per page. The breadcrumb bar contains the create action when your account can create records. Below 640 px it becomes a plus icon, and search becomes a magnifier. On a task detail page, the **Tasks** breadcrumb takes you back to the same project filter.
+
+- **Find and configure rows:** Press **Shift+/** to search, **Shift+F** to filter, **Shift+S** to sort, or **Shift+O** for column options. **Shift+N** opens the create dialog when available. Try the [interactive toolbar](/docs/nuxt-ui/components/toolbar).
+- **Group tasks:** Press **Shift+G** and choose **Status**, then **Priority**. Expand a group to see its tasks. Group counts and estimated-hour sums cover the full matching group. Grouping columns stay pinned on desktop and scroll with the table below 640 px.
+- **Act on a selection:** Select a row or a task group. A separate toolbar shows the selected count on the left and bulk actions on the right. Deletion requires confirmation.
+- **Change how rows load:** In the Tasks footer, choose **Pagination** or **Infinite scroll**. The **Items per page** menu changes the page size. The footer keeps the controls on one line and shows the row range when it fits.
+
 ## Docker Compose quick start
 
 Install Git and Docker with Compose. Clone [the example repository](https://github.com/querry-kit/example) and start the full stack:

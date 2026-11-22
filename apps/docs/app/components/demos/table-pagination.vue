@@ -1,6 +1,6 @@
 <template>
   <DemosDemoShell title="Live pagination" description="Switch the footer between numbered pages and automatic row loading.">
-    <div data-testid="pagination-demo">
+    <div class="pagination-demo -mx-3 sm:mx-0" data-testid="pagination-demo">
       <UTable :data="table.items.value" :columns="columns" caption="Demo tasks" :ui="{ caption: 'sr-only' }" />
       <QTablePagination
         v-model:page="table.page.value"
@@ -12,6 +12,7 @@
         :loading="table.loading.value"
         :error="table.error.value"
         :texts="texts"
+        :ui="{ root: 'px-1 sm:px-3' }"
         @load-more="table.loadMore()"
       />
     </div>
@@ -58,3 +59,18 @@ onMounted(() => {
   void table.initialize();
 });
 </script>
+
+<style scoped>
+.pagination-demo {
+  container-type: inline-size;
+}
+
+@container (max-width: 18rem) {
+  .pagination-demo :deep(footer [role='combobox']) {
+    max-width: 5.5rem;
+  }
+  .pagination-demo :deep(footer [data-slot='item']) {
+    display: none;
+  }
+}
+</style>

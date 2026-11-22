@@ -79,6 +79,21 @@ test('search opens with its keyboard shortcut', async ({ page }, testInfo) => {
   await expect(page.getByRole('dialog')).toBeVisible();
 });
 
+test('creates and searches a project in the toolbar demo', async ({ page }) => {
+  await page.goto('docs/nuxt-ui/components/toolbar');
+  await page.getByRole('button', { name: 'Create project', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Create demo project' });
+  await dialog.getByRole('textbox', { name: 'Project name' }).fill('Documentation sprint');
+  await dialog.getByRole('button', { name: 'Add project' }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Create project', exact: true })).toBeFocused();
+  const searchButton = page.getByRole('button', { name: 'Search demo projects', exact: true });
+  if (await searchButton.isVisible()) await searchButton.click();
+  await page.getByRole('textbox', { name: 'Search demo projects', exact: true }).fill('sprint');
+  await expect(page.getByRole('checkbox', { name: 'Documentation sprint' })).toBeVisible();
+  await expect(page.getByRole('checkbox', { name: 'Operations', exact: true })).toHaveCount(0);
+});
+
 test('theme picker updates and resets the documentation theme', async ({ page }) => {
   await page.goto('docs/nest');
   await page.getByRole('button', { name: 'Theme settings' }).click();

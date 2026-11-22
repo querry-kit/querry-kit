@@ -13,6 +13,7 @@
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <UButton to="/docs/nest" size="lg" label="Read the docs" trailing-icon="i-lucide-arrow-right" />
+            <UButton to="/example" size="lg" color="neutral" variant="outline" label="Explore Workboard" />
           </div>
         </div>
         <UCard class="border-primary/20 bg-default/70 shadow-2xl shadow-primary/10">

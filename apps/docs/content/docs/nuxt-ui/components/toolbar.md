@@ -2,9 +2,13 @@
 
 `QTableToolbar` arranges a breadcrumb, create region, search field, and the grouping, sorting, filtering, and column controls. It does not fetch data, perform filtering, or own table state; it forwards the models supplied by the application.
 
+The selection toolbar, mobile search button, and full set of shortcuts described below are development features. They are available in the local UI preview; the released `4.2.0` package does not include them.
+
 <DemosTableToolbar></DemosTableToolbar>
 
 ## Small screens
+
+The default search control starts as a magnifier button below `sm`. Activate it or press **Shift+/** to focus the search field. Escape or leaving the field collapses it without clearing the query.
 
 Below the toolbar’s `sm` breakpoint (640 px by default), each table control opens in a modal dialog. The header and footer stay visible while the body scrolls. Use the footer’s **Close** button or press Escape to dismiss the dialog. Translate the button with `querrykit.table.toolbar.close` or override it using `texts.toolbar.close`. On wider screens, the controls open in popovers.
 
@@ -26,6 +30,7 @@ Below the toolbar’s `sm` breakpoint (640 px by default), each table control op
 | `column-definitions` | Optional `ColumnDefinition[]` for column options. |
 | `breadcrumb-items`          | Optional `Record<string, unknown>[]` rendered by the default `UBreadcrumb`.                            |
 | `search-placeholder`        | Replaces only the default search placeholder.                           |
+| `selected-count`            | Number selected across pages and groups. Defaults to `0`, hiding the bulk-action row. |
 | `texts`                     | Text overrides forwarded to the default child controls.                 |
 | `icons`                     | Nested icon overrides forwarded to the default child controls.          |
 | `shortcuts`                 | Enables or disables the default child-control shortcuts.                |
@@ -33,12 +38,15 @@ Below the toolbar’s `sm` breakpoint (640 px by default), each table control op
 
 The toolbar renders each default control only when it receives the necessary model and field/column definitions. It is therefore safe to use it for a search-only or partially configurable table.
 
+Enabled toolbar buttons show a pointer cursor. Hover or focus the default icon buttons to see their translated labels and keyboard shortcuts. The desktop search field shows its shortcut inline. Shortcut hints are hidden when shortcuts are disabled.
+
 ## Slots
 
 | Slot             | Slot props                            | Use it to replace                                                               |
 | ---------------- | ------------------------------------- | ------------------------------------------------------------------------------- |
 | `breadcrumb`     | `items`                               | The breadcrumb region.                                                          |
-| `new`            | —                                     | Create or bulk-action controls.                                                 |
+| `new`            | —                                     | The create action in the main toolbar.                                          |
+| `bulk-actions`   | `selectedCount`                       | Actions on the right of the separate selection toolbar.                         |
 | `search`         | `search`, `setSearch`                 | The search field or search behavior.                                            |
 | `options`        | `sorting`, `filtering`, `grouping`, `columnOrder` | The complete group of table controls.                                           |
 | `filter-context` | —                                     | Adds controls above the rules in the filter panel.                            |
@@ -51,6 +59,18 @@ Set `filter-context-active` to highlight the filter trigger when an application-
   <template #new><UButton label="Create project" /></template>
   <template #search="{ search, setSearch }">
     <UInput :model-value="search" placeholder="Find projects" @update:model-value="setSearch" />
+  </template>
+</QTableToolbar>
+```
+
+## Selection and bulk actions
+
+Pass the full selection count (including other pages or collapsed groups) in `selected-count`. A positive value shows a separate toolbar with the count on the left and the `bulk-actions` slot on the right. At zero the row disappears. The application owns selection, permissions, and action handlers.
+
+```vue
+<QTableToolbar :selected-count="selectedIds.size">
+  <template #bulk-actions="{ selectedCount }">
+    <UButton label="Export selected" @click="exportSelected(selectedCount)" />
   </template>
 </QTableToolbar>
 ```
@@ -78,7 +98,13 @@ current model and setters. For example, `#filtering` receives `filtering`,
 `fields`, and `setFiltering`. The existing `#options` slot replaces the
 whole control region.
 
-The `search` model is a string or `undefined`. Its setter accepts a string, a number (converted to a string), or `undefined` (clear). Unbound models are omitted by default. The `shortcuts` flag defaults to each child control's default (`true`), and `ui` accepts optional CSS class strings.
+The `search` model is a string or `undefined`. Its setter accepts a string, a number (converted to a string), or `undefined` (clear). Unbound models are omitted by default. `ui` accepts optional CSS class strings.
+
+### Keyboard shortcuts
+
+Shortcuts are enabled by default for the available controls: **Shift+G** for Group by, **Shift+F** for Filter, **Shift+S** for Sort, **Shift+O** for Table options, **Shift+N** for New, and **Shift+/** to focus the search input. Typing in an input does not activate them. Use `:shortcuts="false"` to disable the toolbar shortcuts.
+
+Place a single create button or link in `#new` for automatic activation. If the slot contains additional actions, add `data-qk-new` to the create trigger; without it, the shortcut does nothing when the target is ambiguous.
 
 | Region slot | Additional scope | Default |
 | --- | --- | --- |
