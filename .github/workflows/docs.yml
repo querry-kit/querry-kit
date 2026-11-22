@@ -22,6 +22,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  import-lint:
+    name: Lint ${{ matrix.source }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [packages/nest, packages/nuxt, packages/nuxt-ui, imports/example]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26.13.0
+      - name: Lint with the imported repository's lockfile and rules
+        env:
+          SOURCE: ${{ matrix.source }}
+        run: |
+          # Outside the destination workspace, just as in the original repositories.
+          dir=$(mktemp -d "$RUNNER_TEMP/import-lint.XXXXXXXX")
+          git archive "HEAD:$SOURCE" | tar -x -C "$dir"
+          cd "$dir"
+          if [ "$SOURCE" = imports/example ]; then
+            node scripts/stage-querry-kit.mjs
+          fi
+          pnpm install --frozen-lockfile
+          pnpm lint
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -40,8 +71,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint workspace
-        run: pnpm lint
+      - name: Lint destination workspace
+        run: pnpm run lint --ignore-pattern 'packages/nest/**' --ignore-pattern 'packages/nuxt/**' --ignore-pattern 'packages/nuxt-ui/**' --ignore-pattern 'imports/example/**'
 
       - name: Typecheck documentation
         run: pnpm docs:typecheck
@@ -69,7 +100,7 @@ jobs:
 
   deploy:
     if: github.event_name != 'pull_request'
-    needs: build
+    needs: [build, import-lint]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
