@@ -25,12 +25,10 @@ const model: ProjectModel = {
 
 describe('historical Workboard project graph', () => {
   const service = {
-    query: jest
-      .fn()
-      .mockResolvedValue({
-        items: [model],
-        pageMeta: new PageMetaDTO({ itemCount: 1, pageOptions: { page: 1, perPage: 10 } }),
-      }),
+    query: jest.fn().mockResolvedValue({
+      items: [model],
+      pageMeta: new PageMetaDTO({ itemCount: 1, pageOptions: { page: 1, perPage: 10 } }),
+    }),
     findById: jest.fn().mockResolvedValue(model),
   };
 

@@ -71,11 +71,16 @@ packages:
 - packages/nuxt
 - packages/nuxt-ui
 - apps/docs
+- examples/workboard
 - examples/workboard/apps/*
 - examples/workboard/libs/contracts
 patchedDependencies:
   braces@3.0.3: patches/braces@3.0.3.patch
 packageExtensions:
+  # Nuxt UI augments table-core directly; use its Vue Table 8 instance, not docs' v9.
+  "@nuxt/ui@4.13.0":
+    dependencies:
+      "@tanstack/table-core": 8.21.3
   unctx@3.0.1:
     dependencies:
       oxc-parser: 0.156.0
