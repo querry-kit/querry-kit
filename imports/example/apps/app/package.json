@@ -1,0 +1,32 @@
+{
+  "name": "@workboard/app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --host 127.0.0.1 --port 3201",
+    "build": "nuxt build",
+    "typecheck": "nuxt typecheck",
+    "test:workboard": "playwright test --config playwright.config.ts workboard.spec.ts",
+    "test:account-switch": "playwright test --config playwright.config.ts account-switch.spec.ts",
+    "test:grouping": "playwright test --config playwright.config.ts grouped-tasks.spec.ts"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "1.2.158",
+    "@iconify-json/tabler": "1.2.46",
+    "@nuxt/ui": "4.13.0",
+    "@querry-kit/nuxt": "workspace:*",
+    "@querry-kit/nuxt-ui": "workspace:*",
+    "@vueuse/core": "15.0.0",
+    "@vueuse/router": "15.0.0",
+    "@workboard/contracts": "workspace:*",
+    "h3": "1.15.11",
+    "nuxt": "4.6.4",
+    "vue": "3.5.46",
+    "vue-router": "5.5.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "typescript": "6.0.2",
+    "vue-tsc": "3.3.14"
+  }
+}

@@ -1,0 +1,15 @@
+.git
+.agents
+.specify
+dockerdata/
+**/node_modules
+**/dist
+**/.nuxt
+**/.output
+**/generated
+**/coverage
+**/.env*
+vendor
+test-results
+playwright-report
+*.log

@@ -1,0 +1,37 @@
+name: Workboard CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.13.0'
+      - name: Bootstrap the pinned source workspace
+        run: |
+          npm install --global pnpm@11.28.9
+          node scripts/stage-querry-kit.mjs
+          pnpm install --frozen-lockfile
+      - name: Validate and build
+        run: |
+          pnpm lint
+          pnpm format:check
+          pnpm build
+          pnpm typecheck
+          pnpm sources:check
+      - name: Test real Fastify and PostgreSQL contracts
+        run: pnpm test:api
+      - name: Install Chromium and system libraries
+        run: pnpm --filter @workboard/app exec playwright install --with-deps chromium
+      - name: Verify cold standalone Compose, browser flows and seeded restart
+        run: pnpm test:compose
