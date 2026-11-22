@@ -2,7 +2,14 @@ node_modules
 .nuxt
 .output
 dist
+build/
 coverage
+*.log
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
 docs/.vitepress/.temp
 docs/.vitepress/cache
 apps/docs/.nuxt
@@ -11,4 +18,3 @@ apps/docs/.data
 apps/docs/test-results
 apps/docs/content/docs/*/changelog.md
 examples/*/api/src/generated
-examples/*/api/.env
