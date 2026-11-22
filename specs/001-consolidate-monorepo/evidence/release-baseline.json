@@ -1,0 +1,1123 @@
+{
+  "packages": {
+    "@querry-kit/nest": {
+      "version": "2.1.2",
+      "versionHistory": [
+        "0.0.1",
+        "0.1.0",
+        "0.2.0",
+        "0.3.0",
+        "0.3.1",
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3",
+        "1.0.4",
+        "1.0.5",
+        "1.0.6",
+        "1.0.7",
+        "1.1.0",
+        "1.1.1",
+        "1.1.2",
+        "2.0.0",
+        "2.1.0",
+        "2.1.1",
+        "2.1.2"
+      ],
+      "distTags": {
+        "latest": "2.1.2"
+      },
+      "source": "ad68cba0dc17850b667980a62cab2f2d648ff940",
+      "publishedTarball": "https://registry.npmjs.org/@querry-kit/nest/-/nest-2.1.2.tgz",
+      "integrity": "sha512-7b0zRRa0tWH4qAtf+WPyFqi9v9QPSvillO0JpM57QwJgGZIwAfW8vxV+uPkumNaUu5IsZK/uCQdtQZagyDag7w==",
+      "manifest": {
+        "name": "@querry-kit/nest",
+        "version": "2.1.2",
+        "description": "Consolidated NestJS helpers for Query Kit fields, Prisma-style query services, CASL policies, decorators, pipes, and response projection.",
+        "keywords": [
+          "nestjs",
+          "query-kit",
+          "prisma",
+          "casl",
+          "fields",
+          "projection",
+          "pagination",
+          "openapi",
+          "swagger",
+          "decorators",
+          "pipes",
+          "query-service",
+          "typescript"
+        ],
+        "license": "MIT",
+        "homepage": "https://querry-kit.github.io/querry-kit/docs/nest/",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/querry-kit/nest.git"
+        },
+        "bugs": {
+          "url": "https://github.com/querry-kit/nest/issues"
+        },
+        "author": {
+          "name": "Tobias W\u00e4lde",
+          "email": "business@tobiaswaelde.com",
+          "url": "https://tobiaswaelde.com"
+        },
+        "private": false,
+        "publishConfig": {
+          "access": "public"
+        },
+        "type": "module",
+        "engines": {
+          "node": ">=26.13.0"
+        },
+        "packageManager": "pnpm@11.28.9",
+        "main": "./dist/index.cjs",
+        "module": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+        "files": [
+          "dist"
+        ],
+        "exports": {
+          ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "default": "./dist/index.js"
+          },
+          "./object": {
+            "types": "./dist/object.d.ts",
+            "import": "./dist/object.js",
+            "require": "./dist/object.cjs",
+            "default": "./dist/object.js"
+          },
+          "./fields": {
+            "types": "./dist/fields.d.ts",
+            "import": "./dist/fields.js",
+            "require": "./dist/fields.cjs",
+            "default": "./dist/fields.js"
+          },
+          "./dto": {
+            "types": "./dist/dto.d.ts",
+            "import": "./dist/dto.js",
+            "require": "./dist/dto.cjs",
+            "default": "./dist/dto.js"
+          },
+          "./pagination": {
+            "types": "./dist/pagination.d.ts",
+            "import": "./dist/pagination.js",
+            "require": "./dist/pagination.cjs",
+            "default": "./dist/pagination.js"
+          },
+          "./query-service": {
+            "types": "./dist/query-service.d.ts",
+            "import": "./dist/query-service.js",
+            "require": "./dist/query-service.cjs",
+            "default": "./dist/query-service.js"
+          },
+          "./casl": {
+            "types": "./dist/casl.d.ts",
+            "import": "./dist/casl.js",
+            "require": "./dist/casl.cjs",
+            "default": "./dist/casl.js"
+          },
+          "./decorators": {
+            "types": "./dist/decorators.d.ts",
+            "import": "./dist/decorators.js",
+            "require": "./dist/decorators.cjs",
+            "default": "./dist/decorators.js"
+          },
+          "./pipes": {
+            "types": "./dist/pipes.d.ts",
+            "import": "./dist/pipes.js",
+            "require": "./dist/pipes.cjs",
+            "default": "./dist/pipes.js"
+          },
+          "./zod": {
+            "types": "./dist/zod.d.ts",
+            "import": "./dist/zod.js",
+            "require": "./dist/zod.cjs",
+            "default": "./dist/zod.js"
+          },
+          "./core": {
+            "types": "./dist/core.d.ts",
+            "import": "./dist/core.js",
+            "require": "./dist/core.cjs",
+            "default": "./dist/core.js"
+          }
+        },
+        "scripts": {
+          "dev": "tsc -p tsconfig.json --watch",
+          "check": "tsc -p tsconfig.json --noEmit",
+          "build": "tsup",
+          "lint": "eslint .",
+          "lint:fix": "eslint . --fix",
+          "test": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs",
+          "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs --coverage",
+          "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs --watch",
+          "test:optional-peers": "node test/optional-validation-peers.mjs"
+        },
+        "peerDependencies": {
+          "@casl/ability": "^6.7.3 || ^7.0.0",
+          "@casl/prisma": "^1.5.2 || ^2.0.0",
+          "@nestjs/common": "^11.1.28 || ^12.0.1",
+          "@nestjs/core": "^11.1.28 || ^12.0.1",
+          "@nestjs/swagger": "^11.4.6 || ^12.0.1",
+          "class-transformer": "^0.5.1",
+          "class-validator": "^0.15.1",
+          "reflect-metadata": "^0.2.2",
+          "zod": "^4.0.0"
+        },
+        "peerDependenciesMeta": {
+          "@casl/ability": {
+            "optional": true
+          },
+          "@casl/prisma": {
+            "optional": true
+          },
+          "zod": {
+            "optional": true
+          },
+          "class-validator": {
+            "optional": true
+          },
+          "class-transformer": {
+            "optional": true
+          }
+        },
+        "dependencies": {
+          "qs": "^6.17.1"
+        },
+        "devDependencies": {
+          "@casl/ability": "^7.1.3",
+          "@casl/prisma": "^2.2.0",
+          "@changesets/cli": "^3.0.3",
+          "@jest/globals": "^30.5.2",
+          "@jest/types": "^30.5.1",
+          "@nestjs/common": "^12.5.1",
+          "@nestjs/core": "^12.5.1",
+          "@nestjs/platform-express": "^12.5.1",
+          "@nestjs/swagger": "^12.1.2",
+          "@types/jest": "^30.0.0",
+          "@types/node": "^26.6.6",
+          "@types/qs": "^6.15.1",
+          "@typescript/native": "npm:typescript@^7.0.2",
+          "class-transformer": "^0.5.1",
+          "class-validator": "^0.15.1",
+          "eslint": "^10.15.0",
+          "eslint-config-prettier": "^10.1.8",
+          "eslint-plugin-prettier": "^5.5.7",
+          "jest": "^30.5.2",
+          "prettier": "^3.10.1",
+          "prettier-plugin-organize-imports": "^4.3.0",
+          "reflect-metadata": "^0.2.2",
+          "ts-jest": "^29.4.15",
+          "tsup": "^9.0.0",
+          "typescript": "npm:@typescript/typescript6@^6.0.2",
+          "typescript-eslint": "^8.73.0",
+          "zod": "^4.6.7"
+        }
+      },
+      "files": [
+        "package/LICENSE",
+        "package/README.md",
+        "package/dist/casl.cjs",
+        "package/dist/casl.cjs.map",
+        "package/dist/casl.d.cts",
+        "package/dist/casl.d.ts",
+        "package/dist/casl.js",
+        "package/dist/casl.js.map",
+        "package/dist/chunk-4B5OJ33C.js",
+        "package/dist/chunk-4B5OJ33C.js.map",
+        "package/dist/chunk-4ZKRRGLL.js",
+        "package/dist/chunk-4ZKRRGLL.js.map",
+        "package/dist/chunk-AE6GAEJW.js",
+        "package/dist/chunk-AE6GAEJW.js.map",
+        "package/dist/chunk-B6QOHY72.js",
+        "package/dist/chunk-B6QOHY72.js.map",
+        "package/dist/chunk-BRKEJJFQ.js",
+        "package/dist/chunk-BRKEJJFQ.js.map",
+        "package/dist/chunk-BY2B2WWN.js",
+        "package/dist/chunk-BY2B2WWN.js.map",
+        "package/dist/chunk-GKLTIPLP.js",
+        "package/dist/chunk-GKLTIPLP.js.map",
+        "package/dist/chunk-IYY6XFAR.js",
+        "package/dist/chunk-IYY6XFAR.js.map",
+        "package/dist/chunk-L7QJYSL2.js",
+        "package/dist/chunk-L7QJYSL2.js.map",
+        "package/dist/chunk-NXWUXTS6.js",
+        "package/dist/chunk-NXWUXTS6.js.map",
+        "package/dist/chunk-QAV7HVH6.js",
+        "package/dist/chunk-QAV7HVH6.js.map",
+        "package/dist/chunk-TQ3EYBBD.js",
+        "package/dist/chunk-TQ3EYBBD.js.map",
+        "package/dist/chunk-WJC6WZRC.js",
+        "package/dist/chunk-WJC6WZRC.js.map",
+        "package/dist/chunk-WULMN6U5.js",
+        "package/dist/chunk-WULMN6U5.js.map",
+        "package/dist/chunk-XMKWILDK.js",
+        "package/dist/chunk-XMKWILDK.js.map",
+        "package/dist/core.cjs",
+        "package/dist/core.cjs.map",
+        "package/dist/core.d.cts",
+        "package/dist/core.d.ts",
+        "package/dist/core.js",
+        "package/dist/core.js.map",
+        "package/dist/decorators.cjs",
+        "package/dist/decorators.cjs.map",
+        "package/dist/decorators.d.cts",
+        "package/dist/decorators.d.ts",
+        "package/dist/decorators.js",
+        "package/dist/decorators.js.map",
+        "package/dist/dto.cjs",
+        "package/dist/dto.cjs.map",
+        "package/dist/dto.d.cts",
+        "package/dist/dto.d.ts",
+        "package/dist/dto.js",
+        "package/dist/dto.js.map",
+        "package/dist/fields.cjs",
+        "package/dist/fields.cjs.map",
+        "package/dist/fields.d.cts",
+        "package/dist/fields.d.ts",
+        "package/dist/fields.js",
+        "package/dist/fields.js.map",
+        "package/dist/index.cjs",
+        "package/dist/index.cjs.map",
+        "package/dist/index.d.cts",
+        "package/dist/index.d.ts",
+        "package/dist/index.js",
+        "package/dist/index.js.map",
+        "package/dist/object.cjs",
+        "package/dist/object.cjs.map",
+        "package/dist/object.d.cts",
+        "package/dist/object.d.ts",
+        "package/dist/object.js",
+        "package/dist/object.js.map",
+        "package/dist/page-meta-Bk3LJ893.d.cts",
+        "package/dist/page-meta-Bk3LJ893.d.ts",
+        "package/dist/page-meta.dto-DeMVcWfV.d.ts",
+        "package/dist/page-meta.dto-DmbSqvUq.d.cts",
+        "package/dist/page-options.dto-DbbuIVqj.d.cts",
+        "package/dist/page-options.dto-DbbuIVqj.d.ts",
+        "package/dist/pagination.cjs",
+        "package/dist/pagination.cjs.map",
+        "package/dist/pagination.d.cts",
+        "package/dist/pagination.d.ts",
+        "package/dist/pagination.js",
+        "package/dist/pagination.js.map",
+        "package/dist/parse-from-object-CISPQrhz.d.cts",
+        "package/dist/parse-from-object-CISPQrhz.d.ts",
+        "package/dist/pipes.cjs",
+        "package/dist/pipes.cjs.map",
+        "package/dist/pipes.d.cts",
+        "package/dist/pipes.d.ts",
+        "package/dist/pipes.js",
+        "package/dist/pipes.js.map",
+        "package/dist/query-service.cjs",
+        "package/dist/query-service.cjs.map",
+        "package/dist/query-service.d.cts",
+        "package/dist/query-service.d.ts",
+        "package/dist/query-service.js",
+        "package/dist/query-service.js.map",
+        "package/dist/query-service.types-BZpfvSO5.d.cts",
+        "package/dist/query-service.types-BZpfvSO5.d.ts",
+        "package/dist/query.service-BODobWCJ.d.ts",
+        "package/dist/query.service-CjXKXjD7.d.cts",
+        "package/dist/resource-query-D4pwkfgk.d.ts",
+        "package/dist/resource-query-D6p-F9eo.d.cts",
+        "package/dist/zod.cjs",
+        "package/dist/zod.cjs.map",
+        "package/dist/zod.d.cts",
+        "package/dist/zod.d.ts",
+        "package/dist/zod.js",
+        "package/dist/zod.js.map",
+        "package/package.json"
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@querry-kit%2fnest@2.1.2",
+        "statement": {
+          "_type": "https://in-toto.io/Statement/v1",
+          "subject": [
+            {
+              "name": "pkg:npm/%40querry-kit/nest@2.1.2",
+              "digest": {
+                "sha512": "edbd334516b4b561f8a80b5ff963f216a8bdbfd40f4af8a594ed09a4ce7b43026019923001f5bcbf157eb8f92e98d694bb922c64afee09076d4196a0c836a0ef"
+              }
+            }
+          ],
+          "predicateType": "https://slsa.dev/provenance/v1",
+          "predicate": {
+            "buildDefinition": {
+              "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+              "externalParameters": {
+                "workflow": {
+                  "ref": "refs/heads/main",
+                  "repository": "https://github.com/querry-kit/nest",
+                  "path": ".github/workflows/release.yml"
+                }
+              },
+              "internalParameters": {
+                "github": {
+                  "event_name": "push",
+                  "repository_id": "1307126899",
+                  "repository_owner_id": "306616720"
+                }
+              },
+              "resolvedDependencies": [
+                {
+                  "uri": "git+https://github.com/querry-kit/nest@refs/heads/main",
+                  "digest": {
+                    "gitCommit": "ad68cba0dc17850b667980a62cab2f2d648ff940"
+                  }
+                }
+              ]
+            },
+            "runDetails": {
+              "builder": {
+                "id": "https://github.com/actions/runner/github-hosted"
+              },
+              "metadata": {
+                "invocationId": "https://github.com/querry-kit/nest/actions/runs/45069313489/attempts/1"
+              }
+            }
+          }
+        }
+      },
+      "registryMaintainers": [
+        "tobiaswaelde"
+      ],
+      "historicalPublisherWorkflow": "querry-kit/nest/.github/workflows/release.yml",
+      "currentBinding": "Owner confirmation required before cutover; observed provenance identifies historical publisher only.",
+      "releaseTagCommit": "dc55141b00d562868f83c55ee8c59a606429e348"
+    },
+    "@querry-kit/nuxt": {
+      "version": "1.1.2",
+      "versionHistory": [
+        "0.0.1",
+        "0.0.2",
+        "0.0.3",
+        "0.0.4",
+        "0.0.5",
+        "0.1.0",
+        "0.1.1",
+        "0.2.0",
+        "0.2.1",
+        "0.2.2",
+        "0.2.3",
+        "0.2.4",
+        "0.2.5",
+        "0.2.6",
+        "0.2.7",
+        "0.2.8",
+        "0.2.9",
+        "0.2.10",
+        "1.0.0",
+        "1.1.0",
+        "1.1.1",
+        "1.1.2"
+      ],
+      "distTags": {
+        "latest": "1.1.2"
+      },
+      "source": "ba5dfab593c5b5c5791d7356f5378bd2b39b7d79",
+      "publishedTarball": "https://registry.npmjs.org/@querry-kit/nuxt/-/nuxt-1.1.2.tgz",
+      "integrity": "sha512-FgpbPKcp4bVK39xuREKCpzyL+wlKHbgKFDd5yPpzEVAG8Ynbw2JcwCKdTf3iGoM5azggUeJt+9Fz+/IZ4kaleg==",
+      "manifest": {
+        "name": "@querry-kit/nuxt",
+        "version": "1.1.2",
+        "description": "Framework-agnostic Vue and Nuxt composables for Query Kit APIs, tables, and autocompletes.",
+        "keywords": [
+          "nuxt",
+          "vue",
+          "query-kit",
+          "table",
+          "autocomplete",
+          "axios",
+          "typescript"
+        ],
+        "license": "MIT",
+        "homepage": "https://querry-kit.github.io/querry-kit/docs/nuxt",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/querry-kit/nuxt.git"
+        },
+        "bugs": {
+          "url": "https://github.com/querry-kit/nuxt/issues"
+        },
+        "author": {
+          "name": "Tobias Waelde",
+          "email": "business@tobiaswaelde.com",
+          "url": "https://tobiaswaelde.com"
+        },
+        "private": false,
+        "publishConfig": {
+          "access": "public"
+        },
+        "type": "module",
+        "sideEffects": false,
+        "engines": {
+          "node": ">=26.13.0"
+        },
+        "packageManager": "pnpm@11.28.9",
+        "main": "./dist/index.cjs",
+        "module": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+        "files": [
+          "dist"
+        ],
+        "exports": {
+          ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "default": "./dist/index.js"
+          },
+          "./api": {
+            "types": "./dist/api.d.ts",
+            "import": "./dist/api.js",
+            "require": "./dist/api.cjs",
+            "default": "./dist/api.js"
+          },
+          "./table": {
+            "types": "./dist/table.d.ts",
+            "import": "./dist/table.js",
+            "require": "./dist/table.cjs",
+            "default": "./dist/table.js"
+          },
+          "./autocomplete": {
+            "types": "./dist/autocomplete.d.ts",
+            "import": "./dist/autocomplete.js",
+            "require": "./dist/autocomplete.cjs",
+            "default": "./dist/autocomplete.js"
+          },
+          "./types": {
+            "types": "./dist/types.d.ts",
+            "import": "./dist/types.js",
+            "require": "./dist/types.cjs",
+            "default": "./dist/types.js"
+          },
+          "./utils": {
+            "types": "./dist/utils.d.ts",
+            "import": "./dist/utils.js",
+            "require": "./dist/utils.cjs",
+            "default": "./dist/utils.js"
+          }
+        },
+        "scripts": {
+          "dev": "tsc -p tsconfig.json --watch",
+          "check": "tsc -p tsconfig.json --noEmit",
+          "typecheck": "pnpm check",
+          "build": "tsup",
+          "lint": "eslint .",
+          "lint:fix": "eslint . --fix",
+          "test": "jest --config ./jest.config.cjs",
+          "test:coverage": "jest --config ./jest.config.cjs --coverage",
+          "test:watch": "jest --config ./jest.config.cjs --watch"
+        },
+        "peerDependencies": {
+          "@vueuse/core": "^14.3.0 || ^15.0.0",
+          "@vueuse/router": "^14.3.0 || ^15.0.0",
+          "vue": "^3.5.40",
+          "vue-router": "^5.2.0"
+        },
+        "dependencies": {
+          "axios": "^1.21.0",
+          "qs": "^6.17.1"
+        },
+        "devDependencies": {
+          "@changesets/cli": "^3.0.3",
+          "@jest/types": "^30.5.1",
+          "@types/jest": "^30.0.0",
+          "@types/node": "^26.6.6",
+          "@types/qs": "^6.15.1",
+          "@typescript/native": "npm:typescript@^7.0.2",
+          "@vueuse/core": "^15.0.0",
+          "@vueuse/router": "^15.0.0",
+          "eslint": "^10.15.0",
+          "eslint-config-prettier": "^10.1.8",
+          "eslint-plugin-prettier": "^5.5.7",
+          "eslint-plugin-vue": "^10.12.1",
+          "jest": "^30.5.2",
+          "prettier": "^3.10.1",
+          "prettier-plugin-organize-imports": "^4.3.0",
+          "ts-jest": "^29.4.15",
+          "tsup": "^9.0.0",
+          "typescript": "npm:@typescript/typescript6@^6.0.2",
+          "typescript-eslint": "^8.73.0",
+          "vue": "^3.5.45",
+          "vue-eslint-parser": "^10.4.1",
+          "vue-router": "^5.5.1",
+          "vue-tsc": "3.3.14"
+        }
+      },
+      "files": [
+        "package/LICENSE",
+        "package/README.md",
+        "package/dist/api-BjAQ0AIa.d.cts",
+        "package/dist/api-BjAQ0AIa.d.ts",
+        "package/dist/api.cjs",
+        "package/dist/api.cjs.map",
+        "package/dist/api.d.cts",
+        "package/dist/api.d.ts",
+        "package/dist/api.js",
+        "package/dist/api.js.map",
+        "package/dist/autocomplete-options-C9oEEOiT.d.cts",
+        "package/dist/autocomplete-options-Do_AQ8Hl.d.ts",
+        "package/dist/autocomplete.cjs",
+        "package/dist/autocomplete.cjs.map",
+        "package/dist/autocomplete.d.cts",
+        "package/dist/autocomplete.d.ts",
+        "package/dist/autocomplete.js",
+        "package/dist/autocomplete.js.map",
+        "package/dist/chunk-3Q5MFWY7.js",
+        "package/dist/chunk-3Q5MFWY7.js.map",
+        "package/dist/chunk-3V5RAB6T.js",
+        "package/dist/chunk-3V5RAB6T.js.map",
+        "package/dist/chunk-UV6CMWG7.js",
+        "package/dist/chunk-UV6CMWG7.js.map",
+        "package/dist/chunk-WTS75RUC.js",
+        "package/dist/chunk-WTS75RUC.js.map",
+        "package/dist/chunk-YS2BVSJL.js",
+        "package/dist/chunk-YS2BVSJL.js.map",
+        "package/dist/chunk-Z4PZF53D.js",
+        "package/dist/chunk-Z4PZF53D.js.map",
+        "package/dist/chunk-Z6OZSYL2.js",
+        "package/dist/chunk-Z6OZSYL2.js.map",
+        "package/dist/grouping-DW9giwyZ.d.ts",
+        "package/dist/grouping-DYTz30ao.d.cts",
+        "package/dist/index.cjs",
+        "package/dist/index.cjs.map",
+        "package/dist/index.d.cts",
+        "package/dist/index.d.ts",
+        "package/dist/index.js",
+        "package/dist/index.js.map",
+        "package/dist/module-api-BKXoZbyX.d.cts",
+        "package/dist/module-api-BKXoZbyX.d.ts",
+        "package/dist/table-DS2LRoSQ.d.cts",
+        "package/dist/table-DS2LRoSQ.d.ts",
+        "package/dist/table.cjs",
+        "package/dist/table.cjs.map",
+        "package/dist/table.d.cts",
+        "package/dist/table.d.ts",
+        "package/dist/table.js",
+        "package/dist/table.js.map",
+        "package/dist/types.cjs",
+        "package/dist/types.cjs.map",
+        "package/dist/types.d.cts",
+        "package/dist/types.d.ts",
+        "package/dist/types.js",
+        "package/dist/types.js.map",
+        "package/dist/utils.cjs",
+        "package/dist/utils.cjs.map",
+        "package/dist/utils.d.cts",
+        "package/dist/utils.d.ts",
+        "package/dist/utils.js",
+        "package/dist/utils.js.map",
+        "package/package.json"
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@querry-kit%2fnuxt@1.1.2",
+        "statement": {
+          "_type": "https://in-toto.io/Statement/v1",
+          "subject": [
+            {
+              "name": "pkg:npm/%40querry-kit/nuxt@1.1.2",
+              "digest": {
+                "sha512": "160a5b3ca729e1b54adfdc6e444282a73c8bfb094a1db80a143779c8fa73115006f189dbc3625cc0229d4dfde21a83396b382051e26dfbd173fbf219e246a57a"
+              }
+            }
+          ],
+          "predicateType": "https://slsa.dev/provenance/v1",
+          "predicate": {
+            "buildDefinition": {
+              "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+              "externalParameters": {
+                "workflow": {
+                  "ref": "refs/heads/main",
+                  "repository": "https://github.com/querry-kit/nuxt",
+                  "path": ".github/workflows/release.yml"
+                }
+              },
+              "internalParameters": {
+                "github": {
+                  "event_name": "push",
+                  "repository_id": "1308273180",
+                  "repository_owner_id": "306616720"
+                }
+              },
+              "resolvedDependencies": [
+                {
+                  "uri": "git+https://github.com/querry-kit/nuxt@refs/heads/main",
+                  "digest": {
+                    "gitCommit": "ba5dfab593c5b5c5791d7356f5378bd2b39b7d79"
+                  }
+                }
+              ]
+            },
+            "runDetails": {
+              "builder": {
+                "id": "https://github.com/actions/runner/github-hosted"
+              },
+              "metadata": {
+                "invocationId": "https://github.com/querry-kit/nuxt/actions/runs/45069342824/attempts/1"
+              }
+            }
+          }
+        }
+      },
+      "registryMaintainers": [
+        "tobiaswaelde"
+      ],
+      "historicalPublisherWorkflow": "querry-kit/nuxt/.github/workflows/release.yml",
+      "currentBinding": "Owner confirmation required before cutover; observed provenance identifies historical publisher only.",
+      "releaseTagCommit": "5a5f370da4f3bc3c036714dfd7fdafb2bf039934"
+    },
+    "@querry-kit/nuxt-ui": {
+      "version": "4.3.0",
+      "versionHistory": [
+        "0.0.1",
+        "0.1.0",
+        "0.1.1",
+        "0.1.2",
+        "1.0.0",
+        "2.0.0",
+        "2.0.1",
+        "3.1.1",
+        "3.1.2",
+        "3.2.0",
+        "3.2.1",
+        "3.3.0",
+        "3.3.1",
+        "3.3.2",
+        "3.3.3",
+        "3.3.4",
+        "3.3.5",
+        "3.3.6",
+        "3.3.7",
+        "3.3.8",
+        "3.3.9",
+        "3.3.10",
+        "4.0.0",
+        "4.1.0",
+        "4.2.0",
+        "4.3.0"
+      ],
+      "distTags": {
+        "latest": "4.3.0"
+      },
+      "source": "a63116e2e193384b2a2e1045c3c60f61cb845226",
+      "publishedTarball": "https://registry.npmjs.org/@querry-kit/nuxt-ui/-/nuxt-ui-4.3.0.tgz",
+      "integrity": "sha512-TTc+NaaNy4t/JJPTma4VYXbET88XzNsIyiRSSfstomjbYhKi4XiTDWS0Nubjro/3fbkI+20EDJ/wUkul21MSNw==",
+      "manifest": {
+        "name": "@querry-kit/nuxt-ui",
+        "version": "4.3.0",
+        "description": "Customizable Nuxt UI table components for Query Kit",
+        "keywords": [
+          "nuxt",
+          "nuxt-ui",
+          "vue",
+          "table",
+          "data-table",
+          "filtering",
+          "sorting",
+          "pagination",
+          "query-kit",
+          "querry-kit"
+        ],
+        "license": "MIT",
+        "homepage": "https://querry-kit.github.io/querry-kit/docs/nuxt-ui/",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/querry-kit/nuxt-ui.git"
+        },
+        "bugs": {
+          "url": "https://github.com/querry-kit/nuxt-ui/issues"
+        },
+        "author": {
+          "name": "Tobias W\u00e4lde",
+          "email": "business@tobiaswaelde.com",
+          "url": "https://tobiaswaelde.com"
+        },
+        "private": false,
+        "publishConfig": {
+          "access": "public"
+        },
+        "type": "module",
+        "exports": {
+          ".": {
+            "types": "./dist/module.d.mts",
+            "import": "./dist/module.mjs"
+          },
+          "./types": {
+            "types": "./dist/runtime/types/table.d.ts",
+            "import": "./dist/runtime/types/table.js"
+          }
+        },
+        "main": "./dist/module.mjs",
+        "types": "./dist/module.d.mts",
+        "files": [
+          "dist"
+        ],
+        "scripts": {
+          "build": "nuxt-module-build build",
+          "dev": "nuxt-module-build build --stub",
+          "prepack": "pnpm build",
+          "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+          "lint": "eslint .",
+          "lint:fix": "eslint . --fix",
+          "test": "vitest run",
+          "test:coverage": "vitest run --coverage"
+        },
+        "peerDependencies": {
+          "@nuxt/ui": "^4.0.0",
+          "@querry-kit/nuxt": "^0.2.0 || ^1.0.0",
+          "@vueuse/core": "^14.4.0 || ^15.0.0",
+          "nuxt": "^4.0.0",
+          "vue": "^3.5.0"
+        },
+        "devDependencies": {
+          "@changesets/cli": "^3.0.3",
+          "@nuxt/kit": "^4.6.4",
+          "@nuxt/module-builder": "^1.0.4",
+          "@nuxt/schema": "^4.6.4",
+          "@nuxt/ui": "^4.13.0",
+          "@querry-kit/nuxt": "^1.1.1",
+          "@types/node": "^26.6.6",
+          "@typescript/native": "npm:typescript@^7.0.2",
+          "@vitejs/plugin-vue": "^6.0.11",
+          "@vitest/coverage-v8": "^5.1.1",
+          "@vue/test-utils": "^2.6.0",
+          "@vueuse/core": "^15.0.0",
+          "@vueuse/router": "^15.0.0",
+          "eslint": "^10.15.0",
+          "eslint-config-prettier": "^10.1.8",
+          "eslint-plugin-prettier": "^5.5.7",
+          "eslint-plugin-vue": "^10.12.0",
+          "happy-dom": "^21.0.4",
+          "nuxt": "^4.6.4",
+          "prettier": "^3.10.1",
+          "prettier-plugin-organize-imports": "^4.3.0",
+          "prettier-plugin-tailwindcss": "^0.8.1",
+          "typescript": "npm:@typescript/typescript6@^6.0.2",
+          "typescript-eslint": "^8.72.1",
+          "vite": "^8.3.8",
+          "vitest": "^5.1.1",
+          "vue": "^3.5.45",
+          "vue-tsc": "3.3.14"
+        },
+        "engines": {
+          "node": ">=26.13.0"
+        },
+        "packageManager": "pnpm@11.28.9",
+        "dependencies": {
+          "vue-draggable-plus": "^0.6.1"
+        }
+      },
+      "files": [
+        "package/LICENSE",
+        "package/README.md",
+        "package/dist/module.d.mts",
+        "package/dist/module.json",
+        "package/dist/module.mjs",
+        "package/dist/runtime/components/table/filtering/add.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/add.vue",
+        "package/dist/runtime/components/table/filtering/add.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/header.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/header.vue",
+        "package/dist/runtime/components/table/filtering/header.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/index.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/index.vue",
+        "package/dist/runtime/components/table/filtering/index.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/boolean.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/boolean.vue",
+        "package/dist/runtime/components/table/filtering/item/boolean.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/enum.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/enum.vue",
+        "package/dist/runtime/components/table/filtering/item/enum.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/index.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/index.vue",
+        "package/dist/runtime/components/table/filtering/item/index.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/number.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/number.vue",
+        "package/dist/runtime/components/table/filtering/item/number.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/operator.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/operator.vue",
+        "package/dist/runtime/components/table/filtering/item/operator.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/item/select.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/item/select.vue",
+        "package/dist/runtime/components/table/filtering/item/select.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/items.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/items.vue",
+        "package/dist/runtime/components/table/filtering/items.vue.d.ts",
+        "package/dist/runtime/components/table/filtering/lookup.d.vue.ts",
+        "package/dist/runtime/components/table/filtering/lookup.vue",
+        "package/dist/runtime/components/table/filtering/lookup.vue.d.ts",
+        "package/dist/runtime/components/table/group/index.d.vue.ts",
+        "package/dist/runtime/components/table/group/index.vue",
+        "package/dist/runtime/components/table/group/index.vue.d.ts",
+        "package/dist/runtime/components/table/group/load-more.d.vue.ts",
+        "package/dist/runtime/components/table/group/load-more.vue",
+        "package/dist/runtime/components/table/group/load-more.vue.d.ts",
+        "package/dist/runtime/components/table/grouped/branch-controls.d.vue.ts",
+        "package/dist/runtime/components/table/grouped/branch-controls.vue",
+        "package/dist/runtime/components/table/grouped/branch-controls.vue.d.ts",
+        "package/dist/runtime/components/table/grouped/index.d.vue.ts",
+        "package/dist/runtime/components/table/grouped/index.vue",
+        "package/dist/runtime/components/table/grouped/index.vue.d.ts",
+        "package/dist/runtime/components/table/grouped/pagination.d.vue.ts",
+        "package/dist/runtime/components/table/grouped/pagination.vue",
+        "package/dist/runtime/components/table/grouped/pagination.vue.d.ts",
+        "package/dist/runtime/components/table/grouping/index.d.vue.ts",
+        "package/dist/runtime/components/table/grouping/index.vue",
+        "package/dist/runtime/components/table/grouping/index.vue.d.ts",
+        "package/dist/runtime/components/table/options/header.d.vue.ts",
+        "package/dist/runtime/components/table/options/header.vue",
+        "package/dist/runtime/components/table/options/header.vue.d.ts",
+        "package/dist/runtime/components/table/options/index.d.vue.ts",
+        "package/dist/runtime/components/table/options/index.vue",
+        "package/dist/runtime/components/table/options/index.vue.d.ts",
+        "package/dist/runtime/components/table/options/item-placeholder.d.vue.ts",
+        "package/dist/runtime/components/table/options/item-placeholder.vue",
+        "package/dist/runtime/components/table/options/item-placeholder.vue.d.ts",
+        "package/dist/runtime/components/table/options/item.d.vue.ts",
+        "package/dist/runtime/components/table/options/item.vue",
+        "package/dist/runtime/components/table/options/item.vue.d.ts",
+        "package/dist/runtime/components/table/options/items.d.vue.ts",
+        "package/dist/runtime/components/table/options/items.vue",
+        "package/dist/runtime/components/table/options/items.vue.d.ts",
+        "package/dist/runtime/components/table/pagination/index.d.vue.ts",
+        "package/dist/runtime/components/table/pagination/index.vue",
+        "package/dist/runtime/components/table/pagination/index.vue.d.ts",
+        "package/dist/runtime/components/table/pagination/page-size.d.vue.ts",
+        "package/dist/runtime/components/table/pagination/page-size.vue",
+        "package/dist/runtime/components/table/pagination/page-size.vue.d.ts",
+        "package/dist/runtime/components/table/pagination/pagination.d.vue.ts",
+        "package/dist/runtime/components/table/pagination/pagination.vue",
+        "package/dist/runtime/components/table/pagination/pagination.vue.d.ts",
+        "package/dist/runtime/components/table/pagination/summary.d.vue.ts",
+        "package/dist/runtime/components/table/pagination/summary.vue",
+        "package/dist/runtime/components/table/pagination/summary.vue.d.ts",
+        "package/dist/runtime/components/table/sorting/add.d.vue.ts",
+        "package/dist/runtime/components/table/sorting/add.vue",
+        "package/dist/runtime/components/table/sorting/add.vue.d.ts",
+        "package/dist/runtime/components/table/sorting/header.d.vue.ts",
+        "package/dist/runtime/components/table/sorting/header.vue",
+        "package/dist/runtime/components/table/sorting/header.vue.d.ts",
+        "package/dist/runtime/components/table/sorting/index.d.vue.ts",
+        "package/dist/runtime/components/table/sorting/index.vue",
+        "package/dist/runtime/components/table/sorting/index.vue.d.ts",
+        "package/dist/runtime/components/table/sorting/item.d.vue.ts",
+        "package/dist/runtime/components/table/sorting/item.vue",
+        "package/dist/runtime/components/table/sorting/item.vue.d.ts",
+        "package/dist/runtime/components/table/sorting/items.d.vue.ts",
+        "package/dist/runtime/components/table/sorting/items.vue",
+        "package/dist/runtime/components/table/sorting/items.vue.d.ts",
+        "package/dist/runtime/components/table/toolbar/context.d.ts",
+        "package/dist/runtime/components/table/toolbar/context.js",
+        "package/dist/runtime/components/table/toolbar/control-panel.d.vue.ts",
+        "package/dist/runtime/components/table/toolbar/control-panel.vue",
+        "package/dist/runtime/components/table/toolbar/control-panel.vue.d.ts",
+        "package/dist/runtime/components/table/toolbar/index.d.vue.ts",
+        "package/dist/runtime/components/table/toolbar/index.vue",
+        "package/dist/runtime/components/table/toolbar/index.vue.d.ts",
+        "package/dist/runtime/composables/use-table-i18n.d.ts",
+        "package/dist/runtime/composables/use-table-i18n.js",
+        "package/dist/runtime/composables/use-table-icons.d.ts",
+        "package/dist/runtime/composables/use-table-icons.js",
+        "package/dist/runtime/composables/use-table-shortcut.d.ts",
+        "package/dist/runtime/composables/use-table-shortcut.js",
+        "package/dist/runtime/icons.d.ts",
+        "package/dist/runtime/icons.js",
+        "package/dist/runtime/index.d.ts",
+        "package/dist/runtime/index.js",
+        "package/dist/runtime/texts.d.ts",
+        "package/dist/runtime/texts.js",
+        "package/dist/runtime/types/grouped-table.d.ts",
+        "package/dist/runtime/types/grouped-table.js",
+        "package/dist/runtime/types/table.d.ts",
+        "package/dist/runtime/types/table.js",
+        "package/dist/runtime/utils/filtering.d.ts",
+        "package/dist/runtime/utils/filtering.js",
+        "package/dist/runtime/utils/keyboard.d.ts",
+        "package/dist/runtime/utils/keyboard.js",
+        "package/dist/types.d.mts",
+        "package/package.json"
+      ],
+      "provenance": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@querry-kit%2fnuxt-ui@4.3.0",
+        "statement": {
+          "_type": "https://in-toto.io/Statement/v1",
+          "subject": [
+            {
+              "name": "pkg:npm/%40querry-kit/nuxt-ui@4.3.0",
+              "digest": {
+                "sha512": "4d373e35a68dcb8b7f2493d399ae156176c44fcf17ccdb08ca245249fb2da268db6212a2e178930d64b436e6e3ae8ff77db908fb6d040c9ff0524ba5db531237"
+              }
+            }
+          ],
+          "predicateType": "https://slsa.dev/provenance/v1",
+          "predicate": {
+            "buildDefinition": {
+              "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+              "externalParameters": {
+                "workflow": {
+                  "ref": "refs/heads/main",
+                  "repository": "https://github.com/querry-kit/nuxt-ui",
+                  "path": ".github/workflows/release.yml"
+                }
+              },
+              "internalParameters": {
+                "github": {
+                  "event_name": "push",
+                  "repository_id": "1308314684",
+                  "repository_owner_id": "306616720"
+                }
+              },
+              "resolvedDependencies": [
+                {
+                  "uri": "git+https://github.com/querry-kit/nuxt-ui@refs/heads/main",
+                  "digest": {
+                    "gitCommit": "a63116e2e193384b2a2e1045c3c60f61cb845226"
+                  }
+                }
+              ]
+            },
+            "runDetails": {
+              "builder": {
+                "id": "https://github.com/actions/runner/github-hosted"
+              },
+              "metadata": {
+                "invocationId": "https://github.com/querry-kit/nuxt-ui/actions/runs/45069375770/attempts/1"
+              }
+            }
+          }
+        }
+      },
+      "registryMaintainers": [
+        "tobiaswaelde"
+      ],
+      "historicalPublisherWorkflow": "querry-kit/nuxt-ui/.github/workflows/release.yml",
+      "currentBinding": "Owner confirmation required before cutover; observed provenance identifies historical publisher only.",
+      "releaseTagCommit": "031e5a64bf66928bd98e39f9f71c69e56be5f5b0"
+    }
+  },
+  "changesets": {
+    "querry-kit": [
+      {
+        "file": ".changeset/compatible-dependencies.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      },
+      {
+        "file": ".changeset/current-docs-dependencies.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/example-navigation.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/group-by-backend.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/group-by-generated-types.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouped-client.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouped-leaf-types.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouped-table-demo.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      },
+      {
+        "file": ".changeset/grouping-demo.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouping-docs-current-baseline.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouping-published-dependencies.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/grouping-static-icons.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/mobile-table-toolbar-docs.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/node26-prerequisites.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      },
+      {
+        "file": ".changeset/patch-transitive-security.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/reusable-workboard-grouping.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/searchable-filter-lookup-docs.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/table-footer-loading.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      },
+      {
+        "file": ".changeset/table-i18n-and-slots-docs.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "\"@querry-kit/landing-page\": patch"
+      },
+      {
+        "file": ".changeset/update-workboard-dependencies.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      },
+      {
+        "file": ".changeset/workboard-website-update.md",
+        "disposition": "Private-site history only; no public release.",
+        "frontmatter": "'@querry-kit/landing-page': patch"
+      }
+    ],
+    "nest": [],
+    "nuxt": [],
+    "nuxt-ui": [],
+    "example": [
+      {
+        "file": ".changeset/responsive-workboard.md",
+        "disposition": "Empty private example entry; no public release.",
+        "frontmatter": ""
+      }
+    ]
+  }
+}

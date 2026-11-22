@@ -1,0 +1,15 @@
+import type { HttpStatus } from '@nestjs/common';
+import type { ApiResponseExamples } from '@nestjs/swagger';
+import type { Code } from './api-error-responses.types.js';
+import { getExampleFromCode } from './get-example-from-code.js';
+
+export function getExamples(statusCode: HttpStatus, codes: Code[]) {
+  if (codes.length === 0) return undefined;
+
+  return codes.reduce<Record<string, ApiResponseExamples>>((acc, code, index) => {
+    const codeName = Array.isArray(code) ? code[0] : code;
+    const key = acc[codeName] ? `${codeName}-${index}` : codeName;
+    acc[key] = getExampleFromCode(statusCode, code);
+    return acc;
+  }, {});
+}

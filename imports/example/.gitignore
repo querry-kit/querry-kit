@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.nuxt/
+.output/
+.data/
+/dockerdata/
+/vendor/
+/apps/api/src/generated/
+coverage/
+playwright-report/
+test-results/
+*.log
+workboard.cookies
+.env*
+!.env.example
+.DS_Store

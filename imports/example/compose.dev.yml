@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${WORKBOARD_DB_NAME:-workboard}
+      POSTGRES_USER: workboard
+      POSTGRES_PASSWORD: workboard
+    ports:
+      - '127.0.0.1:${WORKBOARD_DB_PORT:-54329}:5432'
+    volumes:
+      - ./dockerdata/postgres:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U workboard -d "$$POSTGRES_DB"']
+      interval: 2s
+      timeout: 3s
+      retries: 15

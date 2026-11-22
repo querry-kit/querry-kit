@@ -1,0 +1,95 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AccountRole {
+  user
+  admin
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+  ARCHIVED
+
+  @@map("WorkItemStatus")
+}
+
+enum TaskPriority {
+  LOW
+  NORMAL
+  HIGH
+
+  @@map("WorkItemPriority")
+}
+
+model Account {
+  id            String      @id
+  login         String      @unique
+  role          AccountRole
+  profile       Profile?
+  ownedTasks    Task[]      @relation("Owner")
+  assignedTasks Task[]      @relation("Assignee")
+}
+
+model Profile {
+  accountId   String  @id
+  displayName String
+  account     Account @relation(fields: [accountId], references: [id])
+}
+
+model Project {
+  id    String @id
+  slug  String @unique
+  title String
+  tasks Task[]
+}
+
+model Task {
+  id                String       @id
+  projectId         String
+  ownerId           String
+  assigneeId        String?
+  title             String
+  status            TaskStatus
+  priority          TaskPriority
+  estimatedHours    Int
+  internalNote      String
+  internalCostCents Int
+  createdAt         DateTime
+  project           Project      @relation(fields: [projectId], references: [id])
+  owner             Account      @relation("Owner", fields: [ownerId], references: [id])
+  assignee          Account?     @relation("Assignee", fields: [assigneeId], references: [id])
+  labels            TaskLabel[]
+
+  @@index([ownerId, projectId])
+  @@index([projectId])
+  @@map("WorkItem")
+}
+
+model Label {
+  id          String      @id
+  slug        String      @unique
+  displayName String
+  tasks       TaskLabel[]
+}
+
+model TaskLabel {
+  taskId  String @map("workItemId")
+  labelId String
+  task    Task   @relation(fields: [taskId], references: [id])
+  label   Label  @relation(fields: [labelId], references: [id])
+
+  @@id([taskId, labelId])
+  @@index([labelId])
+  @@map("WorkItemLabel")
+}

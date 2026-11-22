@@ -1,0 +1,1040 @@
+{
+  "observed_at": "2026-11-22T21:41:06.399658+00:00",
+  "source": "GitHub REST API; paginated open issues/PRs, tags, releases, and per-library release workflow runs",
+  "repositories": {
+    "querry-kit": {
+      "repo": {
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "archived": false,
+        "default_branch": "main",
+        "has_pages": true
+      },
+      "commit": {
+        "date": "2026-11-22T20:51:10Z",
+        "sha": "34b2dca00b22b42c861f956ab88c43cb8af549ff",
+        "tree": "14f073bff88cc435359733665b5caa34470b10be"
+      },
+      "branch": {
+        "protected": true,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "checks": [],
+            "contexts": [],
+            "enforcement_level": "off"
+          }
+        }
+      },
+      "rules": [
+        {
+          "parameters": null,
+          "type": "deletion"
+        }
+      ],
+      "issues": [
+        {
+          "html_url": "https://github.com/querry-kit/querry-kit/issues/53",
+          "kind": "issue",
+          "number": 53,
+          "title": "Plan: consolidate Querry Kit into a monorepo with three independent npm packages"
+        }
+      ],
+      "workflows": [
+        {
+          "path": ".github/workflows/docs.yml",
+          "state": "active"
+        },
+        {
+          "path": "dynamic/dependabot/dependabot-updates",
+          "state": "active"
+        }
+      ],
+      "tags": [
+        {
+          "name": "v0.2.2",
+          "sha": "2dfbf6bd06b8feb51e7c5b689bbda2aa75d0eb4a"
+        },
+        {
+          "name": "v0.2.1",
+          "sha": "b52043c1a61731b8d043ab2f39bcf25bf581e589"
+        },
+        {
+          "name": "v0.2.0",
+          "sha": "cdb25e84477d0f855ac9879f7725d018a8092382"
+        }
+      ],
+      "releases": [
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/querry-kit/releases/tag/v0.2.2",
+          "prerelease": false,
+          "tag_name": "v0.2.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/querry-kit/releases/tag/v0.2.1",
+          "prerelease": false,
+          "tag_name": "v0.2.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/querry-kit/releases/tag/v0.2.0",
+          "prerelease": false,
+          "tag_name": "v0.2.0"
+        }
+      ],
+      "workflow_sources": "https://github.com/querry-kit/querry-kit/tree/34b2dca00b22b42c861f956ab88c43cb8af549ff/.github/workflows",
+      "prefix": ".",
+      "pages": {
+        "build_type": "workflow",
+        "cname": null,
+        "html_url": "https://querry-kit.github.io/querry-kit/",
+        "deployment": 7984879167,
+        "state": "success",
+        "sha": "34b2dca00b22b42c861f956ab88c43cb8af549ff"
+      }
+    },
+    "nest": {
+      "repo": {
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "archived": false,
+        "default_branch": "main",
+        "has_pages": true
+      },
+      "commit": {
+        "date": "2026-11-22T20:57:13Z",
+        "sha": "ad68cba0dc17850b667980a62cab2f2d648ff940",
+        "tree": "a61526fcb34fa5c20ed26045aa5fd1dd7bd6ea77"
+      },
+      "branch": {
+        "protected": true,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "checks": [],
+            "contexts": [],
+            "enforcement_level": "off"
+          }
+        }
+      },
+      "rules": [
+        {
+          "parameters": null,
+          "type": "deletion"
+        }
+      ],
+      "issues": [],
+      "workflows": [
+        {
+          "path": ".github/workflows/build.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/changesets.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/lint.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/test.yml",
+          "state": "active"
+        },
+        {
+          "path": "dynamic/dependabot/dependabot-updates",
+          "state": "active"
+        }
+      ],
+      "tags": [
+        {
+          "name": "v2.1.2",
+          "sha": "dc55141b00d562868f83c55ee8c59a606429e348"
+        },
+        {
+          "name": "v2.1.1",
+          "sha": "566ea2bea9c5faffe0e2360e349ee58de7bd11fd"
+        },
+        {
+          "name": "v2.1.0",
+          "sha": "beaf96239b08b888ac0c272b66441eecb54c1795"
+        },
+        {
+          "name": "v2.0.0",
+          "sha": "62179912ed69799982385adbc2c9cbb853e95fcf"
+        },
+        {
+          "name": "v1.1.2",
+          "sha": "7400ac2fe81c63cf331b4e30ef4ad45a6ab13006"
+        },
+        {
+          "name": "v1.1.1",
+          "sha": "3876585a90bc3a61f3b4517c082b588527bb290d"
+        },
+        {
+          "name": "v1.1.0",
+          "sha": "3101cd748f813ac7162502325c424f040409bb9e"
+        },
+        {
+          "name": "v1.0.7",
+          "sha": "d75372920e5563d7238783d586ef5f4311dbf9f2"
+        },
+        {
+          "name": "v1.0.6",
+          "sha": "0e39496ca4036b9d3812a2103ab1497a3082782e"
+        },
+        {
+          "name": "v1.0.5",
+          "sha": "90a22c25b33a6fad7b6b81424796e95a2e28afed"
+        },
+        {
+          "name": "v1.0.4",
+          "sha": "7e8cf4f4522247aa5a23a27a163a3b3a4a9e913d"
+        },
+        {
+          "name": "v1.0.3",
+          "sha": "ac41587442f5ed5e262a4f1be1a5988052bb2bff"
+        },
+        {
+          "name": "v1.0.2",
+          "sha": "07f8bacaa9ebcf5472d6a82aa94c60cbb455a985"
+        },
+        {
+          "name": "v1.0.1",
+          "sha": "caea1610a935d6fb0683d4fbe181bb6dd337c608"
+        },
+        {
+          "name": "v1.0.0",
+          "sha": "8bd33ea44d4412087ef77f92b552cb75ed91b5bc"
+        },
+        {
+          "name": "v0.3.1",
+          "sha": "0f0e163363e7b727ceede89170b5cd06f2c71a5a"
+        },
+        {
+          "name": "v0.3.0",
+          "sha": "32adc75b8b82bbe302e0e42f9a30d7e59ca0ee0b"
+        },
+        {
+          "name": "v0.2.0",
+          "sha": "07bb8f5320bd8773638d1bb3b03152730ac6b5dd"
+        },
+        {
+          "name": "v0.1.0",
+          "sha": "87a6bebdb06f02d2507dcf43d9f9986ed81c06f6"
+        },
+        {
+          "name": "v0.0.1",
+          "sha": "802c7546206a8001436ff97a790fa4006fff750e"
+        }
+      ],
+      "releases": [
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v2.1.2",
+          "prerelease": false,
+          "tag_name": "v2.1.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v2.1.1",
+          "prerelease": false,
+          "tag_name": "v2.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v2.1.0",
+          "prerelease": false,
+          "tag_name": "v2.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v2.0.0",
+          "prerelease": false,
+          "tag_name": "v2.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.1.2",
+          "prerelease": false,
+          "tag_name": "v1.1.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.1.1",
+          "prerelease": false,
+          "tag_name": "v1.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.1.0",
+          "prerelease": false,
+          "tag_name": "v1.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.7",
+          "prerelease": false,
+          "tag_name": "v1.0.7"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.6",
+          "prerelease": false,
+          "tag_name": "v1.0.6"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.5",
+          "prerelease": false,
+          "tag_name": "v1.0.5"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.4",
+          "prerelease": false,
+          "tag_name": "v1.0.4"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.3",
+          "prerelease": false,
+          "tag_name": "v1.0.3"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.2",
+          "prerelease": false,
+          "tag_name": "v1.0.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.1",
+          "prerelease": false,
+          "tag_name": "v1.0.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v1.0.0",
+          "prerelease": false,
+          "tag_name": "v1.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v0.3.1",
+          "prerelease": false,
+          "tag_name": "v0.3.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v0.3.0",
+          "prerelease": false,
+          "tag_name": "v0.3.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v0.2.0",
+          "prerelease": false,
+          "tag_name": "v0.2.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v0.1.0",
+          "prerelease": false,
+          "tag_name": "v0.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nest/releases/tag/v0.0.1",
+          "prerelease": false,
+          "tag_name": "v0.0.1"
+        }
+      ],
+      "workflow_sources": "https://github.com/querry-kit/nest/tree/ad68cba0dc17850b667980a62cab2f2d648ff940/.github/workflows",
+      "prefix": "packages/nest",
+      "release_workflow": {
+        "total": 78,
+        "in_flight": [],
+        "latest": {
+          "head_sha": "ad68cba0dc17850b667980a62cab2f2d648ff940",
+          "html_url": "https://github.com/querry-kit/nest/actions/runs/45069313489",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      }
+    },
+    "nuxt": {
+      "repo": {
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "archived": false,
+        "default_branch": "main",
+        "has_pages": true
+      },
+      "commit": {
+        "date": "2026-11-22T20:57:33Z",
+        "sha": "ba5dfab593c5b5c5791d7356f5378bd2b39b7d79",
+        "tree": "1c19b8d261ee1c6aa0fefab985df7501577c2cff"
+      },
+      "branch": {
+        "protected": true,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "checks": [],
+            "contexts": [],
+            "enforcement_level": "off"
+          }
+        }
+      },
+      "rules": [
+        {
+          "parameters": null,
+          "type": "deletion"
+        }
+      ],
+      "issues": [],
+      "workflows": [
+        {
+          "path": ".github/workflows/build.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/changesets.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/lint.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/test.yml",
+          "state": "active"
+        },
+        {
+          "path": "dynamic/dependabot/dependabot-updates",
+          "state": "active"
+        }
+      ],
+      "tags": [
+        {
+          "name": "v1.1.2",
+          "sha": "5a5f370da4f3bc3c036714dfd7fdafb2bf039934"
+        },
+        {
+          "name": "v1.1.1",
+          "sha": "828040139a06f5aae31a2660e98f45f7ae27465b"
+        },
+        {
+          "name": "v1.1.0",
+          "sha": "90a37cec2cce1b4f6b02b02a8a5e0e5cb38a6ef1"
+        },
+        {
+          "name": "v1.0.0",
+          "sha": "d3e9bcdf49accb83d3cbc408f5617c07e690e4ae"
+        },
+        {
+          "name": "v0.2.10",
+          "sha": "8875a9f49338818e0761fd8a015b40eec06c2247"
+        },
+        {
+          "name": "v0.2.9",
+          "sha": "3127f5df9d6b10638853c6beef9ee3e0b9e61aff"
+        },
+        {
+          "name": "v0.2.8",
+          "sha": "55bbfff1aa45629275288e7c989f99f463a95cdd"
+        },
+        {
+          "name": "v0.2.7",
+          "sha": "442120cc62da3efac31adff59ea6611c0fea32c6"
+        },
+        {
+          "name": "v0.2.6",
+          "sha": "26cdb91092bfa5f5e2a5b647ef39b3da6834afff"
+        },
+        {
+          "name": "v0.2.5",
+          "sha": "3392bd5a64a441e8af9a2cde00f8830ba11be68a"
+        },
+        {
+          "name": "v0.2.4",
+          "sha": "859001576691379c5ee20c99948126eb5321796c"
+        },
+        {
+          "name": "v0.2.3",
+          "sha": "a3dcd80a46aee220786db5af990ca0f6d084cbd8"
+        },
+        {
+          "name": "v0.2.2",
+          "sha": "6a711b82a3a2fcd62b79fa5d9f08d82ac9483e31"
+        },
+        {
+          "name": "v0.2.1",
+          "sha": "3a09e6472819707e6ebc0e7848cf2ca55a072422"
+        },
+        {
+          "name": "v0.2.0",
+          "sha": "87ccd5fa43adb4d8ac7fd42eb41242ee27ee9ab8"
+        },
+        {
+          "name": "v0.1.1",
+          "sha": "2ed9092d4f5f915b53a63db405a84ece14adeee7"
+        },
+        {
+          "name": "v0.1.0",
+          "sha": "3b7309e82faf5b81af408aff3e0f7fb9eb01248d"
+        },
+        {
+          "name": "v0.0.5",
+          "sha": "b8c851786c8b6dffee1fb710615ed12fb5f04613"
+        },
+        {
+          "name": "v0.0.4",
+          "sha": "2defb8346a56c4f43b5efac281386a17a1051bd7"
+        },
+        {
+          "name": "v0.0.3",
+          "sha": "0474ab80bdd9da4c2606bdf94344fc58045da245"
+        },
+        {
+          "name": "v0.0.2",
+          "sha": "66f1d8811928dbb8fa1261b05e2a20f54b82a6d6"
+        }
+      ],
+      "releases": [
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v1.1.2",
+          "prerelease": false,
+          "tag_name": "v1.1.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v1.1.1",
+          "prerelease": false,
+          "tag_name": "v1.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v1.1.0",
+          "prerelease": false,
+          "tag_name": "v1.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v1.0.0",
+          "prerelease": false,
+          "tag_name": "v1.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.10",
+          "prerelease": false,
+          "tag_name": "v0.2.10"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.9",
+          "prerelease": false,
+          "tag_name": "v0.2.9"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.8",
+          "prerelease": false,
+          "tag_name": "v0.2.8"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.7",
+          "prerelease": false,
+          "tag_name": "v0.2.7"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.6",
+          "prerelease": false,
+          "tag_name": "v0.2.6"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.5",
+          "prerelease": false,
+          "tag_name": "v0.2.5"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.4",
+          "prerelease": false,
+          "tag_name": "v0.2.4"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.3",
+          "prerelease": false,
+          "tag_name": "v0.2.3"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.2",
+          "prerelease": false,
+          "tag_name": "v0.2.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.1",
+          "prerelease": false,
+          "tag_name": "v0.2.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.2.0",
+          "prerelease": false,
+          "tag_name": "v0.2.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.1.1",
+          "prerelease": false,
+          "tag_name": "v0.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.1.0",
+          "prerelease": false,
+          "tag_name": "v0.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.0.5",
+          "prerelease": false,
+          "tag_name": "v0.0.5"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.0.4",
+          "prerelease": false,
+          "tag_name": "v0.0.4"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.0.3",
+          "prerelease": false,
+          "tag_name": "v0.0.3"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt/releases/tag/v0.0.2",
+          "prerelease": false,
+          "tag_name": "v0.0.2"
+        }
+      ],
+      "workflow_sources": "https://github.com/querry-kit/nuxt/tree/ba5dfab593c5b5c5791d7356f5378bd2b39b7d79/.github/workflows",
+      "prefix": "packages/nuxt",
+      "release_workflow": {
+        "total": 79,
+        "in_flight": [],
+        "latest": {
+          "head_sha": "ba5dfab593c5b5c5791d7356f5378bd2b39b7d79",
+          "html_url": "https://github.com/querry-kit/nuxt/actions/runs/45069342824",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      }
+    },
+    "nuxt-ui": {
+      "repo": {
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "archived": false,
+        "default_branch": "main",
+        "has_pages": true
+      },
+      "commit": {
+        "date": "2026-11-22T20:57:56Z",
+        "sha": "a63116e2e193384b2a2e1045c3c60f61cb845226",
+        "tree": "3070058f32090be7b7fb13fadbe0eac9854422ce"
+      },
+      "branch": {
+        "protected": true,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "checks": [],
+            "contexts": [],
+            "enforcement_level": "off"
+          }
+        }
+      },
+      "rules": [
+        {
+          "parameters": null,
+          "type": "deletion"
+        }
+      ],
+      "issues": [],
+      "workflows": [
+        {
+          "path": ".github/workflows/build.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/changesets.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/lint.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "state": "active"
+        },
+        {
+          "path": ".github/workflows/test.yml",
+          "state": "active"
+        },
+        {
+          "path": "dynamic/dependabot/dependabot-updates",
+          "state": "active"
+        }
+      ],
+      "tags": [
+        {
+          "name": "v4.3.0",
+          "sha": "031e5a64bf66928bd98e39f9f71c69e56be5f5b0"
+        },
+        {
+          "name": "v4.2.0",
+          "sha": "317a4243a94c6cd866999b2e4e4407ba6efdbc3c"
+        },
+        {
+          "name": "v4.1.0",
+          "sha": "4a909fb1efd46b9a5f0daf5d977137ace107c9cf"
+        },
+        {
+          "name": "v4.0.0",
+          "sha": "5bc969c8e7829300aeeda00f628d3125d871901b"
+        },
+        {
+          "name": "v3.3.10",
+          "sha": "88d4c4f5df45bdce338620e189f571911e7c243d"
+        },
+        {
+          "name": "v3.3.9",
+          "sha": "637c66327b4466e0dd9103bc232662b95eacf0f2"
+        },
+        {
+          "name": "v3.3.8",
+          "sha": "fdb0e9918d88cc03fb5b519b54096d13b50617bc"
+        },
+        {
+          "name": "v3.3.7",
+          "sha": "18104c0976481c3650a90574909913c63763923f"
+        },
+        {
+          "name": "v3.3.6",
+          "sha": "0ccfba5ca039851df8c3b5c1bf43980da9825020"
+        },
+        {
+          "name": "v3.3.5",
+          "sha": "59daa1d5981c7c86449dfd0d38987577e8ffbc1b"
+        },
+        {
+          "name": "v3.3.4",
+          "sha": "2d99200198ef95abb14e9882bc6b38659345fe1e"
+        },
+        {
+          "name": "v3.3.3",
+          "sha": "8448e8fd0a88565233a486f933248d03edb36946"
+        },
+        {
+          "name": "v3.3.2",
+          "sha": "95b1a79426f531f96ee2b7b21c51699202982079"
+        },
+        {
+          "name": "v3.3.1",
+          "sha": "a3f43f221ffca27c68b13babfd9e31f5c960b469"
+        },
+        {
+          "name": "v3.3.0",
+          "sha": "641cc0b932ec49f1c158966b143ccc1fb07f841a"
+        },
+        {
+          "name": "v3.2.1",
+          "sha": "cc35ec70cf6d62934e81eacf8c649a4411ad0c97"
+        },
+        {
+          "name": "v3.2.0",
+          "sha": "ad2bd11c4f79ae5819e6e1083e70c4236d05d89e"
+        },
+        {
+          "name": "v3.1.2",
+          "sha": "235604fd3f1c58201a0a18d5d859ab6fbc1a8136"
+        },
+        {
+          "name": "v3.1.1",
+          "sha": "ce85b97f55cba40e26f63d98e9ad117ae0139a12"
+        },
+        {
+          "name": "v2.0.1",
+          "sha": "367e694bd690e4ae40de24eed9487add202ba451"
+        },
+        {
+          "name": "v2.0.0",
+          "sha": "15ddffd0ebbb362dc148fb1818914647b75555b2"
+        },
+        {
+          "name": "v1.0.0",
+          "sha": "d1b0be6afe07e4686590339fe59e494e49a28f88"
+        },
+        {
+          "name": "v0.1.2",
+          "sha": "8d1503711d09985ab8fd65440703c3297d54a4f2"
+        },
+        {
+          "name": "v0.1.1",
+          "sha": "ce728cdc93a2495703c1578e9fae728cc76a3dff"
+        },
+        {
+          "name": "v0.1.0",
+          "sha": "3bb217f550d557aba12685eafaf4d41374309025"
+        },
+        {
+          "name": "v0.0.1",
+          "sha": "28bf220c684f7db896c28853f987407fcb1c254e"
+        }
+      ],
+      "releases": [
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v4.3.0",
+          "prerelease": false,
+          "tag_name": "v4.3.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v4.2.0",
+          "prerelease": false,
+          "tag_name": "v4.2.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v4.1.0",
+          "prerelease": false,
+          "tag_name": "v4.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v4.0.0",
+          "prerelease": false,
+          "tag_name": "v4.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.10",
+          "prerelease": false,
+          "tag_name": "v3.3.10"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.9",
+          "prerelease": false,
+          "tag_name": "v3.3.9"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.8",
+          "prerelease": false,
+          "tag_name": "v3.3.8"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.7",
+          "prerelease": false,
+          "tag_name": "v3.3.7"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.6",
+          "prerelease": false,
+          "tag_name": "v3.3.6"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.5",
+          "prerelease": false,
+          "tag_name": "v3.3.5"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.4",
+          "prerelease": false,
+          "tag_name": "v3.3.4"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.3",
+          "prerelease": false,
+          "tag_name": "v3.3.3"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.2",
+          "prerelease": false,
+          "tag_name": "v3.3.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.1",
+          "prerelease": false,
+          "tag_name": "v3.3.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.3.0",
+          "prerelease": false,
+          "tag_name": "v3.3.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.2.1",
+          "prerelease": false,
+          "tag_name": "v3.2.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.2.0",
+          "prerelease": false,
+          "tag_name": "v3.2.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.1.2",
+          "prerelease": false,
+          "tag_name": "v3.1.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v3.1.1",
+          "prerelease": false,
+          "tag_name": "v3.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v2.0.1",
+          "prerelease": false,
+          "tag_name": "v2.0.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v2.0.0",
+          "prerelease": false,
+          "tag_name": "v2.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v1.0.0",
+          "prerelease": false,
+          "tag_name": "v1.0.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v0.1.2",
+          "prerelease": false,
+          "tag_name": "v0.1.2"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v0.1.1",
+          "prerelease": false,
+          "tag_name": "v0.1.1"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v0.1.0",
+          "prerelease": false,
+          "tag_name": "v0.1.0"
+        },
+        {
+          "draft": false,
+          "html_url": "https://github.com/querry-kit/nuxt-ui/releases/tag/v0.0.1",
+          "prerelease": false,
+          "tag_name": "v0.0.1"
+        }
+      ],
+      "workflow_sources": "https://github.com/querry-kit/nuxt-ui/tree/a63116e2e193384b2a2e1045c3c60f61cb845226/.github/workflows",
+      "prefix": "packages/nuxt-ui",
+      "release_workflow": {
+        "total": 90,
+        "in_flight": [],
+        "latest": {
+          "head_sha": "a63116e2e193384b2a2e1045c3c60f61cb845226",
+          "html_url": "https://github.com/querry-kit/nuxt-ui/actions/runs/45069375770",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      }
+    },
+    "example": {
+      "repo": {
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "archived": false,
+        "default_branch": "main",
+        "has_pages": false
+      },
+      "commit": {
+        "date": "2026-11-22T20:51:10Z",
+        "sha": "f7f7d0b9c813cdf7960fab87bf0e8becfb03260e",
+        "tree": "c46802585c5d662e6c610d9981ed83fe419cf3b9"
+      },
+      "branch": {
+        "protected": true,
+        "protection": {
+          "enabled": true,
+          "required_status_checks": {
+            "checks": [
+              {
+                "app_id": 15368,
+                "context": "verify"
+              }
+            ],
+            "contexts": [
+              "verify"
+            ],
+            "enforcement_level": "everyone"
+          }
+        }
+      },
+      "rules": [],
+      "issues": [],
+      "workflows": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "state": "active"
+        }
+      ],
+      "tags": [],
+      "releases": [],
+      "workflow_sources": "https://github.com/querry-kit/example/tree/f7f7d0b9c813cdf7960fab87bf0e8becfb03260e/.github/workflows",
+      "prefix": "imports/example"
+    }
+  }
+}
