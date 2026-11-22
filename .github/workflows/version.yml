@@ -1,0 +1,22 @@
+name: Version packages
+on:
+  push:
+    branches: [main]
+permissions: {}
+concurrency:
+  group: version-packages
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/workspace
+      - uses: changesets/action@v2
+        with:
+          version-script: pnpm version-packages
+          pr-title: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

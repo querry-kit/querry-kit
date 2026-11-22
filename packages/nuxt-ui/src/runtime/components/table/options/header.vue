@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4 flex items-center justify-between gap-2">
-    <span ref="heading" class="flex items-center gap-2" tabindex="-1">
+    <span ref="heading" class="flex items-center gap-2" tabindex="-1" @keydown.esc.stop.prevent="emit('close')">
       <UIcon :name="icon('options.header')" />
       {{ t('options.title') }}
     </span>
@@ -25,7 +25,7 @@ import type { TableIconOverrides } from '../../../icons';
 import type { TableTextOverrides } from '../../../texts';
 
 const props = defineProps<{ canReset: boolean; texts?: TableTextOverrides; icons?: TableIconOverrides }>();
-const emit = defineEmits<{ reset: [] }>();
+const emit = defineEmits<{ reset: []; close: [] }>();
 const t = useTableI18n(() => props.texts);
 const icon = useTableIcons(props.icons);
 const heading = useTemplateRef('heading');

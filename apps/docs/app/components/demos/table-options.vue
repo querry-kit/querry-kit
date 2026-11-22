@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ColumnDefinition, ColumnPinning } from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
+import type { ColumnDefinition, ColumnPinning } from '@querry-kit/nuxt-ui/types';
 
 const columnOrder = ref<string[]>(['name', 'status', 'owner']);
 const invisibleColumns = ref<string[]>([]);

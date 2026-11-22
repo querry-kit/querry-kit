@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: workboard
+      POSTGRES_USER: workboard
+      POSTGRES_PASSWORD: workboard
+    volumes:
+      - ./dockerdata/postgres-demo:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U workboard -d workboard']
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  api:
+    build:
+      context: ../..
+      dockerfile: examples/workboard/apps/api/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://workboard:workboard@db:5432/workboard
+      DEMO_ORIGIN: http://127.0.0.1:${WORKBOARD_APP_PORT:-3201}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3101/api/health/ready').then(r=>{if(!r.ok)process.exit(1)})"]
+      interval: 2s
+      timeout: 4s
+      retries: 20
+
+  app:
+    build:
+      context: ../..
+      dockerfile: examples/workboard/apps/app/Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      NUXT_API_ORIGIN: http://api:3101
+    ports:
+      - '127.0.0.1:${WORKBOARD_APP_PORT:-3201}:3201'
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3201/api/health/ready').then(r=>{if(!r.ok)process.exit(1)})"]
+      interval: 2s
+      timeout: 4s
+      retries: 20

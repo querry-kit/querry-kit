@@ -2,7 +2,7 @@
 
 ## Runtime requirements
 
-The next major release requires Node.js 26.13.0 or newer and drops Node.js 24 support. Upgrade application runtimes and CI before updating. Published package versions remain unchanged until the release workflow runs.
+The published `@querry-kit/nuxt@1.1.2` requires Node.js 26.13.0 or newer. Workspace previews marked **Next** may include changes that are not in that release.
 
 Install the core package and its peers:
 

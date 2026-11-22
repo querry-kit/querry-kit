@@ -13,7 +13,7 @@ import {
   FilteringMode,
   type FilterField,
   type Filtering,
-} from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
+} from '@querry-kit/nuxt-ui/types';
 
 const filtering = ref<Filtering>({ operator: FilteringMode.Intersect, filters: [] });
 const fields: FilterField[] = [

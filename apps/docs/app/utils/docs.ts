@@ -23,7 +23,7 @@ export const documentationPackages: DocumentationPackage[] = [
     label: 'Nest',
     packageName: '@querry-kit/nest',
     description: 'Resource queries, fields projection, pagination and API helpers for NestJS.',
-    repository: 'https://github.com/querry-kit/nest',
+    repository: 'https://github.com/querry-kit/querry-kit/tree/main/packages/nest',
     groups: [
       {
         text: 'Guide',
@@ -66,7 +66,7 @@ export const documentationPackages: DocumentationPackage[] = [
     label: 'Nuxt',
     packageName: '@querry-kit/nuxt',
     description: 'Typed API clients, remote table state and autocomplete composables.',
-    repository: 'https://github.com/querry-kit/nuxt',
+    repository: 'https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt',
     groups: [
       {
         text: 'Guide',
@@ -100,7 +100,7 @@ export const documentationPackages: DocumentationPackage[] = [
     label: 'Nuxt UI',
     packageName: '@querry-kit/nuxt-ui',
     description: 'Composable, accessible table controls for Nuxt UI applications.',
-    repository: 'https://github.com/querry-kit/nuxt-ui',
+    repository: 'https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt-ui',
     groups: [
       { text: 'Guide', icon: 'i-lucide-book-open', items: [{ text: 'Getting Started', path: page('nuxt-ui', '/guide/getting-started'), icon: 'i-lucide-rocket' }] },
       {

@@ -17,12 +17,26 @@ export default tseslint.config(
       '**/dist/**',
       '**/coverage/**',
       '**/generated/**',
+      '**/test-results/**',
+      '**/playwright-report/**',
+      '**/.specify/**',
+      '**/.agents/**',
+      '**/.data/**',
+      '**/dockerdata/**',
       'docs/.vitepress/**',
     ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],
+  {
+    files: ['scripts/**/*.mjs', 'tests/packed/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    files: ['tests/packed/nuxt/plugin.mjs'],
+    languageOptions: { globals: { defineNuxtPlugin: 'readonly' } },
+  },
   {
     files: ['**/*.{ts,vue}'],
     languageOptions: {

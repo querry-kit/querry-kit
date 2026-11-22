@@ -1,0 +1,103 @@
+name: Workspace CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    outputs:
+      full: ${{ steps.scope.outputs.full }}
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0, persist-credentials: false }
+      - id: scope
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          full=true
+          if git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            git diff --name-only -z "$BASE"...HEAD > "$RUNNER_TEMP/changed"
+            full=$(python3 -c 'import sys; paths=open(sys.argv[1],"rb").read().split(b"\0"); print(str(any(p and not p.startswith(b"apps/docs/") for p in paths)).lower())' "$RUNNER_TEMP/changed")
+          fi
+          echo "full=$full" >> "$GITHUB_OUTPUT"
+  libraries:
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: { id: [nest, nuxt, nuxt-ui] }
+    steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/workspace
+      - run: pnpm build:packages
+      - env: { LIB: "${{ matrix.id }}" }
+        run: |
+          pnpm --filter "@querry-kit/$LIB" lint
+          if [[ "$LIB" == nest ]]; then
+            pnpm --filter @querry-kit/nest check
+            pnpm --filter @querry-kit/nest test:optional-peers
+          else
+            pnpm --filter "@querry-kit/$LIB" typecheck
+          fi
+          pnpm --filter "@querry-kit/$LIB" test:coverage
+  consumers:
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/workspace
+      - run: |
+          pnpm build:packages
+          pnpm examples:build
+          pnpm examples:check
+          pnpm examples:lint
+          pnpm examples:format:check
+          pnpm examples:sources:check
+          pnpm --filter @workboard/app exec playwright install --with-deps chromium
+          pnpm examples:test:api
+          pnpm examples:test:compose
+  packed:
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/workspace
+      - run: |
+          pnpm exec eslint scripts tests/packed --max-warnings=0
+          pnpm build:packages
+          pnpm verify:packages
+          pnpm verify:release-plan
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/workspace
+      - run: |
+          pnpm build:packages
+          pnpm docs:lint
+          pnpm docs:typecheck
+          pnpm --dir apps/docs exec playwright install --with-deps chromium
+          pnpm docs:test
+  result:
+    name: Workspace checks
+    if: always()
+    needs: [scope, libraries, consumers, packed, docs]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          jq -e '.scope.result == "success" and .docs.result == "success" and
+            ((if .scope.outputs.full == "true" then "success" else "skipped" end) as $want |
+            [.libraries.result,.consumers.result,.packed.result] | all(. == $want))' <<< "$NEEDS"

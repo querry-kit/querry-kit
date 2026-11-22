@@ -8,9 +8,9 @@ Querry Kit is a set of complementary building blocks for relational, type-safe N
 
 | Repository                                                     | Role in the reference application                                                                                            |
 | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [`@querry-kit/nest`](https://github.com/querry-kit/nest)       | NestJS controller helpers, `ResourceQuery`, DTO-backed `fields` projections, pagination, query pipes, and OpenAPI decorators |
-| [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt)       | Axios client, typed resource clients, and the headless `useTable` composable                                                 |
-| [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) | Nuxt module with a toolbar, filters, sorting, column options, and pagination for Query Kit tables                            |
+| [`@querry-kit/nest`](packages/nest)       | NestJS controller helpers, `ResourceQuery`, DTO-backed `fields` projections, pagination, query pipes, and OpenAPI decorators |
+| [`@querry-kit/nuxt`](packages/nuxt)       | Axios client, typed resource clients, and the headless `useTable` composable                                                 |
+| [`@querry-kit/nuxt-ui`](packages/nuxt-ui) | Nuxt module with a toolbar, filters, sorting, column options, and pagination for Query Kit tables                            |
 
 ## 📚 Table of Contents <!-- omit in toc -->
 
@@ -22,39 +22,18 @@ Querry Kit is a set of complementary building blocks for relational, type-safe N
 
 ## 📦 Install
 
-Prerequisites: Node.js 26.13.0 LTS and the pnpm 11 version pinned in `package.json`. The three core repositories must be available as sibling directories next to this checkout, as they are in the Querry Kit organization. The example packages intentionally use `link:` specifications so library changes are immediately available in the reference apps.
+Install Node 26.13+ (26.x) and the pnpm version pinned in `package.json`. From the monorepo root:
 
 ```sh
-pnpm install
-
-cd examples/workboard/api
-cp .env.example .env
-docker compose up -d
-pnpm prisma:generate && pnpm db:push && pnpm db:seed
+pnpm install --frozen-lockfile
+pnpm build
 ```
 
 ## 🧩 Usage
 
-Workboard is a product-team workspace. Its data model connects:
+[Workboard](examples/workboard/README.md) runs PostgreSQL, a Nest/Fastify API and a Nuxt dashboard for account-scoped projects and tasks. From `examples/workboard/`, run `docker compose up -d --build --wait`; open the [dashboard](http://127.0.0.1:3201) or [OpenAPI reference](http://127.0.0.1:3201/docs). The same README describes running the API and app on the host with a separate development database.
 
-- `Workspace` → `Project` → `Task` (two one-to-many relations)
-- `Workspace` → `Member` (one-to-many)
-- `Task` ↔ `Label` (many-to-many)
-
-The Nest API follows a production-oriented `config`, `prisma`, and domain-module structure. It uses the dedicated Prisma model in `examples/workboard/api/prisma/schema.prisma`; the Nuxt app loads the project list with `useTable` and renders `QuerryKitTableToolbar` and `QuerryKitTablePagination`.
-
-Start the API and web app in separate terminals:
-
-```sh
-pnpm --filter @querry-kit/example-workboard-api dev
-pnpm --filter @querry-kit/example-workboard-web dev
-```
-
-| Application | API                     | Web                     | OpenAPI                      |
-| ----------- | ----------------------- | ----------------------- | ---------------------------- |
-| Workboard   | `http://localhost:3101` | `http://localhost:3201` | `http://localhost:3101/docs` |
-
-For a separately deployed API, set `NUXT_PUBLIC_API_BASE=https://api.example.test` in the corresponding web package.
+For the original workspace/member/task/label graph and its UUID API, see the [project projection lesson](apps/docs/content/docs/nest/guide/example-app.md#historical-workboard-project-projection).
 
 ## 📖 Documentation
 
@@ -79,9 +58,7 @@ The documentation is a statically generated Nuxt 4 application in `apps/docs`. I
 
 ### Package changelogs
 
-The docs build fetches the current `CHANGELOG.md` from each package repository. The generated content files are ignored, so they must not be committed. The docs workflow refreshes them on every deployment and every six hours.
-
-For an immediate update after a package release, configure the `QUERRY_KIT_DOCS_TOKEN` Actions secret in each package repository. The token must be permitted to send a repository-dispatch event to `querry-kit/querry-kit`; without it, the scheduled refresh remains the fallback.
+The docs build reads `packages/{nest,nuxt,nuxt-ui}/CHANGELOG.md` from the same commit as the site. Generated copies are ignored.
 
 ## 🛠 Development
 
@@ -107,7 +84,7 @@ The docs theme restores saved settings before persisting changes and works when 
 
 ## Development toolchain
 
-Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets tracks the private documentation-site version; site packages are not published to npm. Pull requests run lint, type checks, documentation tests and the static build before deployment.
+Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changesets versions the three libraries independently; documentation, Workboard and contracts stay private. Pull requests run lint, type checks, documentation tests and the static build before deployment.
 
 ### Dependency maintenance
 
@@ -117,34 +94,4 @@ Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and
 
 ## Group-by documentation
 
-The grouped-table demo uses the published `@querry-kit/nuxt` 1.x and
-`@querry-kit/nuxt-ui` 4.x packages from the lockfile. Node.js 26.13.0 or newer
-is required. No sibling package builds or local dependency links are needed
-for the documentation app.
-
-```sh
-pnpm install --frozen-lockfile
-pnpm docs:lint
-pnpm docs:typecheck
-pnpm docs:test
-pnpm docs:build
-```
-
-The interactive fixture uses synthetic records and an in-browser Axios adapter;
-its group counts and lazy loading are independent of production systems.
-
-To check the website against unreleased Nuxt UI changes, use a disposable copy of this website checkout. Pack the library and install that exact tarball **in the copy** so the demos, generated component types, and Tailwind scan all use the same build:
-
-```sh
-# In the nuxt-ui checkout (with dependencies installed):
-pnpm pack --pack-destination /path/to/preview-packages
-
-# In the disposable website checkout:
-pnpm install --frozen-lockfile
-pnpm --filter @querry-kit/docs add @querry-kit/nuxt-ui@file:/path/to/preview-packages/querry-kit-nuxt-ui-4.2.0.tgz
-pnpm docs:typecheck
-pnpm docs:test
-pnpm docs:build
-```
-
-Use the filename printed by `pnpm pack`. Keep the temporary manifest and lockfile out of the website PR. When the UI changes are released, update the site's dependency and lockfile to that release before deploying the docs and demos together.
+The grouped-table demo exercises local library builds using synthetic records and an in-browser Axios adapter. It does not require a Workboard database. Run `pnpm build:packages` after a library edit, then `pnpm docs:test` to exercise the change in the browser.

@@ -191,3 +191,14 @@ Every route accepts `fields`. Unknown DTO fields return HTTP 400 during fields v
 Register `QueryTransformPipe` and `FieldsExceptionFilter` once in the application bootstrap. The complete [NestJS `main.ts`](/docs/nest/guide/main-bootstrap) example includes validation and Swagger configuration.
 
 With those pieces in place, the API remains application-owned: replace `BookDTO`, `BooksService`, the Prisma types, and the ability with the equivalents from your own domain.
+## Historical Workboard project projection
+
+The [original UUID-based Workboard controller](https://github.com/querry-kit/querry-kit/blob/34b2dca/examples/workboard/api/src/modules/projects/projects.controller.ts) and its [web columns](https://github.com/querry-kit/querry-kit/blob/34b2dca/examples/workboard/web/app/app.vue) illustrate how a column such as `tasks` requests `title`, `status`, and `labels.name`. This query belongs to that historical API, not the canonical Workboard's `/api/projects` lookup:
+
+```text
+GET /api/v1/projects?fields=items{id,name,workspace{name},tasks{title,status,labels{name}}},meta{page,itemCount,pageCount}
+```
+
+`ResourceQuery.query` prepares nested includes from `ProjectDTO`, maps database records to DTOs, and projects both items and metadata. The [runnable fixture](https://github.com/querry-kit/querry-kit/tree/main/packages/nest/test/workboard) checks `Spring launch` in `Product studio`, two labels on `Refine product brief`, and an empty list on `Document API contract`. A separate detail selection demonstrates `workspace.members` and an absent assignee without exposing member roles or label colors.
+
+For `POST /api/v1/projects`, the controller prepares the fields before creating the project with `name` and `workspaceId`, then projects the mapped write result. `PATCH /api/v1/projects/tasks/:id` accepts a status or nullable `assigneeId` and returns a task, not a project. The historical and canonical apps have different schemas and storage; these examples do not require running the old seed.

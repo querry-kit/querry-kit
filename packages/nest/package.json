@@ -21,10 +21,11 @@
   "homepage": "https://querry-kit.github.io/querry-kit/docs/nest/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/querry-kit/nest.git"
+    "url": "git+https://github.com/querry-kit/querry-kit.git",
+    "directory": "packages/nest"
   },
   "bugs": {
-    "url": "https://github.com/querry-kit/nest/issues"
+    "url": "https://github.com/querry-kit/querry-kit/issues"
   },
   "author": {
     "name": "Tobias Wälde",
@@ -179,6 +180,7 @@
     "prettier": "^3.10.1",
     "prettier-plugin-organize-imports": "^4.3.0",
     "reflect-metadata": "^0.2.2",
+    "supports-color": "10.2.2",
     "ts-jest": "^29.4.15",
     "tsup": "^9.0.0",
     "typescript": "npm:@typescript/typescript6@^6.0.2",

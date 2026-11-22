@@ -1,0 +1,51 @@
+name: Publish reviewed packages
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: Exact comma-separated package names changed in this main commit
+        required: true
+        type: string
+permissions: {}
+concurrency:
+  group: central-npm-publisher
+  cancel-in-progress: false
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/main' && vars.NPM_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0, persist-credentials: false }
+      - uses: ./.github/actions/workspace
+      - env: { EXPECTED: "${{ inputs.packages }}" }
+        run: |
+          pnpm build:packages
+          pnpm verify:packages "$RUNNER_TEMP/release"
+          node scripts/release/run.mjs inspect "$RUNNER_TEMP/release" "$EXPECTED"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: reviewed-${{ github.sha }}
+          path: ${{ runner.temp }}/release
+          if-no-files-found: error
+  publish:
+    needs: inspect
+    environment: npm-production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v7
+        with: { node-version: 26.13.1, package-manager-cache: false }
+      - uses: actions/download-artifact@v8
+        with:
+          name: reviewed-${{ github.sha }}
+          path: ${{ runner.temp }}/release
+      - env:
+          EXPECTED: ${{ inputs.packages }}
+          NPM_ENABLED_PACKAGES: ${{ vars.NPM_ENABLED_PACKAGES }}
+        run: node scripts/release/run.mjs publish "$RUNNER_TEMP/release" "$EXPECTED"

@@ -1,0 +1,13 @@
+name: Install workspace
+description: Install the frozen pnpm workspace on the supported Node release
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v6
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 26.13.1
+        cache: pnpm
+        cache-dependency-path: pnpm-lock.yaml
+    - shell: bash
+      run: pnpm install --frozen-lockfile

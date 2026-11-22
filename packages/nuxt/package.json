@@ -15,10 +15,11 @@
   "homepage": "https://querry-kit.github.io/querry-kit/docs/nuxt",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/querry-kit/nuxt.git"
+    "url": "git+https://github.com/querry-kit/querry-kit.git",
+    "directory": "packages/nuxt"
   },
   "bugs": {
-    "url": "https://github.com/querry-kit/nuxt/issues"
+    "url": "https://github.com/querry-kit/querry-kit/issues"
   },
   "author": {
     "name": "Tobias Waelde",
