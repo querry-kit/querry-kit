@@ -43,8 +43,8 @@ Use a clean disposable clone so neither Compose file can touch pre-existing bind
 
 ```sh
 pnpm --filter @workboard/app exec playwright install --with-deps chromium
-bash examples/workboard/scripts/test-api.sh
-bash examples/workboard/scripts/test-compose.sh
+bash example/scripts/test-api.sh
+bash example/scripts/test-compose.sh
 ```
 
 Preserve/adapt these canonical script paths. Expected: live Fastify and PostgreSQL; cold image build without vendor sources or host Node; app port exposed on loopback, API/DB internal; OpenAPI group-by route present; 18 compact seeded task IDs unchanged across restart; browser tests exercise desktop/mobile views and persona-scoped reads. Inspect final image layers for local env files, staging trees, credentials and machine-specific paths.
@@ -52,7 +52,7 @@ Preserve/adapt these canonical script paths. Expected: live Fastify and PostgreS
 Then start **development mode** separately, on unused ports and a fresh database directory:
 
 ```sh
-docker compose -p qk-plan53-dev -f examples/workboard/compose.dev.yml up -d --wait
+docker compose -p qk-plan53-dev -f example/compose.dev.yml up -d --wait
 pnpm --filter @workboard/api dev
 # In a second terminal:
 pnpm --filter @workboard/app dev
@@ -61,7 +61,7 @@ curl -fsS http://127.0.0.1:3101/api/health/ready
 curl -fsS http://127.0.0.1:3201/docs/openapi.json | jq -e '.paths["/api/tasks/group-by"].get != null'
 ```
 
-Open the dashboard, change persona, filter/group tasks and inspect a projection. Stop the two host processes and run `docker compose -p qk-plan53-dev -f examples/workboard/compose.dev.yml down`. Exercise the legacy teaching cases and original inbound links in the [consumer contract](contracts/consumers.md); a working canonical dashboard does not cover those cases automatically.
+Open the dashboard, change persona, filter/group tasks and inspect a projection. Stop the two host processes and run `docker compose -p qk-plan53-dev -f example/compose.dev.yml down`. Exercise the legacy teaching cases and original inbound links in the [consumer contract](contracts/consumers.md); a working canonical dashboard does not cover those cases automatically.
 
 ### 4. Exercise Pages at its real prefix
 

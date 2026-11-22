@@ -3,7 +3,7 @@ import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { parse } from 'yaml';
 
-const root = new URL('../../../', import.meta.url);
+const root = new URL('../../', import.meta.url);
 const lock = parse(readFileSync(new URL('pnpm-lock.yaml', root), 'utf8'));
 const packages = ['nest', 'nuxt', 'nuxt-ui'];
 const prefix = '@querry-kit/';
@@ -46,8 +46,8 @@ function resolveNuxt(consumer) {
 }
 
 checkLockfile();
-checkInstalledExport('examples/workboard/apps/api', 'nest');
-checkInstalledExport('examples/workboard/apps/app', 'nuxt');
-checkInstalledExport('examples/workboard/apps/app', 'nuxt-ui');
-assert.equal(resolveNuxt('examples/workboard/apps/app'), resolveNuxt('packages/nuxt-ui'));
+checkInstalledExport('example/apps/api', 'nest');
+checkInstalledExport('example/apps/web', 'nuxt');
+checkInstalledExport('example/apps/web', 'nuxt-ui');
+assert.equal(resolveNuxt('example/apps/web'), resolveNuxt('packages/nuxt-ui'));
 console.log('Verified workspace-only Querry Kit links, builds, and a shared Nuxt resolution.');

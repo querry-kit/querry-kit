@@ -6,8 +6,8 @@ COPY patches/ patches/
 COPY packages/nest/ packages/nest/
 COPY packages/nuxt/ packages/nuxt/
 COPY packages/nuxt-ui/ packages/nuxt-ui/
-COPY examples/workboard/libs/contracts/ examples/workboard/libs/contracts/
-COPY examples/workboard/apps/api/ examples/workboard/apps/api/
+COPY example/libs/contracts/ example/libs/contracts/
+COPY example/apps/api/ example/apps/api/
 RUN CI=true pnpm --filter @workboard/api... install --frozen-lockfile
 RUN pnpm --filter @querry-kit/nest build
 RUN pnpm --filter @workboard/contracts build && pnpm --filter @workboard/api build

@@ -190,7 +190,7 @@ importers:
         specifier: ^3.3.14
         version: 3.3.14(@typescript/typescript6@6.0.2)
 
-  examples/workboard/apps/api:
+  example/apps/api:
     dependencies:
       '@casl/ability':
         specifier: 7.1.3
@@ -224,7 +224,7 @@ importers:
         version: 7.10.1(prisma@7.10.1(@types/node@26.6.6)(@types/react@19.3.0)(better-sqlite3@13.2.0)(magicast@0.5.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.2))(typescript@6.0.2)
       '@querry-kit/nest':
         specifier: workspace:*
-        version: link:../../../../packages/nest
+        version: link:../../../packages/nest
       '@workboard/contracts':
         specifier: workspace:*
         version: link:../../libs/contracts
@@ -252,7 +252,7 @@ importers:
     devDependencies:
       '@querry-kit/nuxt':
         specifier: workspace:*
-        version: link:../../../../packages/nuxt
+        version: link:../../../packages/nuxt
       '@types/node':
         specifier: ^26.6.6
         version: 26.6.6
@@ -272,7 +272,7 @@ importers:
         specifier: 6.0.2
         version: 6.0.2
 
-  examples/workboard/apps/app:
+  example/apps/web:
     dependencies:
       '@iconify-json/lucide':
         specifier: 1.2.158
@@ -285,10 +285,10 @@ importers:
         version: 4.13.0(27e69fb163bbb090c8fb92ab659650be)
       '@querry-kit/nuxt':
         specifier: workspace:*
-        version: link:../../../../packages/nuxt
+        version: link:../../../packages/nuxt
       '@querry-kit/nuxt-ui':
         specifier: workspace:*
-        version: link:../../../../packages/nuxt-ui
+        version: link:../../../packages/nuxt-ui
       '@vueuse/core':
         specifier: 15.0.0
         version: 15.0.0(vue@3.5.46(typescript@6.0.2))
@@ -321,7 +321,7 @@ importers:
         specifier: 3.3.14
         version: 3.3.14(typescript@6.0.2)
 
-  examples/workboard/libs/contracts:
+  example/libs/contracts:
     dependencies:
       zod:
         specifier: 4.6.7
