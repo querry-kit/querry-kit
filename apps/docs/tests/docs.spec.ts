@@ -138,7 +138,7 @@ test('surround navigation remains available after a trailing-slash reload', asyn
   await page.goto('docs/nuxt-ui/components/toolbar/');
   const surround = page.getByRole('main');
   await expect(surround.getByRole('link', { name: 'Getting Started' })).toBeVisible();
-  await expect(surround.locator('a[data-slot="link"][href="/docs/nuxt-ui/components/grouping"]')).toBeVisible();
+  await expect(surround.locator('a[data-slot="link"][href="/querry-kit/docs/nuxt-ui/components/grouping"]')).toBeVisible();
 });
 
 test('Nuxt API reference keeps each group on one page', async ({ page }, testInfo) => {
@@ -178,11 +178,11 @@ test('Nest API reference keeps fields and DTO schema on one page', async ({ page
 });
 
 test('package changelogs are available from the central documentation', async ({ page }) => {
-  await page.goto('docs/nuxt/changelog');
-  await expect(page.getByRole('heading', { name: '@querry-kit/nuxt', exact: true })).toBeVisible();
-
-  await page.goto('docs/nuxt-ui/changelog');
-  await expect(page.getByRole('heading', { name: '@querry-kit/nuxt-ui', exact: true })).toBeVisible();
+  for (const name of ['nest', 'nuxt', 'nuxt-ui']) {
+    await page.goto(`docs/${name}/changelog`);
+    await expect(page.getByRole('heading', { name: `@querry-kit/${name}`, exact: true })).toBeVisible();
+    await expect(page.locator('article h2').first()).toHaveText(/^\d+\.\d+\.\d+/);
+  }
 });
 
 test('publishes crawl and favicon assets', async ({ page }) => {
@@ -192,12 +192,12 @@ test('publishes crawl and favicon assets', async ({ page }) => {
   await expect(page.locator('body')).toContainText('Sitemap: https://querry-kit.github.io/querry-kit/sitemap.xml');
 
   await page.goto('docs/nuxt');
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/querry-kit/favicon.svg');
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
 
   const sitemapResponse = await page.request.get('sitemap.xml');
   expect(sitemapResponse.status()).toBe(200);
-  await expect(sitemapResponse.text()).resolves.toContain('https://querry-kit.github.io/docs/nuxt');
+  await expect(sitemapResponse.text()).resolves.toContain('https://querry-kit.github.io/querry-kit/docs/nuxt');
 });
 
 for (const { path, heading } of tableControlContent) {
@@ -215,7 +215,7 @@ for (const path of packagePages) {
 }
 
 test('Example is reachable from the primary navigation and can be opened directly', async ({ page }, testInfo) => {
-  await page.goto('/');
+  await page.goto('./');
   if (testInfo.project.name === 'mobile') await page.locator('header [data-slot="toggle"]').click();
   const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
   await navigation.getByRole('link', { name: 'Example', exact: true }).click();
@@ -225,4 +225,14 @@ test('Example is reachable from the primary navigation and can be opened directl
   await expect(page.getByRole('heading', { name: 'Docker Compose quick start' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Run the development stack locally' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'dashboard', exact: true })).toHaveAttribute('href', 'http://127.0.0.1:3201');
+});
+
+test('the historical Nest reference and static icon survive a direct Pages reload', async ({ page }) => {
+  const response = await page.goto('docs/nest/api/decorators-pipes-utils');
+  expect(response?.ok()).toBe(true);
+  await page.reload();
+  await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible();
+  const icon = await page.request.get('favicon.svg');
+  expect(icon.ok()).toBe(true);
+  expect(await icon.text()).toContain('<svg');
 });

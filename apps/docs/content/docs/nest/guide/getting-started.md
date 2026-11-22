@@ -6,7 +6,7 @@ description: 'Install and use @querry-kit/nest.'
 
 ## Runtime requirements
 
-The next major release requires Node.js 26.13.0 or newer and drops Node.js 24 support. Upgrade application runtimes and CI before updating. Published package versions remain unchanged until the release workflow runs.
+The published `@querry-kit/nest@2.1.2` requires Node.js 26.13.0 or newer. Workspace previews marked **Next** may include changes that are not in that release.
 
 `@querry-kit/nest` combines the useful parts of the former Query Kit Nest packages into one import surface:
 
