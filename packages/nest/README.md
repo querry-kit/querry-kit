@@ -1,0 +1,421 @@
+# @querry-kit/nest <!-- omit in toc -->
+
+[![npm](https://img.shields.io/npm/v/%40querry-kit%2Fnest?label=npm&logo=npm&logoColor=white&style=for-the-badge)](https://www.npmjs.com/package/@querry-kit/nest)
+[![npm downloads](https://img.shields.io/npm/dm/%40querry-kit%2Fnest?label=downloads&logo=npm&logoColor=white&style=for-the-badge)](https://www.npmjs.com/package/@querry-kit/nest)
+[![license](https://img.shields.io/npm/l/%40querry-kit%2Fnest?label=license&style=for-the-badge)](LICENSE)
+[![node](https://img.shields.io/node/v/%40querry-kit%2Fnest?label=node&logo=nodedotjs&logoColor=white&style=for-the-badge)](package.json)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/%40querry-kit/nest?label=size&logo=webpack&logoColor=white&style=for-the-badge)](https://bundlephobia.com/package/@querry-kit/nest)
+[![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
+[![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
+
+[![build](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/build.yml?branch=main&label=build&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/build.yml)
+[![test](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/test.yml?branch=main&label=test&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/test.yml)
+[![coverage](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/test.yml?branch=main&label=coverage&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/test.yml)
+[![lint](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/lint.yml?branch=main&label=lint&logo=eslint&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/lint.yml)
+[![changesets](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/changesets.yml?branch=main&label=changesets&logo=changesets&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/changesets.yml)
+[![npm publish](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/release.yml?branch=main&label=npm%20publish&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/release.yml)
+
+Consolidated NestJS helpers for Query Kit APIs: fields projection, Prisma-style query services, CASL policies, OpenAPI decorators, pipes, pagination DTOs, and object utilities.
+
+📖 Documentation: [Querry Kit Nest documentation](https://querry-kit.github.io/querry-kit/docs/nest)
+
+## 🌐 Querry Kit Ecosystem
+
+The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three core packages:
+
+- [`@querry-kit/nest`](https://github.com/querry-kit/nest) provides the NestJS API and controller patterns.
+- [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt) provides typed API clients and headless Vue/Nuxt data primitives.
+- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) provides Nuxt UI table controls built on those primitives.
+
+## 📚 Table of Contents <!-- omit in toc -->
+
+- [🌐 Querry Kit Ecosystem](#-querry-kit-ecosystem)
+- [📦 Install](#-install)
+- [Zod 4 schemas](#zod-4-schemas)
+- [🚀 Release Workflow](#-release-workflow)
+- [🧩 Usage](#-usage)
+- [🔐 CASL](#-casl)
+- [🎯 Fields](#-fields)
+- [📖 Documentation](#-documentation)
+- [🛠 Development](#-development)
+
+## 📦 Install
+
+```sh
+pnpm add @querry-kit/nest
+pnpm add @nestjs/common @nestjs/core @nestjs/swagger reflect-metadata
+```
+
+For the existing decorated DTOs, pagination DTOs, `ValidationUtil`, or the main
+`@querry-kit/nest` import, also install:
+
+```sh
+pnpm add class-transformer class-validator
+```
+
+For Fastify APIs with Zod, use `@querry-kit/nest/core` and `@querry-kit/nest/zod`
+without installing either package.
+
+For the optional CASL adapter:
+
+```sh
+pnpm add @casl/ability @casl/prisma
+```
+
+The current package version is published on npm. npm is the primary distribution channel.
+
+GitHub release tags remain available as a fallback:
+
+```sh
+pnpm add github:querry-kit/nest#v0.0.1
+```
+
+## Zod 4 schemas
+
+Install Zod only when using the dedicated `@querry-kit/nest/zod` subpath:
+
+```sh
+pnpm add zod@^4
+# Optional NestJS integration:
+pnpm add nestjs-zod
+```
+
+Zod, `class-validator`, and `class-transformer` are optional peers. Use the dedicated
+`core` and `zod` subpaths to avoid loading either class-based validation dependency.
+These schemas work independently of Express or Fastify and do not configure either adapter.
+
+The main entrypoint and existing `dto`, `pagination`, `decorators`, and `query-service`
+entrypoints retain decorated DTOs and require their class-based dependencies.
+`ValidationUtil` requires `class-validator`. The `core` entrypoint exports `QueryService`,
+`ResourceQuery`, `PageMeta`, fields helpers, pipes, and object/query utilities, with
+no runtime imports of `class-validator` or `class-transformer`.
+
+Core services calculate the same pagination metadata; `ResourceQuery` returns the
+same `{ items, meta }` envelope as plain objects. Legacy entrypoints keep their
+`PageMetaDTO` and `PaginatedDTO` instances and serialization decorators.
+
+```ts
+import { QueryService, ResourceQuery, parseQueryObject } from '@querry-kit/nest/core';
+import { QuerySchema } from '@querry-kit/nest/zod';
+```
+
+Use the core imports throughout a Zod application; importing a helper from the main
+entrypoint also loads its legacy DTO exports.
+
+Schema implementations live in individual `src/zod/*.schema.ts` files; `src/zod/index.ts` only re-exports the public API.
+
+Available exports: `QuerySchema`, `FindOneSchema`, `FindManySchema`, `FindByIdSchema`,
+`FindUniqueSchema`, `CountSchema`, `AggregateSchema`, `PageOptionsSchema`,
+`PageMetaSchema`, and `createPaginatedSchema(itemSchema)`.
+
+```ts
+import { z } from 'zod';
+
+import { QuerySchema, createPaginatedSchema } from '@querry-kit/nest/zod';
+
+const UserQuerySchema = QuerySchema.extend({
+  where: z.object({ name: z.string().optional() }).optional(),
+});
+type UserQuery = z.infer<typeof UserQuerySchema>;
+
+const query: UserQuery = UserQuerySchema.parse({ page: '2', where: { name: 'Ada' } });
+const UserPageSchema = createPaginatedSchema(z.object({ id: z.string(), name: z.string() }));
+const response = UserPageSchema.parse({
+  items: [],
+  meta: { page: 1, perPage: 10, itemCount: 0, pageCount: 0, hasPrevPage: false, hasNextPage: false },
+});
+```
+
+Pagination defaults to `page = 1`, `perPage = 10`, with integer bounds `page >= 1`
+and `1 <= perPage <= 1000`. `take >= 1` and `skip >= 0` are optional integers.
+Numeric query strings are converted; empty strings, null, booleans, arrays,
+fractions and non-finite numbers are rejected. `fields` is an optional string.
+Unknown top-level keys are stripped. Response metadata requires numbers and is
+validated without computing or cross-checking pagination totals.
+
+Prisma-specific fields use `z.unknown().optional()`: the base schemas do **not**
+validate Prisma inputs or infer generated Prisma types. Extend every exposed
+Prisma field with an application-specific schema before treating it as validated.
+Like the existing DTO, `FindUniqueSchema` does not require `where`; make it required
+in your extension when the endpoint needs it.
+
+For [nestjs-zod](https://github.com/BenLorantfy/nestjs-zod), wrap the schema in a DTO
+and apply its validation pipe:
+
+```ts
+import { Controller, Get, Query } from '@nestjs/common';
+import { createZodDto, ZodValidationPipe } from 'nestjs-zod';
+
+import { PageOptionsSchema } from '@querry-kit/nest/zod';
+
+/** Validated pagination request. */
+class ListQueryDTO extends createZodDto(PageOptionsSchema) {}
+
+/** Example pagination endpoint. */
+@Controller('users')
+class UsersController {
+  /**
+   * Returns validated pagination options for this example.
+   *
+   * @param {ListQueryDTO} query Validated request query.
+   * @returns {ListQueryDTO} Parsed pagination options.
+   */
+  @Get()
+  list(@Query(new ZodValidationPipe()) query: ListQueryDTO): ListQueryDTO {
+    return query;
+  }
+}
+```
+
+Schemas do not decode JSON or dotted query keys. For nested transport values,
+normalize with existing `parseQueryObject` from `@querry-kit/nest/core` (or your query
+parser) **before** schema validation. For example, validate
+`UserQuerySchema.parse(parseQueryObject(rawQuery))`. In NestJS, normalization must
+run before `ZodValidationPipe`. Do not apply normalization blindly to scalar
+`fields` strings such as `"123"`, which the generic parser converts to numbers.
+
+## 🚀 Release Workflow
+
+Releases are driven by Changesets and GitHub Actions. The `main` branch does not contain committed `dist` files; it only contains source, the README, and workflow configuration.
+
+Package-visible changes should include a changeset:
+
+```sh
+pnpm changeset
+```
+
+When changes land on `main`, the `changesets` workflow creates or updates a release PR. That PR contains the version bump and changelog updates produced by:
+
+```sh
+pnpm changeset version
+```
+
+The npm publish workflow uses npm Trusted Publishing through GitHub Actions OIDC. The npm package must be connected to this repository and workflow in the npm package publishing settings:
+
+- Repository: `querry-kit/nest`
+- Workflow file: `release.yml`
+- Environment: unset
+
+After the release PR is merged, the `npm publish` workflow runs for the version/changelog changes. It runs package checks, builds `dist` in CI, publishes `@querry-kit/nest` to npm, tags the release commit as `vX.Y.Z`, and creates a GitHub Release.
+
+Consumers should install from npm:
+
+```sh
+pnpm add @querry-kit/nest
+```
+
+## 🧩 Usage
+
+`ResourceQuery` covers the common controller flow: parse optional `fields`, merge endpoint-required includes with client `include` values, generate Prisma includes for selected relations, call a `QueryService`, map models to DTOs, and project the response.
+
+```ts
+import { Get, Query, Req } from '@nestjs/common';
+import { ApiErrorResponses, ApiPaginatedResponse, ApiResourceQuery, QueryDTO, ResourceQuery } from '@querry-kit/nest';
+
+@Get()
+@ApiResourceQuery()
+@ApiPaginatedResponse({ model: CustomerDTO })
+@ApiErrorResponses({ badRequestDescription: 'Invalid query parameter.' })
+async query(@Req() req: AuthRequest, @Query() query: QueryDTO<CustomerTypeMap>) {
+  return ResourceQuery.query({
+    service: this.customersService,
+    query,
+    schema: CustomerDTO,
+    ability: req.ability,
+    map: (customer, ability) => CustomerDTO.fromModel(customer, ability),
+  });
+}
+```
+
+Create resource services with `QueryService` and a Prisma-compatible delegate:
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { QueryService, type BaseDelegateTypeMap } from '@querry-kit/nest';
+import { Prisma, PrismaService } from '../prisma';
+
+interface CustomerTypeMap extends BaseDelegateTypeMap {
+  select: Prisma.CustomerSelect;
+  include: Prisma.CustomerInclude;
+  whereInput: Prisma.CustomerWhereInput;
+  orderByWithRelationInput: Prisma.CustomerOrderByWithRelationInput;
+  whereUniqueInput: Prisma.CustomerWhereUniqueInput;
+  scalarFieldEnum: Prisma.CustomerScalarFieldEnum;
+}
+
+@Injectable()
+export class CustomersService extends QueryService<typeof PrismaService.prototype.customer, CustomerTypeMap> {
+  constructor(prisma: PrismaService) {
+    super(prisma.customer);
+  }
+}
+```
+
+Focused subpaths are available for smaller imports:
+
+```ts
+import { createCaslAccessibleWhere, filterCaslFields } from '@querry-kit/nest/casl';
+import { ApiResourceQuery } from '@querry-kit/nest/decorators';
+import { Fields } from '@querry-kit/nest/fields';
+import { parseObject } from '@querry-kit/nest/object';
+import { QueryService } from '@querry-kit/nest/query-service';
+```
+
+## 🔐 CASL
+
+CASL is optional. Pass `ability` only when the endpoint should merge an authorization-aware `where` clause through `QueryService`; omit it for APIs that do not use CASL.
+
+```ts
+import { createCaslAccessibleWhere } from '@querry-kit/nest/casl';
+
+super(prisma.customer, {
+  subject: 'Customer',
+  accessibleWhere: createCaslAccessibleWhere({ action: 'read' }),
+});
+```
+
+When an ability is passed to `query`, the service combines the CASL where clause with user filters as `{ AND: [accessibleWhere, parsedWhere] }`.
+
+For field-level response permissions, filter the completed DTO without mutating it:
+
+```ts
+return filterCaslFields(dto, 'Customer', ability);
+```
+
+The helper uses the `read` action by default. Pass `{ action: RoleAction.READ }` when an application uses uppercase or enum-backed actions. It filters serialized DTO fields only; keep passing the ability to `QueryService` to constrain database reads too.
+
+## 🎯 Fields
+
+`fields` is optional by default. When omitted, Query Kit returns the complete DTO response. When present, it validates the syntax and selected fields, adds required relation includes, and projects the returned DTOs. Outer braces are optional, so `{id,title}` is equivalent to `id,title`.
+
+```txt
+GET /books?fields=id,title
+GET /books?fields={id,title}
+GET /books?fields=items{id,title},meta{page,perPage,itemCount,pageCount}
+GET /books?fields=items{},meta{page}
+```
+
+An explicit empty value (`?fields=`) or empty outer selection (`?fields={}`) returns `{}`. Empty nested selections are also valid: `items{}` produces empty item objects, while `meta{page}` keeps only the requested page metadata. A value containing only whitespace remains invalid.
+
+Use `prepareFieldsQuery` directly when a controller needs custom service orchestration:
+
+```ts
+import { Fields, prepareFieldsQuery } from '@querry-kit/nest/fields';
+
+const prepared = prepareFieldsQuery({
+  fields: query.fields,
+  include: query.include,
+  schema: BookDTO,
+  requiredInclude: { author: true },
+});
+
+const { items, pageMeta } = await booksService.query({ ...query, include: prepared.include });
+
+return {
+  items: Fields.project(items.map(BookDTO.fromModel), prepared.projection),
+  meta: Fields.project(pageMeta, prepared.metaProjection),
+};
+```
+
+## 📖 Documentation
+
+- [Getting Started](https://querry-kit.github.io/querry-kit/docs/nest/guide/getting-started)
+- [Complete API Example](https://querry-kit.github.io/querry-kit/docs/nest/guide/example-app)
+- [CRUD Controller](https://querry-kit.github.io/querry-kit/docs/nest/guide/crud-controller)
+- [Fields](https://querry-kit.github.io/querry-kit/docs/nest/api/fields/)
+- [Query Service](https://querry-kit.github.io/querry-kit/docs/nest/api/query-service)
+- [DTOs and Pagination](https://querry-kit.github.io/querry-kit/docs/nest/api/dtos-pagination)
+- [OpenAPI Decorators](https://querry-kit.github.io/querry-kit/docs/nest/api/openapi)
+- [CASL](https://querry-kit.github.io/querry-kit/docs/nest/api/casl)
+- [API Reference](https://querry-kit.github.io/querry-kit/docs/nest/api/)
+
+## 🛠 Development
+
+```sh
+pnpm install
+pnpm lint
+pnpm check
+pnpm test
+pnpm test:coverage
+pnpm test:optional-peers # Requires pnpm build first.
+pnpm build
+```
+
+`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and retains the report as a workflow artifact. It also builds the package and runs `test:optional-peers` to verify ESM and CommonJS core/Zod query flows while both class-based validation packages are blocked.
+
+Dependency maintenance updates manifests and the pnpm lockfile within supported version ranges. The development toolchain pins patched transitive versions of glob and minimatch.
+
+The workspace build allowlist permits the native scripts required by the test
+and documentation toolchain, including Parcel's file watcher.
+
+Release pull requests are maintained by `changesets/action@v2` using the
+`version-script` input. Prettier is installed directly so Changesets can format
+the generated changelog in clean CI installations.
+
+Query normalization ignores `__proto__`, `constructor`, and `prototype` path segments. Dotted sibling paths merge; later assignments replace values at conflicting paths. CASL DTO filtering checks each field and honors explicit denials after general permissions; `all` is not a wildcard field.
+
+Run `pnpm check` for source and ESM test type checking; CI runs it before building.
+
+## Development toolchain
+
+Use Node.js 26.13.0 LTS and the package manager pinned in `package.json`. This release requires Node.js 26.13.0 or newer and no longer supports Node.js 24. Upgrade application runtimes and CI before updating the package. Builds use TypeScript 7; ESLint and compiler-API consumers use the TypeScript 6 compatibility package. Dependency overrides, where present, pin security fixes for transitive packages; validate tests and documentation builds when changing them.
+
+### Dependency maintenance
+
+Development and integration tests use NestJS 12.6.0 and Swagger 12.1.2. Swagger 12.1 requires validation decorators on properties used with `PartialType()` and a whitelisting `ValidationPipe`; review application DTOs when updating Swagger. See the [upstream behavior changes](https://github.com/nestjs/swagger/releases/tag/12.1.0).
+
+Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
+
+## Scalar grouping
+
+`groupBy<T>(options, ability?)` returns group rows, not resource models. Supported options:
+`by` (required non-empty array), `where`, `having`, `orderBy`, `take`, `skip`,
+`_count`, `_sum`, `_avg`, `_min`, `_max`. Pagination requires ordering. Prisma validates
+model fields, aggregate selectors, and the relationship between `by`, `having`, and ordering.
+`select`, `include`, `fields`, and `cursor` are unsupported.
+
+```ts
+await projectsService.groupBy({
+  by: ['status'],
+  where: { archived: false },
+  orderBy: { status: 'asc' },
+  take: 26,
+  _count: { _all: true },
+}, ability);
+```
+
+Extend your model type map with `orderByWithAggregationInput` and
+`scalarWhereWithAggregatesInput` using the corresponding generated Prisma types for
+strict ordering and `having` inputs. Existing delegates need no `groupBy` method;
+calling it on an unsupported delegate returns HTTP 501. A separate `GroupByDelegate`
+capability is exported for adapters. Decimal aggregate values serialize to numbers.
+
+Expose an application-owned `GET /projects/group-by` route before dynamic ID routes.
+Use a concrete subclass of `GroupByDTO<ProjectTypeMap>` with your normal validation
+pipe; the inherited Swagger decorators describe the options. Keep this route out of
+`ResourceQuery.query` model mapping and projection. Validate allowed grouping and
+aggregate fields against the endpoint's schema and the caller's field permissions.
+Pass the same ability to grouping and leaf queries: access conditions are applied
+before aggregation. Never replace tenant constraints with a caller's filter.
+
+For exact scalar group keys (for example string `"001"`, `"true"`, or `"null"`),
+configure the service with `preserveJsonWhereTypes: true`. Send `where` as a JSON
+string for both grouping and leaf requests. When using `QueryTransformPipe`, enable
+its matching opt-in: `new QueryTransformPipe({ preserveJsonWhereTypes: true })`.
+
+Pass an ability as the second argument to `aggregate(options, ability)` to apply the same row scope as `groupBy` and `count`. The service honors `preserveJsonWhereTypes` for aggregate filters.
+Its default legacy coercion would otherwise erase key types before the service.
+Configure the HTTP adapter's query parser for bracket notation, for example
+`app.getHttpAdapter().getInstance().set('query parser', value => qs.parse(value))`
+with Express and `qs`. Keep the normal transforming validation pipe enabled.
+The opt-in also preserves already typed object filters when pagination forwards them internally.
+Other consumers retain existing parsing defaults. Malformed or non-object JSON
+filters produce HTTP 400. Use the same access resolver on both routes.
+
+Nested table grouping calls `groupBy` once per level with one `by` field, `_count._all`,
+and parent equality predicates in `where`. Leaf records use ordinary paginated
+queries. Group counts cover every matching accessible record, not only loaded rows.
+Offset pagination has no snapshot guarantee during concurrent writes; refresh the
+view after mutations. Relations and date intervals are outside this feature.
+
+Grouping keys consumed by the table must be JSON scalar values: strings, numbers, booleans, or null. Dates retain their normal ISO JSON encoding; Decimal-like values serialize to numbers. Binary and BigInt keys require application-owned encoding and filter conversion.

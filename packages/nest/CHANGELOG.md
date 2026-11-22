@@ -1,0 +1,169 @@
+# @querry-kit/nest
+
+## 2.1.2
+
+### Patch Changes
+
+- f8ebdb0: Validate the existing NestJS peer contract against NestJS 12.6.
+
+## 2.1.1
+
+### Patch Changes
+
+- d6493b5: Refresh and verify compatible development dependencies.
+
+## 2.1.0
+
+### Minor Changes
+
+- 6b540ed: Support access-control abilities and type-preserving filters in QueryService.aggregate.
+
+### Patch Changes
+
+- bb75b9a: Use patched transitive versions of minimatch in the development toolchain.
+
+## 2.0.0
+
+### Major Changes
+
+- 3077102: Require Node.js 26.13.0 or newer and drop Node.js 24 support. Upgrade application runtimes and CI before updating.
+
+### Minor Changes
+
+- 05e6635: Add access-constrained scalar grouping and opt-in typed JSON filters.
+- 05e6635: Preserve typed group keys through global query pipes and pagination; retain Date serialization.
+
+### Patch Changes
+
+- 3077102: Refresh compatible dependencies and the lockfile while preserving the TypeScript compatibility toolchain and security overrides.
+- 05e6635: Keep grouping documentation aligned with the current Node.js 26 baseline.
+
+## 1.1.2
+
+### Patch Changes
+
+- 9eb4c9d: Update stable dependencies and security fixes, and move development, CI, and application images to Node.js 26 LTS. Application runtimes now require Node.js 26; public library runtime support is preserved. TypeScript 7 builds use the TypeScript 6 compatibility API for lint and test tooling.
+
+## 1.1.1
+
+### Patch Changes
+
+- 0a1ec18: Honor explicit CASL field denials, prevent query prototype injection, preserve dotted sibling filters, and repair ESM test type checking.
+
+## 1.1.0
+
+### Minor Changes
+
+- ccbbdef: Add optional Zod 4 query and pagination schemas through `@querry-kit/nest/zod`.
+- ccbbdef: Make class-validator and class-transformer optional and add a core entrypoint for query services and resource helpers without either dependency. Existing DTO-based imports retain their decorated responses.
+
+### Patch Changes
+
+- ccbbdef: Refresh dependencies within their supported version ranges.
+
+## 1.0.7
+
+### Patch Changes
+
+- 4cf94a8: Refresh the NestJS common development dependency.
+- 83677a0: Refresh the NestJS core development dependency.
+
+## 1.0.6
+
+### Patch Changes
+
+- b966a57: Resolve vulnerable transitive development dependencies.
+
+## 1.0.5
+
+### Patch Changes
+
+- 96ac5df: Add NestJS 12 and CASL Prisma 2 compatibility.
+
+## 1.0.4
+
+### Patch Changes
+
+- 79303a0: Install Prettier directly so Changesets can format release changelogs in CI.
+- 4baa41f: Fix the Changesets v2 workflow input so release pull requests can be created and updated again.
+- 57078e8: Resolve vulnerable transitive YAML and multipart parser versions.
+- b7448fc: Update Jest to 30.5.1 and keep clean CI installs compatible with its watcher dependency.
+
+## 1.0.3
+
+### Patch Changes
+
+- b4f448c: Keep the central documentation changelog in sync after releases.
+
+## 1.0.2
+
+### Patch Changes
+
+- 8066ee0: Update transitive dependencies to resolve security alerts.
+
+## 1.0.1
+
+### Patch Changes
+
+- 60151de: Add security reporting and repository maintenance configuration.
+
+## 1.0.0
+
+### Major Changes
+
+- 3c3c611: Remove redundant and deprecated exports: `AggregateDTOType`, `createFromPath`, `diff`, `hasDifferences`, `parse`, `parseFromObject`, `createRelationSchemaNode`, and the `./swagger` subpath.
+
+  Migrate imports to `AggregateDTO`, `createObjectFromPath`, `diffObjects`, `hasObjectDifferences`, `parseObject`, `parseObjectProperties`, `relation`, and `@querry-kit/nest/decorators`.
+
+### Patch Changes
+
+- 802a93f: Move documentation to the central Querry Kit site and improve test coverage reporting.
+- ed31fd2: Fix release validation after moving documentation to the central Querry Kit site.
+
+## 0.3.1
+
+### Patch Changes
+
+- 81a8410: Standardize the English README and contributor guidance.
+
+## 0.3.0
+
+### Minor Changes
+
+- 059fe27: Allow empty and outer-braced Fields projections.
+
+### Patch Changes
+
+- 6e26ed5: Improve Fields coverage and assign release pull requests automatically.
+- 575a52d: Improve runtime coverage reporting and regression coverage.
+
+## 0.2.0
+
+### Minor Changes
+
+- 3cdc028: Add CASL-aware DTO field filtering, coverage reporting, and refreshed documentation styling.
+
+### Patch Changes
+
+- 96b9c10: Add package discovery keywords.
+- 12481ed: Document CASL query and conditional write service wiring.
+- 5d32bf2: Show named resource query and application error examples in OpenAPI.
+- acee7ce: Fix CASL Prisma v1 accessibility resolver support.
+- 3d9ec19: Document the runtime coverage quality target.
+
+## 0.1.0
+
+### Minor Changes
+
+- 5a1d093: Create the consolidated NestJS package with fields projection, Prisma query helpers, CASL utilities, decorators, pipes, and resource-query facades.
+- cde7bce: Add ResourceQuery include merging, paginated fields envelope projection, Swagger resource query documentation, and complete fields-aware CRUD examples.
+
+### Patch Changes
+
+- 9e8a740: Clean up package structure by grouping the Books API example by feature, moving query parsing into generic utilities, moving OpenAPI decorators under decorators, splitting public helper types, and reducing large decorator and resource-query files.
+
+## 0.0.0
+
+### Minor Changes
+
+- Initial consolidated package with fields projection, Prisma-style query services, CASL utilities, decorators, pipes, pagination DTOs, and resource-query facades.

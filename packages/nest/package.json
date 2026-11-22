@@ -1,0 +1,188 @@
+{
+  "name": "@querry-kit/nest",
+  "version": "2.1.2",
+  "description": "Consolidated NestJS helpers for Query Kit fields, Prisma-style query services, CASL policies, decorators, pipes, and response projection.",
+  "keywords": [
+    "nestjs",
+    "query-kit",
+    "prisma",
+    "casl",
+    "fields",
+    "projection",
+    "pagination",
+    "openapi",
+    "swagger",
+    "decorators",
+    "pipes",
+    "query-service",
+    "typescript"
+  ],
+  "license": "MIT",
+  "homepage": "https://querry-kit.github.io/querry-kit/docs/nest/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/querry-kit/nest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/querry-kit/nest/issues"
+  },
+  "author": {
+    "name": "Tobias Wälde",
+    "email": "business@tobiaswaelde.com",
+    "url": "https://tobiaswaelde.com"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=26.13.0"
+  },
+  "packageManager": "pnpm@11.28.9",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./object": {
+      "types": "./dist/object.d.ts",
+      "import": "./dist/object.js",
+      "require": "./dist/object.cjs",
+      "default": "./dist/object.js"
+    },
+    "./fields": {
+      "types": "./dist/fields.d.ts",
+      "import": "./dist/fields.js",
+      "require": "./dist/fields.cjs",
+      "default": "./dist/fields.js"
+    },
+    "./dto": {
+      "types": "./dist/dto.d.ts",
+      "import": "./dist/dto.js",
+      "require": "./dist/dto.cjs",
+      "default": "./dist/dto.js"
+    },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "import": "./dist/pagination.js",
+      "require": "./dist/pagination.cjs",
+      "default": "./dist/pagination.js"
+    },
+    "./query-service": {
+      "types": "./dist/query-service.d.ts",
+      "import": "./dist/query-service.js",
+      "require": "./dist/query-service.cjs",
+      "default": "./dist/query-service.js"
+    },
+    "./casl": {
+      "types": "./dist/casl.d.ts",
+      "import": "./dist/casl.js",
+      "require": "./dist/casl.cjs",
+      "default": "./dist/casl.js"
+    },
+    "./decorators": {
+      "types": "./dist/decorators.d.ts",
+      "import": "./dist/decorators.js",
+      "require": "./dist/decorators.cjs",
+      "default": "./dist/decorators.js"
+    },
+    "./pipes": {
+      "types": "./dist/pipes.d.ts",
+      "import": "./dist/pipes.js",
+      "require": "./dist/pipes.cjs",
+      "default": "./dist/pipes.js"
+    },
+    "./zod": {
+      "types": "./dist/zod.d.ts",
+      "import": "./dist/zod.js",
+      "require": "./dist/zod.cjs",
+      "default": "./dist/zod.js"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs",
+      "default": "./dist/core.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsc -p tsconfig.json --watch",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "build": "tsup",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs --coverage",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.config.cjs --watch",
+    "test:optional-peers": "node test/optional-validation-peers.mjs"
+  },
+  "peerDependencies": {
+    "@casl/ability": "^6.7.3 || ^7.0.0",
+    "@casl/prisma": "^1.5.2 || ^2.0.0",
+    "@nestjs/common": "^11.1.28 || ^12.0.1",
+    "@nestjs/core": "^11.1.28 || ^12.0.1",
+    "@nestjs/swagger": "^11.4.6 || ^12.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@casl/ability": {
+      "optional": true
+    },
+    "@casl/prisma": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    },
+    "class-validator": {
+      "optional": true
+    },
+    "class-transformer": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "qs": "^6.17.1"
+  },
+  "devDependencies": {
+    "@casl/ability": "^7.1.3",
+    "@casl/prisma": "^2.2.0",
+    "@changesets/cli": "^3.0.3",
+    "@jest/globals": "^30.5.2",
+    "@jest/types": "^30.5.1",
+    "@nestjs/common": "^12.5.1",
+    "@nestjs/core": "^12.5.1",
+    "@nestjs/platform-express": "^12.5.1",
+    "@nestjs/swagger": "^12.1.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.6",
+    "@types/qs": "^6.15.1",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.7",
+    "jest": "^30.5.2",
+    "prettier": "^3.10.1",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "reflect-metadata": "^0.2.2",
+    "ts-jest": "^29.4.15",
+    "tsup": "^9.0.0",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "typescript-eslint": "^8.73.0",
+    "zod": "^4.6.7"
+  }
+}
