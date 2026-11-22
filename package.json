@@ -22,7 +22,8 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset tag",
-    "build:packages": "pnpm --filter @querry-kit/nest build && pnpm --filter @querry-kit/nuxt build && pnpm --filter @querry-kit/nuxt-ui build"
+    "build:packages": "pnpm --filter @querry-kit/nest build && pnpm --filter @querry-kit/nuxt build && pnpm --filter @querry-kit/nuxt-ui build",
+    "verify:packages": "node scripts/verify-packages.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
