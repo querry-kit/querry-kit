@@ -1,10 +1,5 @@
 # Example app
 
-`examples/nuxt` is a small Nuxt application with a mocked Axios adapter. It exercises `createApiClient`, `useModuleApi`, `useTable`, and `useAutocomplete` without requiring a server.
+The [grouped table demo](/docs/nuxt-ui/components/grouping) uses a browser-side Axios adapter and synthetic rows. It demonstrates remote grouped reads without starting a server. To exercise real task and project queries with a Nest API, run [Workboard](/example).
 
-```sh
-pnpm examples:check
-pnpm examples:build
-```
-
-It is intentionally a consumer, not a second implementation: the Nuxt plugin owns the client configuration, and the app component owns its column metadata and presentation. Use it as a reference for package imports and type checking; it does not prescribe a UI library or state-management solution.
+From the repository root, run `pnpm build:packages` followed by `pnpm docs:dev` to explore the demo against the local packages.
