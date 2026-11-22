@@ -1,6 +1,6 @@
 ---
 title: Example
-description: Run the Querry Kit Workboard locally with Docker Compose or develop against pinned library sources.
+description: Run Workboard with Docker Compose or develop against all three Querry Kit packages in one checkout.
 ---
 
 # Workboard example
@@ -9,7 +9,7 @@ Workboard combines a NestJS/Fastify API, PostgreSQL, shared Zod contracts, and a
 
 ## Try the dashboard
 
-The responsive toolbar described here is in the development version of Workboard and Nuxt UI. To try it before release, use the [local-package setup](https://github.com/querry-kit/example#develop-against-local-querry-kit-packages) with the matching checkouts. The standalone Docker quick start below uses the example's pinned package revisions.
+**Next (workspace preview):** These examples run the libraries at the checked-out revision. Use the [package changelog](/docs/nuxt-ui/changelog) to check what is available in a published release.
 
 Open **Tasks** or **Projects**. Both start with 10 rows per page. The breadcrumb bar contains the create action when your account can create records. Below 640 px it becomes a plus icon, and search becomes a magnifier. On a task detail page, the **Tasks** breadcrumb takes you back to the same project filter.
 
@@ -20,11 +20,11 @@ Open **Tasks** or **Projects**. Both start with 10 rows per page. The breadcrumb
 
 ## Docker Compose quick start
 
-Install Git and Docker with Compose. Clone [the example repository](https://github.com/querry-kit/example) and start the full stack:
+Install Git and Docker with Compose. Clone the monorepo and start the full stack:
 
 ```sh
-git clone https://github.com/querry-kit/example.git
-cd example
+git clone https://github.com/querry-kit/querry-kit.git
+cd querry-kit/examples/workboard
 docker compose up -d --build --wait
 ```
 
@@ -41,14 +41,13 @@ docker compose down
 From the checkout, install Node.js 26.13.0 or a newer Node 26 patch and the pnpm version pinned in `package.json`. Docker Compose runs PostgreSQL. Stop the standalone stack first if it is already using the dashboard port.
 
 ```sh
-node scripts/stage-querry-kit.mjs
-pnpm install --frozen-lockfile
-pnpm build
+pnpm -w install --frozen-lockfile
+pnpm -w build
 docker compose -f compose.dev.yml up -d --wait
 pnpm --filter @workboard/api start
 ```
 
-Source staging fetches the three exact Git revisions in `scripts/querry-kit-sources.json` into the ignored `vendor` directory before pnpm resolves workspace packages. The API applies migrations and seeds an empty database, then listens on `127.0.0.1:3101`. Open another terminal in the checkout and start Nuxt:
+The API uses the workspace packages, applies migrations and seeds an empty database, then listens on `127.0.0.1:3101`. Open another terminal in `examples/workboard` and start Nuxt:
 
 ```sh
 pnpm --filter @workboard/app dev
@@ -60,4 +59,4 @@ Use the same dashboard and API reference links. To stop development, exit both a
 docker compose -f compose.dev.yml down
 ```
 
-For local library development, alternate ports, and CI commands, see the [Workboard README](https://github.com/querry-kit/example#readme). See the [Nest](/docs/nest), [Nuxt](/docs/nuxt), and [Nuxt UI](/docs/nuxt-ui) references for the integration APIs.
+For local library development, alternate ports, and CI commands, see the [Workboard README](https://github.com/querry-kit/querry-kit/tree/main/examples/workboard#readme). See the [Nest](/docs/nest), [Nuxt](/docs/nuxt), and [Nuxt UI](/docs/nuxt-ui) references for the integration APIs.

@@ -50,8 +50,8 @@ import type {
   Filtering,
   SortingField,
   SortingState,
-} from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
-import { FilterFieldType, FilteringMode } from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
+} from '@querry-kit/nuxt-ui/types';
+import { FilterFieldType, FilteringMode } from '@querry-kit/nuxt-ui/types';
 
 const search = ref<string>('');
 type DemoProject = { id: number; title: string };

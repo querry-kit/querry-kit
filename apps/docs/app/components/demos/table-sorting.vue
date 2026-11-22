@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SortingField, SortingState } from '../../../node_modules/@querry-kit/nuxt-ui/dist/runtime/types/table.js';
+import type { SortingField, SortingState } from '@querry-kit/nuxt-ui/types';
 
 const sorting = ref<SortingState>([{ id: 'name', desc: false }]);
 const fields: SortingField[] = [
