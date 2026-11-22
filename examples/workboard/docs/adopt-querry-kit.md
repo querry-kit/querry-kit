@@ -8,7 +8,7 @@ The Workboard is a copyable starter, not a production authentication template. I
 2. Run the [standalone demo](../README.md#try-the-standalone-demo) before changing the code. Verify that you can switch to `user1` in the navbar, browse a task, and open the API reference.
 3. Rename the workspace and apps in `package.json`, `apps/api/package.json` and `apps/app/package.json`. If you rename `@workboard/contracts`, update its directory manifest, imports and workspace dependencies together. Update the `--filter` names in root scripts, Dockerfiles and any CI definitions; regenerate the lockfile with `pnpm install` and check it in.
 4. Set environment variables for the API and Nuxt server. See [API defaults](../apps/api/.env.example) and [Nuxt defaults](../apps/app/.env.example). The committed Compose files deliberately use local defaults and publish the demo only on loopback.
-5. Keep the [pinned or local source workflow](../README.md#develop-against-local-querry-kit-packages) while developing the Querry Kit packages. `pnpm sources:check` verifies that the app and Nuxt UI share the same workspace Nuxt package.
+5. Keep the [workspace development instructions](../README.md#develop-against-local-querry-kit-packages) while developing the Querry Kit packages. `pnpm sources:check` verifies that the app and Nuxt UI share the same workspace Nuxt package.
 
 ## Replace the demo-only pieces
 

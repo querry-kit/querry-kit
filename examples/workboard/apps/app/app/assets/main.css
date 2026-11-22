@@ -1,4 +1,4 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
-@source "../../../../vendor/nuxt-ui/dist/runtime";
+@source "../../../../../../packages/nuxt-ui/dist/runtime";
