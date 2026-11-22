@@ -21,13 +21,14 @@
   "homepage": "https://querry-kit.github.io/querry-kit/docs/nest/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/querry-kit/nest.git"
+    "url": "git+https://github.com/querry-kit/querry-kit.git",
+    "directory": "packages/nest"
   },
   "bugs": {
-    "url": "https://github.com/querry-kit/nest/issues"
+    "url": "https://github.com/querry-kit/querry-kit/issues"
   },
   "author": {
-    "name": "Tobias Wälde",
+    "name": "Tobias W\u00e4lde",
     "email": "business@tobiaswaelde.com",
     "url": "https://tobiaswaelde.com"
   },

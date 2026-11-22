@@ -18,13 +18,14 @@
   "homepage": "https://querry-kit.github.io/querry-kit/docs/nuxt-ui/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/querry-kit/nuxt-ui.git"
+    "url": "git+https://github.com/querry-kit/querry-kit.git",
+    "directory": "packages/nuxt-ui"
   },
   "bugs": {
-    "url": "https://github.com/querry-kit/nuxt-ui/issues"
+    "url": "https://github.com/querry-kit/querry-kit/issues"
   },
   "author": {
-    "name": "Tobias Wälde",
+    "name": "Tobias W\u00e4lde",
     "email": "business@tobiaswaelde.com",
     "url": "https://tobiaswaelde.com"
   },
@@ -71,7 +72,7 @@
     "@nuxt/module-builder": "^1.0.4",
     "@nuxt/schema": "^4.6.4",
     "@nuxt/ui": "^4.13.0",
-    "@querry-kit/nuxt": "^1.1.1",
+    "@querry-kit/nuxt": "workspace:*",
     "@types/node": "^26.6.6",
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-vue": "^6.0.11",
