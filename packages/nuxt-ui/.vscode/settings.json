@@ -1,0 +1,3 @@
+{
+  "i18n-ally.localesPaths": ["coverage/runtime/locales", "src/runtime/locales"]
+}
