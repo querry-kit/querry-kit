@@ -32,7 +32,11 @@ const stubs = {
       </div>
     </div>`,
   },
-  UPopover: { name: 'UPopover', props: ['ui', 'content'], template: '<div><slot /><slot name="content" /></div>' },
+  UPopover: {
+    name: 'UPopover',
+    props: ['ui', 'content', 'open'],
+    template: '<div><slot /><slot name="content" /></div>',
+  },
   USelect: true,
   USelectMenu: true,
   USeparator: true,
@@ -563,6 +567,9 @@ describe('table controls', () => {
       columnPinning: { left: ['email'] },
     });
     const reset = wrapper.get('button[aria-label="Reset layout"]');
+    await wrapper.get('button[aria-label="Table options"]').trigger('click');
+    const panel = wrapper.getComponent({ name: 'UPopover' });
+    expect(panel.props('open')).toBe(true);
     expect(reset.text()).toBe('');
     expect(reset.attributes('color')).toBe('error');
     await reset.trigger('click');
@@ -575,6 +582,8 @@ describe('table controls', () => {
       columnPinning: { left: [] },
     });
     expect(wrapper.find('button[aria-label="Reset layout"]').exists()).toBe(false);
+    await wrapper.get('span[tabindex="-1"]').trigger('keydown', { key: 'Escape' });
+    expect(panel.props('open')).toBe(false);
   });
 
   it('supports pinning and unpinning from a customized column item', async () => {
