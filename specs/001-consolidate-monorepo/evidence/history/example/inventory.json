@@ -1,0 +1,9 @@
+{
+  "source": "example",
+  "refs": 11,
+  "commits": 41,
+  "sha256": {
+    "refs.tsv": "a423dcfc110954e2575f2c0086b70bb1a1fff6fc761d46284da949930cc3b469",
+    "commits.txt": "bcfac4a228438c17f365b530267d1638f1b43364321cf0a1c7d066df0fa2d95f"
+  }
+}

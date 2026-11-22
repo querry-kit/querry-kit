@@ -1,0 +1,9 @@
+{
+  "source": "nuxt",
+  "refs": 120,
+  "commits": 222,
+  "sha256": {
+    "refs.tsv": "2ee120ae4fadff4c38eda662889bc8a98dc492321e3ed43eec02f06eca0ddce6",
+    "commits.txt": "0029458e8f29ff6e6e6f42119d019ffae7d35ddc7fb9bb544d56b73de5913a54"
+  }
+}
