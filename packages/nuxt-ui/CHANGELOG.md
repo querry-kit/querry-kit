@@ -1,5 +1,11 @@
 # @querry-kit/nuxt-ui
 
+## 4.3.1
+
+### Patch Changes
+
+- 35181ba: Close table options with Escape after a keyboard reset returns focus to the options heading.
+
 ## 4.3.0
 
 ### Minor Changes
