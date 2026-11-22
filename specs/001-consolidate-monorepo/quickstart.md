@@ -1,6 +1,6 @@
 # Validate the integration candidate
 
-Run against the **implemented candidate** in a disposable fresh clone, without adjacent source trees, mounted application data, npm publication credentials or generated build output. Required: Git with full history, Node 26.13+ within 26.x, pnpm 11.28.9, npm, Docker Compose, curl, jq and Chromium for Playwright. Commands below run from the workspace root unless noted. `verify:packages` and `verify:release-plan` are proposed CI entry points to implement; no migration tests have run as part of planning.
+Run against the **implemented candidate** in a disposable fresh clone, without adjacent source trees, mounted application data, npm publication credentials or generated build output. Required: Git with full history, Node 26.13+ within 26.x, pnpm 11.28.9, npm, Docker Compose, curl, jq and Chromium for Playwright. Commands below run from the workspace root unless noted. `verify:packages` and `verify:release-plan` check packed consumers and rehearse versioning without publishing.
 
 ### 1. Verify the import at both boundaries
 
@@ -76,7 +76,7 @@ ln -s "$PWD/apps/docs/.output/public" "$preview/querry-kit"
 python3 -m http.server 4174 --bind 127.0.0.1 --directory "$preview"
 ```
 
-With Python 3 available for that preview, open `http://127.0.0.1:4174/querry-kit/example/` and deep-link directly into each package guide/changelog. On desktop and mobile verify grouped tables, toolbar, icons, CSS, navigation, source links and release labels; no root-relative asset failures. Compare rendered changelogs to the frozen output plus intended changes. Repeat on the deployed Pages URL after authorized cutover. Current `docs:test` builds at `/`; that test alone cannot prove the Pages prefix.
+With Python 3 available for that preview, open `http://127.0.0.1:4174/querry-kit/example/` and deep-link directly into each package guide/changelog. On desktop and mobile verify grouped tables, toolbar, icons, CSS, navigation, source links and release labels; no root-relative asset failures. Compare rendered changelogs to the frozen output plus intended changes. Repeat on the deployed Pages URL after authorized cutover. `docs:test` generates the static site and serves it at `/querry-kit/` on both viewport sizes.
 
 ### 5. Rehearse releases without publishing
 
@@ -86,4 +86,4 @@ pnpm verify:release-plan --case nest-and-ui
 pnpm verify:release-plan --case docs-only
 ```
 
-Each proposed command creates an isolated disposable candidate, adds only its case's changes, runs Changesets version computation, then exercises the same pack/selection logic as production without registry/tag writes. Expected public sets: UI; Nest and UI; empty. Compare every version, tag candidate and digest; no unrelated version/peer changes. Simulate a successful first pair and a failed second pair: resume only the missing pair and fail closed on lookup errors or mismatching bytes. This is rehearsal evidence, not owner approval or proof of a real release.
+Each command creates an isolated disposable candidate, adds only its case's changes, runs Changesets version computation, then exercises the same pack/selection logic as production without registry/tag writes. Expected public sets: UI; Nest and UI; empty. Compare every version, tag candidate and digest; no unrelated version/peer changes. Simulate a successful first pair and a failed second pair: resume only the missing pair and fail closed on lookup errors or mismatching bytes. This is rehearsal evidence, not owner approval or proof of a real release.

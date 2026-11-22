@@ -7,10 +7,16 @@ import { checkPack, disposition, fromCommit, git, ids, readRegistry, sameSet } f
 const [mode, dir, names] = process.argv.slice(2);
 assert.ok(['inspect', 'publish'].includes(mode));
 const sha = git('rev-parse', 'HEAD');
-const due = fromCommit(sha, names.split(',').map(n => n.trim()));
+const due = fromCommit(
+  sha,
+  names.split(',').map((n) => n.trim()),
+);
 assert.ok(due.length > 0);
 const packs = JSON.parse(await readFile(join(dir, 'verified.json')));
-sameSet(packs.map(p => p.name), ids.map(id => `@querry-kit/${id}`));
+sameSet(
+  packs.map((p) => p.name),
+  ids.map((id) => `@querry-kit/${id}`),
+);
 const snapshot = {};
 for (const id of ids) {
   const name = `@querry-kit/${id}`;
@@ -19,7 +25,7 @@ for (const id of ids) {
 const ledgerFile = join(dir, 'release.json');
 const entries = [];
 for (const c of due) {
-  const pack = packs.find(p => p.name === c.name);
+  const pack = packs.find((p) => p.name === c.name);
   const archive = await checkPack(dir, c, pack);
   const state = await disposition(c, pack, await readRegistry(c.name), sha);
   const remote = git('ls-remote', '--tags', 'origin', `refs/tags/${c.tag}`);
@@ -39,10 +45,10 @@ if (mode === 'inspect') {
   assert.equal(approved.sha, sha);
   assert.deepEqual(approved.due, due);
   assert.deepEqual(approved.packs, packs);
-  const enabled = (process.env.NPM_ENABLED_PACKAGES || '').split(',').map(s => s.trim());
+  const enabled = (process.env.NPM_ENABLED_PACKAGES || '').split(',').map((s) => s.trim());
   const checkTags = (name, current, allowedLatest) => {
     const expected = { ...approved.snapshot[name] };
-    if (allowedLatest && due.some(c => c.name === name)) expected.latest = allowedLatest;
+    if (allowedLatest && due.some((c) => c.name === name)) expected.latest = allowedLatest;
     assert.deepEqual(current, expected, `${name}: unexpected dist-tag change`);
   };
   for (const [name, tags] of Object.entries(snapshot)) {
@@ -51,13 +57,25 @@ if (mode === 'inspect') {
   }
   for (const { c } of entries) assert.ok(enabled.includes(c.name), `Publisher not enabled for ${c.name}`);
   for (const { c, pack, archive } of entries) {
-    if (await disposition(c, pack, await readRegistry(c.name), sha) === 'missing') {
-      execFileSync('npm', ['publish', archive, '--ignore-scripts', '--provenance', '--access', 'public', '--registry=https://registry.npmjs.org'], { stdio: 'inherit' });
+    if ((await disposition(c, pack, await readRegistry(c.name), sha)) === 'missing') {
+      execFileSync(
+        'npm',
+        [
+          'publish',
+          archive,
+          '--ignore-scripts',
+          '--provenance',
+          '--access',
+          'public',
+          '--registry=https://registry.npmjs.org',
+        ],
+        { stdio: 'inherit' },
+      );
     }
     assert.equal(await disposition(c, pack, await readRegistry(c.name), sha), 'complete');
     git('push', 'origin', `${sha}:refs/tags/${c.tag}`);
   }
   for (const name of Object.keys(snapshot)) {
-    checkTags(name, (await readRegistry(name))['dist-tags'], due.find(c => c.name === name)?.version);
+    checkTags(name, (await readRegistry(name))['dist-tags'], due.find((c) => c.name === name)?.version);
   }
 }
