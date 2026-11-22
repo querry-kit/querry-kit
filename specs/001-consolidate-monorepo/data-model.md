@@ -1,0 +1,17 @@
+# Migration records and invariants
+
+These are review records and CI artifacts, not application tables. No schema or customer-data migration is proposed.
+
+| Record and key | Fields | Relationships and validation |
+| --- | --- | --- |
+| Source snapshot `(repository, freeze)` | main SHA/tree, import prefix, tags and release URLs, branches, open work mapping, license/instructions, CI rules, reviewer, timestamp | Five records per freeze. Four imported roots, one destination. Each recorded head is immutable; drift creates a new snapshot or a documented deferral. |
+| History inventory `(source, freeze)` | original ref → object ID and peeled commit tip, sorted unique reachable commit IDs, count, list digest, integrated `main` SHA | Four independent inventories. Source IDs must be a subset of integrated `main` ancestry, not merely present in a local object store. Each imported prefix must equal its frozen source root tree before adaptation. |
+| Package baseline `(name, version)` | source SHA, npm `gitHead`, tarball URL and integrity, files/exports/types, engines, dependencies, peers/optional flags, license, dist-tags, provenance and tag target | Three allowed names only. Source tag need not equal npm `gitHead`. Compare normalized consumer metadata and real import results; document any intentional repository-link changes. |
+| Workspace member `(path)` | name, role, private flag, compiler, local build dependencies, public peer dependencies, required checks | Only libraries are public. Local build edges are distinct from registry peer ranges. Every dependency needed before prepare/build is declared or ordered explicitly. |
+| Teaching case `(old path, scenario)` | endpoints, fields/relations, inbound links, dataset owner, destination, test, retirement criterion | Each legacy use case is preserved in canonical docs/fixture or explicitly retained in a private example. No dataset/volume changes ownership implicitly. |
+| Pending change `(source, original file or issue)` | original target, released version if any, disposition, destination record, reviewer | A public change can be carried once; private-only or empty entries cannot create public releases. |
+| Release candidate `(reviewed SHA, package, version)` | expected changed set and tag, tarball digest, pre-release dist-tags, registry result, verification and provenance | One reviewed SHA may release multiple independent packages. Enforce exact set equality; immutable package/version pair. No npm entry for a docs-only change. |
+| Publisher `(package)` | old and new repo/workflow/environment, owner, binding confirmation, active job, evidence time | At most one job authorized per package. A short interval with neither enabled is valid. Do not store tokens in this record. |
+| Docs deployment `(revision, artifact digest)` | Pages base, routes tested, released package versions, explicitly marked next demos, previous verified artifact | May advance independently of a package publication; label behavior against verified npm availability. |
+
+**Transitions:** Snapshot: observed → frozen → imported → verified on `main`. Publisher: old active → both disabled → binding verified → central active. Release: proposed → version PR reviewed → packed → verified → published → registry verified. Partial publication holds the candidate at the reviewed SHA and records success per pair. Example: inventoried → preserved and tested → old copy removed; retention requires a named owner and an observable exit criterion.
