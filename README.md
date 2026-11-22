@@ -111,7 +111,7 @@ Use Node.js 26.13.0 LTS and the pnpm version pinned in `package.json`. Changeset
 
 ### Dependency maintenance
 
-Documentation and examples use Nuxt 4.6.4 and Vue 3.5.45; the Workboard API uses NestJS 12.3.3 and Swagger 12.1.0. Nuxt 4.6.4 tightens production error disclosure and Nitro caching rules; see the [upstream behavior changes](https://github.com/nuxt/nuxt/releases/tag/v4.6.4).
+Documentation and examples use Nuxt 4.6.4 and Vue 3.5.46; the Workboard API uses NestJS 12.6.0 and Swagger 12.1.2. Nuxt 4.6.4 tightens production error disclosure and Nitro caching rules; see the [upstream behavior changes](https://github.com/nuxt/nuxt/releases/tag/v4.6.4).
 
 Dependency refreshes retain pnpm 11.28.9, the existing TypeScript 6/7 split, and security overrides. Candidates published less than 24 hours ago are deferred; dependency major migrations are outside this update.
 
@@ -132,3 +132,19 @@ pnpm docs:build
 
 The interactive fixture uses synthetic records and an in-browser Axios adapter;
 its group counts and lazy loading are independent of production systems.
+
+To check the website against unreleased Nuxt UI changes, use a disposable copy of this website checkout. Pack the library and install that exact tarball **in the copy** so the demos, generated component types, and Tailwind scan all use the same build:
+
+```sh
+# In the nuxt-ui checkout (with dependencies installed):
+pnpm pack --pack-destination /path/to/preview-packages
+
+# In the disposable website checkout:
+pnpm install --frozen-lockfile
+pnpm --filter @querry-kit/docs add @querry-kit/nuxt-ui@file:/path/to/preview-packages/querry-kit-nuxt-ui-4.2.0.tgz
+pnpm docs:typecheck
+pnpm docs:test
+pnpm docs:build
+```
+
+Use the filename printed by `pnpm pack`. Keep the temporary manifest and lockfile out of the website PR. When the UI changes are released, update the site's dependency and lockfile to that release before deploying the docs and demos together.

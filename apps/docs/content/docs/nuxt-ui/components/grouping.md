@@ -296,10 +296,14 @@ Requires an ordered `v-model:grouping` (`string[]`) and `fields: readonly Groupi
 | `available-columns` | Optional readonly `GroupedTableColumn[]` | Supplies headers for grouping fields absent from displayed columns. Defaults to displayed columns. |
 | `get-id` | Required `(item: TItem) => string \| number` | Stable record key. |
 | `label` | Required `string` | Accessible table name. |
-| `flexible-column` | Optional column ID | Column that fills available space in grouped mode. Defaults to the first displayed column. |
+| `flexible-column` | Optional column ID | Unpinned column that fills available space in grouped mode. Defaults to the first unpinned column. |
 | `show-branch` | Optional `boolean` | Enables the branch-content slot above branch actions when supplied. |
 | `ui` | Optional Nuxt UI Table `ui` | Styles the underlying table. |
 | `texts`, `icons` | Optional shared overrides | Localized labels and Iconify icons. |
+
+From `sm` (640 px), group columns stay pinned on the left in grouping order, after any leading selection column. Below `sm`, group columns scroll horizontally with the rows. The leading selection column stays pinned. Clearing grouping restores the saved pinning preferences.
+
+Set a grouping column's `width` wide enough for its disclosure icon, longest badge and count if they should stay on one line. Root request errors appear in a padded toolbar above the horizontally scrollable table; **Retry** repeats the failed request.
 
 | Slot | Scope | Fallback |
 | --- | --- | --- |

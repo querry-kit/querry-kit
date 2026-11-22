@@ -21,7 +21,7 @@
           </div>
           <UButton label="Refresh" icon="i-lucide-refresh-cw" variant="soft" :loading="loading" @click="refresh" />
         </div>
-        <QuerryKitTableToolbar
+        <QTableToolbar
           v-model:column-order="columnOrder"
           v-model:column-pinning="columnPinning"
           v-model:filtering="filtering"
@@ -40,7 +40,7 @@
           class="my-4"
         />
         <UTable :data="items" :columns="columns" :loading="loading" class="mt-4" />
-        <QuerryKitTablePagination
+        <QTablePagination
           v-model:items-per-page="itemsPerPage"
           v-model:page="page"
           :total-items="totalItems"

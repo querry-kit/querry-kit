@@ -1,6 +1,6 @@
 # Workboard Web <!-- omit in toc -->
 
-A Nuxt frontend for the Workboard reference application. It uses `@querry-kit/nuxt` for its typed API client and headless table state, and `@querry-kit/nuxt-ui` for the toolbar, filtering, sorting, and pagination controls.
+A Nuxt frontend for the Workboard reference application. It uses `@querry-kit/nuxt` 1.x for its typed API client and headless table state, and `@querry-kit/nuxt-ui` 4.x for the `QTableToolbar` and `QTablePagination` components. Both packages require Node.js 26.13.0 or newer.
 
 See the [Querry Kit overview](../../../README.md) for the complete API-and-web application setup.
 

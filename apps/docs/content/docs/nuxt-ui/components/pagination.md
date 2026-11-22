@@ -6,11 +6,13 @@
 
 ## Inputs and behavior
 
+The footer stays on one line. It shows the summary only when the entire text fits beside the controls. On narrow footers, numbered navigation keeps the current page and the previous/next buttons. Use `#start` for controls that should stay visible beside the optional `#summary`.
+
 | Prop/model               | Default                   | Description                                                    |
 | ------------------------ | ------------------------- | -------------------------------------------------------------- |
 | `v-model:page`           | required                  | One-based current page.                                        |
 | `v-model:items-per-page` | required                  | Current page size.                                             |
-| `v-model:loading-mode`   | omitted                   | Shows a switch when set to `'pagination'` or `'infinite'`.     |
+| `v-model:loading-mode`   | omitted                   | Shows a mode selector when bound to `'pagination'` or `'infinite'`. |
 | `total-items`            | `0`                       | Total available rows. Hides the numbered summary when zero.    |
 | `page-sizes`             | `[1, 2, 10, 25, 50, 100]` | Selectable page sizes. Use `[]` to hide the default selector. |
 | `loaded-items`           | `0`                       | Loaded rows in the flat Infinite scroll summary.              |
@@ -53,10 +55,12 @@ Override the mode, loaded count, and load/retry labels via `texts.pagination` or
 | Slot         | Slot props                                               | Use it to replace            |
 | ------------ | -------------------------------------------------------- | ---------------------------- |
 | `left`       | `page`, `itemsPerPage`, `totalItems`, `start`, `end`     | The result summary region.   |
+| `start`      | —                                                        | Persistent controls before the optional summary. |
+| `summary`    | `start`, `end`, `totalItems`                             | The text hidden when space is insufficient. |
 | `page-size`  | `itemsPerPage`, `setItemsPerPage`                        | The page-size selector.      |
 | `pagination` | `page`, `pageCount`, `first`, `previous`, `next`, `last` | The page navigation control. |
 | `right`      | `page`, `pageCount`                                      | A trailing footer region.    |
 
 ## Replace the summary
 
-`#summary` receives numeric `start`, `end` and `totalItems`. It defaults to the localized page range or loaded count for flat infinite mode. `#left` replaces the entire summary region. The three models emit their matching `update:<model>` events. The default page-size picker uses `pagination.pageSize` as its accessible name. The trailing `right` slot is empty by default.
+`#summary` receives numeric `start`, `end` and `totalItems`. It defaults to the localized page range or loaded count for flat infinite mode. `#left` replaces the entire left region, including `#start`. The page-size picker uses `pagination.pageSize` for both its accessible name and its non-selectable menu heading (**Items per page** in English). Page navigation, page size, and **Load more** use small controls.
