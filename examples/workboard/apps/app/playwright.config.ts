@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
+  outputDir: process.env.WORKBOARD_TEST_OUTPUT,
   projects: [
     { name: 'app', testDir: './test', testIgnore: '**/crud.spec.ts' },
     { name: 'e2e', testDir: '../../tests/e2e' },

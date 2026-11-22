@@ -47,3 +47,5 @@ Only IDs present in `column-order` are shown. A column with `enableHiding: false
 The slots let an application replace the whole list or a row while retaining the component's immutable state updates.
 
 The trigger opens the panel. The header shows the reset action when a layout differs from its defaults. The default list divides pinned and unpinned columns, supports drag and drop, and renders visibility and pinning actions per item. Use `move(from, to)` with indices, `toggleVisibility(id)`, and `pin(id, side)` at list level. The item actions bind the current column. A pin side of `left` or `right` pins the column and `center` unpins it. The three models emit their matching `update:<model>` events. A toolbar switches the panel to a dialog on small screens.
+
+**Next:** After activating **Reset layout** with the keyboard, focus stays on the options heading. Press **Escape** to dismiss the panel.

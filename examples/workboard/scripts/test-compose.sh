@@ -6,12 +6,19 @@ export WORKBOARD_APP_PORT=${WORKBOARD_TEST_COMPOSE_PORT:-35465}
 export WORKBOARD_TEST_APP_URL="http://127.0.0.1:$WORKBOARD_APP_PORT"
 project="workboard-compose-test-$$"
 temp=$(mktemp -d)
+export WORKBOARD_TEST_OUTPUT="$temp/browser-results"
 
 # Use an isolated Compose project and delete only its temporary containers and volume.
 cleanup() {
+  local status=$?
   docker compose -p "$project" down -v
   rm -f "$temp/session.cookies" "$temp/before.json" "$temp/after.json" "$temp/compose.override.yml"
-  rmdir "$temp"
+  if (( status == 0 )); then
+    rm -rf -- "$temp/browser-results"
+    rmdir "$temp"
+  else
+    echo "Test artifacts: $WORKBOARD_TEST_OUTPUT" >&2
+  fi
 }
 trap cleanup EXIT
 

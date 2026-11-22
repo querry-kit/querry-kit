@@ -8,7 +8,7 @@ services:
     ports:
       - '127.0.0.1:${WORKBOARD_DB_PORT:-54329}:5432'
     volumes:
-      - ./dockerdata/postgres:/var/lib/postgresql
+      - ${WORKBOARD_DEV_DB_DIR:-./dockerdata/postgres}:/var/lib/postgresql
     healthcheck:
       test: [CMD-SHELL, 'pg_isready -U workboard -d "$$POSTGRES_DB"']
       interval: 2s

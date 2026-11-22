@@ -15,8 +15,8 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: apps/api/Dockerfile
+      context: ../..
+      dockerfile: examples/workboard/apps/api/Dockerfile
     depends_on:
       db:
         condition: service_healthy
@@ -31,8 +31,8 @@ services:
 
   app:
     build:
-      context: .
-      dockerfile: apps/app/Dockerfile
+      context: ../..
+      dockerfile: examples/workboard/apps/app/Dockerfile
     depends_on:
       api:
         condition: service_healthy

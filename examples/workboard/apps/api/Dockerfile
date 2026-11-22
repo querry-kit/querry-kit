@@ -1,23 +1,25 @@
 FROM node:26.13.1-bookworm AS build
-WORKDIR /workboard
+WORKDIR /repo
 RUN npm install --global pnpm@11.28.9
-COPY . .
-# Package sources come from the versioned Git pins, not the npm registry or host checkouts.
-RUN node scripts/stage-querry-kit.mjs && CI=true pnpm install --frozen-lockfile
-RUN pnpm sources:build && pnpm --filter @workboard/contracts build
-RUN pnpm --filter @workboard/api build
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY patches/ patches/
+COPY packages/nest/ packages/nest/
+COPY packages/nuxt/ packages/nuxt/
+COPY packages/nuxt-ui/ packages/nuxt-ui/
+COPY examples/workboard/libs/contracts/ examples/workboard/libs/contracts/
+COPY examples/workboard/apps/api/ examples/workboard/apps/api/
+RUN CI=true pnpm --filter @workboard/api... install --frozen-lockfile
+RUN pnpm --filter @querry-kit/nest build
+RUN pnpm --filter @workboard/contracts build && pnpm --filter @workboard/api build
+RUN pnpm --filter @workboard/api deploy --legacy --prod /runtime
 
 FROM node:26.13.1-bookworm-slim AS runtime
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=3101
 RUN apt-get update \
     && apt-get install -y --no-install-recommends openssl \
     && rm -rf /var/lib/apt/lists/*
-# Preserve the frozen install's relative workspace links without resolving peers again.
-COPY --from=build --chown=node:node /workboard/node_modules/ /workboard/node_modules/
-COPY --from=build --chown=node:node /workboard/vendor/nest/ /workboard/vendor/nest/
-COPY --from=build --chown=node:node /workboard/libs/contracts/ /workboard/libs/contracts/
-COPY --from=build --chown=node:node /workboard/apps/api/ /workboard/apps/api/
-WORKDIR /workboard/apps/api
+COPY --from=build --chown=node:node /runtime/ /workboard/api/
+WORKDIR /workboard/api
 USER node
 EXPOSE 3101
 # Migrate before listening; Nest then finishes the empty-database seed before readiness.

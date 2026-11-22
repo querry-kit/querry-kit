@@ -239,14 +239,17 @@ test(
     await page.getByRole('button', { name: 'Table options' }).click();
     await page
       .getByRole('listitem')
-      .filter({ hasText: /^Priority$/ })
+      .filter({ has: page.getByText('Priority', { exact: true }) })
       .getByRole('switch', { name: 'Toggle column visibility' })
       .click();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('columnheader', { name: 'Priority', exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Table options' }).click();
-    await page.getByRole('button', { name: 'Reset layout', exact: true }).press('Enter');
+    const resetLayout = page.getByRole('button', { name: 'Reset layout', exact: true });
+    await resetLayout.press('Enter');
+    await expect(resetLayout).toBeHidden();
     await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog', { name: 'Table options' })).toBeHidden();
     await expect(page.getByRole('columnheader', { name: 'Priority', exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Actions for Review detail layout' }).click();
     await page.getByRole('menuitem', { name: 'Open', exact: true }).click();

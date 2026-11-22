@@ -24,7 +24,7 @@
     </template>
     <template #header>
       <slot name="header" :columns="orderedColumns" :can-reset="canReset" :reset="resetLayout">
-        <OptionsHeader :can-reset="canReset" :texts="texts" :icons="icons" @reset="resetLayout" />
+        <OptionsHeader :can-reset="canReset" :texts="texts" :icons="icons" @reset="resetLayout" @close="open = false" />
       </slot>
     </template>
     <slot name="items" :columns="orderedColumns" :move="move" :toggle-visibility="toggleVisibility" :pin="pin">
