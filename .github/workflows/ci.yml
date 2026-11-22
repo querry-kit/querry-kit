@@ -58,12 +58,12 @@ jobs:
           pnpm build:packages
           pnpm examples:build
           pnpm examples:check
-          pnpm --dir examples/workboard lint
-          pnpm --dir examples/workboard format:check
-          pnpm --dir examples/workboard sources:check
+          pnpm examples:lint
+          pnpm examples:format:check
+          pnpm examples:sources:check
           pnpm --filter @workboard/app exec playwright install --with-deps chromium
-          pnpm --dir examples/workboard test:api
-          pnpm --dir examples/workboard test:compose
+          pnpm examples:test:api
+          pnpm examples:test:compose
   packed:
     needs: scope
     if: needs.scope.outputs.full == 'true'

@@ -20,15 +20,15 @@ Use Node 26 and the pnpm version in `package.json`. These rules apply to example
 
 Run commands from the workspace root. Check commands do not change files.
 
-| Command             | Purpose                                                        |
-| ------------------- | -------------------------------------------------------------- |
-| `pnpm lint`         | ESLint including SFC order and doc-comment checks; no warnings |
-| `pnpm lint:fix`     | Apply supported lint fixes, then review behavioral precedence  |
-| `pnpm format:check` | Compare against Prettier plus the canonical Vue layout pass    |
-| `pnpm format:fix`   | Write the same formatting pipeline used by the check           |
-| `pnpm typecheck`    | Check the shared library and both apps after dependency builds |
-| `pnpm build`        | Build staged packages, contracts, API and web app              |
+| Command                         | Purpose                                                        |
+| ------------------------------- | -------------------------------------------------------------- |
+| `pnpm -w examples:lint`         | ESLint including SFC order and doc-comment checks; no warnings |
+| `pnpm -w examples:lint:fix`     | Apply supported lint fixes, then review behavioral precedence  |
+| `pnpm -w examples:format:check` | Compare against Prettier plus the canonical Vue layout pass    |
+| `pnpm -w examples:format:fix`   | Write the same formatting pipeline used by the check           |
+| `pnpm -w examples:check`        | Check the shared library and both apps after dependency builds |
+| `pnpm -w build`                 | Build workspace packages, contracts, API and web app           |
 
-When editing formatter or lint rules, verify valid and invalid TS and Vue fixtures and require identical bytes on a second format pass. Vue formatting intentionally applies layout rules after Prettier; plain `prettier --check` does not replace `pnpm format:check`.
+When editing formatter or lint rules, verify valid and invalid TS and Vue fixtures and require identical bytes on a second format pass. Vue formatting intentionally applies layout rules after Prettier; plain `prettier --check` does not replace `pnpm -w examples:format:check`.
 
 For Spec Kit delivery, validate one task, make its own commit, then push it to the linked issue branch before starting the next task. A push does not authorize merging.

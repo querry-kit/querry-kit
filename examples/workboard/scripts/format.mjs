@@ -70,7 +70,7 @@ async function formatWorkspace() {
   }
 
   if (!write && changed) {
-    console.error(`${changed} file(s) need formatting. Run pnpm format:fix.`);
+    console.error(`${changed} file(s) need formatting. Run pnpm -w examples:format:fix.`);
     process.exitCode = 1;
   }
 }

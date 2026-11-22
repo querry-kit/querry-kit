@@ -37,7 +37,7 @@ function checkInstalledExport(consumer, name) {
   assert.equal(realpathSync(link), realpathSync(source));
   const manifest = JSON.parse(readFileSync(new URL('package.json', source), 'utf8'));
   const entry = manifest.exports['.'].import;
-  assert.ok(existsSync(new URL(entry, source)), `${manifest.name} is not built. Run pnpm sources:build.`);
+  assert.ok(existsSync(new URL(entry, source)), `${manifest.name} is not built. Run pnpm -w build:packages.`);
 }
 
 /** Resolves both Nuxt consumers to the same built package file. */

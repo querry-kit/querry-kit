@@ -71,7 +71,6 @@ packages:
 - packages/nuxt
 - packages/nuxt-ui
 - apps/docs
-- examples/workboard
 - examples/workboard/apps/*
 - examples/workboard/libs/contracts
 patchedDependencies:

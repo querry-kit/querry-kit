@@ -184,8 +184,6 @@ importers:
         specifier: ^3.3.14
         version: 3.3.14(@typescript/typescript6@6.0.2)
 
-  examples/workboard: {}
-
   examples/workboard/apps/api:
     dependencies:
       '@casl/ability':

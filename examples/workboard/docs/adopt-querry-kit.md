@@ -8,7 +8,7 @@ The Workboard is a copyable starter, not a production authentication template. I
 2. Run the [standalone demo](../README.md#try-the-standalone-demo) before changing the code. Verify that you can switch to `user1` in the navbar, browse a task, and open the API reference.
 3. Rename the workspace and apps in `package.json`, `apps/api/package.json` and `apps/app/package.json`. If you rename `@workboard/contracts`, update its directory manifest, imports and workspace dependencies together. Update the `--filter` names in root scripts, Dockerfiles and any CI definitions; regenerate the lockfile with `pnpm install` and check it in.
 4. Set environment variables for the API and Nuxt server. See [API defaults](../apps/api/.env.example) and [Nuxt defaults](../apps/app/.env.example). The committed Compose files deliberately use local defaults and publish the demo only on loopback.
-5. Keep the [workspace development instructions](../README.md#develop-against-local-querry-kit-packages) while developing the Querry Kit packages. `pnpm sources:check` verifies that the app and Nuxt UI share the same workspace Nuxt package.
+5. Keep the [workspace development instructions](../README.md#develop-against-local-querry-kit-packages) while developing the Querry Kit packages. `pnpm -w examples:sources:check` verifies that the app and Nuxt UI share the same workspace Nuxt package.
 
 ## Replace the demo-only pieces
 
@@ -38,7 +38,7 @@ Try this in a disposable copy with its own PostgreSQL instance. Seed data is add
 3. Add a `summary` value in the [fixture builder](../apps/api/src/database/fixtures.ts) for a visible sample such as `u1-1`. In [session.ts](../libs/contracts/src/session.ts), add `summary` to the supported projection fields. In [tasks.ts](../libs/contracts/src/tasks.ts), add `summary: z.string().nullable().optional()` to `taskSchema`. `null` means the record has no summary; absent means the caller did not select the field.
 4. Allow `summary` in the [CASL public field rule](../apps/api/src/auth/workboard-ability.ts). Add `summary: true` to the [projection schema](../apps/api/src/tasks/task-projection.ts) and map `summary: row.summary` into its DTO. If you only intend to display the field, do not add it to the filter, sort or grouping schemas.
 5. Add a `summary` column with `id` and `accessorKey` set to `summary` in [TaskTable.vue](../apps/app/app/components/tasks/TaskTable.vue). Its visibility then drives the API field selector. Add a read assertion for `fields=id,summary` while signed in as `user1`.
-6. Run `pnpm build`, `pnpm lint`, `pnpm format:check`, and `pnpm typecheck`. Start `pnpm dev` with the copy's database settings. Switch to `user1` in the navbar, verify the summary on the visible row, and confirm that a user2-owned row is still unavailable. The field requires no changes in any upstream package checkout.
+6. Run `pnpm -w build`, `pnpm -w examples:lint`, `pnpm -w examples:format:check`, and `pnpm -w examples:check`. Start `pnpm -w examples:dev` with the copy's database settings. Switch to `user1` in the navbar, verify the summary on the visible row, and confirm that a user2-owned row is still unavailable. The field requires no changes in any upstream package checkout.
 
 ## Bring the integration into an existing app
 

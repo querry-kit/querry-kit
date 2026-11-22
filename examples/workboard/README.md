@@ -102,7 +102,7 @@ The Nuxt server forwards `/api` and `/docs` to `NUXT_API_ORIGIN` (default `http:
 
 ## Develop against local Querry Kit packages
 
-Edit `packages/nest`, `packages/nuxt` or `packages/nuxt-ui` in the monorepo. Build from the root with `pnpm build:packages`; `pnpm --dir examples/workboard sources:check` verifies the actual workspace exports and shared Nuxt resolution. Restart the app processes after rebuilding the libraries.
+Edit `packages/nest`, `packages/nuxt` or `packages/nuxt-ui` in the monorepo. Build from the root with `pnpm build:packages`; `pnpm -w examples:sources:check` verifies the actual workspace exports and shared Nuxt resolution. Restart the app processes after rebuilding the libraries.
 
 ## Follow one read request
 
@@ -116,8 +116,8 @@ Key integration blocks link directly to their Querry Kit docs. To use this repo 
 
 ## Verify changes
 
-After bootstrapping, run `pnpm lint`, `pnpm format:check`, `pnpm build`, `pnpm typecheck`, and `pnpm sources:check`.
+After bootstrapping, run `pnpm -w examples:lint`, `pnpm -w examples:format:check`, `pnpm -w build`, `pnpm -w examples:check`, and `pnpm -w examples:sources:check`.
 
-- `pnpm test:api` runs migrations, seed and live Fastify integration against a disposable PostgreSQL Compose project. It requires free loopback ports `55463` and `35463` (or `WORKBOARD_TEST_DB_PORT` and `WORKBOARD_TEST_API_PORT`).
-- `pnpm test:web` runs Playwright against a running test stack initialized with `WORKBOARD_SEED_PROFILE=compact` on the API. Set `WORKBOARD_TEST_APP_URL` if the app URL differs from `http://127.0.0.1:3201`. Install Chromium first with `pnpm --filter @workboard/app exec playwright install --with-deps chromium` on supported Linux hosts.
-- `pnpm test:compose` uses Docker, curl and jq to build the standalone stack without a Docker build cache, run browser tests, and compare seed IDs across a restart. It uses a separate volume and loopback port `35465` by default; override that port with `WORKBOARD_TEST_COMPOSE_PORT`.
+- `pnpm -w examples:test:api` runs migrations, seed and live Fastify integration against a disposable PostgreSQL Compose project. It requires free loopback ports `55463` and `35463` (or `WORKBOARD_TEST_DB_PORT` and `WORKBOARD_TEST_API_PORT`).
+- `pnpm -w examples:test:web` runs Playwright against a running test stack initialized with `WORKBOARD_SEED_PROFILE=compact` on the API. Set `WORKBOARD_TEST_APP_URL` if the app URL differs from `http://127.0.0.1:3201`. Install Chromium first with `pnpm --filter @workboard/app exec playwright install --with-deps chromium` on supported Linux hosts.
+- `pnpm -w examples:test:compose` uses Docker, curl and jq to build the standalone stack without a Docker build cache, run browser tests, and compare seed IDs across a restart. It uses a separate volume and loopback port `35465` by default; override that port with `WORKBOARD_TEST_COMPOSE_PORT`.

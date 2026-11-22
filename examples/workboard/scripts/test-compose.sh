@@ -56,7 +56,7 @@ curl -fsS --ipv4 \
   -H "Origin: http://localhost:$WORKBOARD_APP_PORT" -H 'Content-Type: application/json' \
   --data '{"login":"admin"}' "http://localhost:$WORKBOARD_APP_PORT/api/demo/session" > /dev/null
 read_ids "$temp/before.json"
-pnpm test:web
+pnpm -w examples:test:web
 docker compose -p "$project" restart api app
 docker compose -p "$project" up -d --no-build --wait
 read_ids "$temp/after.json"
