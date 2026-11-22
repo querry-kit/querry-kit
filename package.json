@@ -20,8 +20,7 @@
     "lint:fix": "eslint . --config eslint.config.mjs --fix",
     "format": "prettier --write .",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "changeset tag",
+    "version-packages": "changeset version && pnpm install --lockfile-only --no-frozen-lockfile",
     "build:packages": "pnpm --filter @querry-kit/nest build && pnpm --filter @querry-kit/nuxt build && pnpm --filter @querry-kit/nuxt-ui build",
     "verify:packages": "node scripts/verify-packages.mjs"
   },
