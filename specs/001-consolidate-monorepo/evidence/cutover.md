@@ -1,6 +1,6 @@
 # Publisher and Pages handoff
 
-**Preflight: 2026-11-22 22:21 UTC.** Reviewed implementation `35181ba`. The migration PR can be reviewed independently of permission to publish. No publisher binding, branch rule, registry version, dist-tag or repository archival state was changed.
+**Preflight: 2026-11-22 22:21 UTC.** Cold build, pack, release and Pages checks at `35181ba`; the exact eight-project command layout is `45f04e4`. The migration PR can be reviewed independently of permission to publish. No publisher binding, branch rule, registry version, dist-tag or repository archival state was changed.
 
 | Package | Registry `latest` | Last successful old publisher (`release.yml`) | Proposed new binding |
 | --- | --- | --- | --- |
@@ -12,7 +12,9 @@ Registry dist-tags and the three published tarball integrities match `release-ba
 
 **History and pending work.** Compared full advertised refs against `evidence/history/` again: no added or changed refs in the four source repositories. Nine temporary `archive/monorepo-53/*` branch names have disappeared since the import; every tip remains an ancestor of central `main`. Missing frozen commits: Nest **0/225**, Nuxt **0/222**, Nuxt UI **0/286**, example **0/41**. Each source had zero open issues/PRs. Destination integration work remains on #53. The legacy queues were classified at freeze; no outstanding public entry was recreated.
 
-**Pages baseline.** The verified deployed revision is `047205332cda57c9f860a43749194f08b64c4e6a`, success deployment `7985664693`. Root, `/example/` and `/docs/nest/api/decorators-pipes-utils/` returned 200 at `https://querry-kit.github.io/querry-kit/`. Artifact `14774538654`, ZIP SHA-256 `1b5888435c91c18209f57fb517914bd1b2d8278b9e4694fa1817908ad7d67c61`, was separately downloaded and its digest checked. Retain that ZIP beyond Actions expiry before relying on it for rollback. Do not mistake this baseline for deployment of the migration PR.
+**Pages baseline.** The verified deployed revision is `047205332cda57c9f860a43749194f08b64c4e6a`, success deployment `7985664693`. Root, `/example/` and `/docs/nest/api/decorators-pipes-utils/` returned 200 at `https://querry-kit.github.io/querry-kit/`. Artifact `14774538654`, ZIP SHA-256 `1b5888435c91c18209f57fb517914bd1b2d8278b9e4694fa1817908ad7d67c61`, was separately downloaded and its digest checked. The verified ZIP is retained outside version control in the implementation checkout at `.git/migration-rollback/github-pages-14774538654.zip`; hand that file to the release operator before the hosted artifact expires. Do not mistake this baseline for deployment of the migration PR.
+
+**T029 local gate passed.** In a new clone of `45f04e4` the frozen install, root build, local export resolution, all three release rehearsals and a cold Compose run succeeded. All 29 browser scenarios passed; DB, API and app were healthy after restart and seed IDs matched. The UI coverage follow-up `96de356` passed lint, typechecking and the native suite with 100% statement and line coverage. Hosted CI is a separate check of the PR head.
 
 ## T030 — Owner operation after review and merge
 
