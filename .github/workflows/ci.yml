@@ -79,6 +79,7 @@ jobs:
     needs: scope
     if: fromJSON(needs.scope.outputs.plan).docs
     outputs:
+      artifact-name: ${{ steps.archive.outputs.name }}
       artifact-id: ${{ steps.upload.outputs.artifact-id }}
       artifact-digest: ${{ steps.upload.outputs.artifact-digest }}
     runs-on: ubuntu-latest
@@ -93,13 +94,16 @@ jobs:
           pnpm --dir apps/docs exec playwright install --with-deps chromium
           pnpm docs:test
       - name: Archive the tree served by Playwright
+        id: archive
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit'
-        run: tar --dereference --hard-dereference -cf "$RUNNER_TEMP/artifact.tar" -C apps/docs/.output/pages-test/querry-kit .
+        run: |
+          tar --dereference --hard-dereference -cf "$RUNNER_TEMP/artifact.tar" -C apps/docs/.output/pages-test/querry-kit .
+          echo "name=pages-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
       - id: upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit'
         uses: actions/upload-artifact@v7
         with:
-          name: pages-${{ github.run_id }}-${{ github.sha }}
+          name: ${{ steps.archive.outputs.name }}
           path: ${{ runner.temp }}/artifact.tar
           retention-days: 7
           if-no-files-found: error
@@ -120,5 +124,6 @@ jobs:
     uses: ./.github/workflows/docs.yml
     permissions: { actions: read, pages: write, id-token: write }
     with:
+      artifact-name: ${{ needs.docs.outputs.artifact-name }}
       artifact-id: ${{ needs.docs.outputs.artifact-id }}
       artifact-digest: ${{ needs.docs.outputs.artifact-digest }}

@@ -2,6 +2,7 @@ name: Deploy tested documentation
 on:
   workflow_call:
     inputs:
+      artifact-name: { type: string, required: true }
       artifact-id: { type: string, required: true }
       artifact-digest: { type: string, required: true }
 permissions: {}
@@ -20,19 +21,21 @@ jobs:
       - name: Verify the tested artifact identity
         env:
           GH_TOKEN: ${{ github.token }}
+          NAME: ${{ inputs.artifact-name }}
           ID: ${{ inputs.artifact-id }}
           DIGEST: ${{ inputs.artifact-digest }}
         run: |
           set -euo pipefail
           [[ "$ID" =~ ^[0-9]+$ && "${DIGEST#sha256:}" =~ ^[a-f0-9]{64}$ ]]
+          [[ "$NAME" =~ ^pages-"$GITHUB_RUN_ID"-[1-9][0-9]*-"$GITHUB_SHA"$ ]]
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ID" | jq -e \
             --arg id "$ID" --arg run "$GITHUB_RUN_ID" --arg sha "$GITHUB_SHA" \
-            --arg repo "$GITHUB_REPOSITORY_ID" --arg hash "sha256:${DIGEST#sha256:}" '
+            --arg repo "$GITHUB_REPOSITORY_ID" --arg hash "sha256:${DIGEST#sha256:}" --arg name "$NAME" '
               (.id | tostring) == $id and .expired == false and .digest == $hash and
-              .name == ("pages-" + $run + "-" + $sha) and (.workflow_run.id | tostring) == $run and
+              .name == $name and (.workflow_run.id | tostring) == $run and
               (.workflow_run.head_repository_id | tostring) == $repo and
               .workflow_run.head_sha == $sha and .workflow_run.head_branch == "main"'
           echo "Pages: $GITHUB_SHA, run $GITHUB_RUN_ID, artifact $ID, $DIGEST" >> "$GITHUB_STEP_SUMMARY"
       - id: pages
         uses: actions/deploy-pages@v5
-        with: { artifact_name: 'pages-${{ github.run_id }}-${{ github.sha }}' }
+        with: { artifact_name: '${{ inputs.artifact-name }}' }
