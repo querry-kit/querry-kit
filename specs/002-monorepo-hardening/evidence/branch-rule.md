@@ -11,3 +11,5 @@ Proposed change: create a separate active branch ruleset scoped only to `refs/he
 ```
 
 The owner may create this ruleset with the repository rulesets API only after approval; record the response ID. If rollback is needed, delete that exact ID and verify rule `20121609` remains effective. [Full matrix PR #60](https://github.com/querry-kit/querry-kit/actions/runs/45086518530) and [docs-only PR #63](https://github.com/querry-kit/querry-kit/pull/63) are the two check-identity observations.
+
+T008 verified: GitHub Actions app `15368` reported exactly one successful `Workspace checks` on the [docs-only head](https://github.com/querry-kit/querry-kit/actions/runs/45088015217/job/137411873364) and the [full head](https://github.com/querry-kit/querry-kit/actions/runs/45086518530/job/137407892360). The docs-only run passed scope/docs and skipped libraries, consumers and packed, as expected. Applying and testing a new rule remains T010.
