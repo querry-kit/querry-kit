@@ -268,3 +268,5 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
+
+`useTable` always requests its `identityKey` (default `id`), even for hidden columns or custom `staticFields`. `updateRow()` ignores patches with a missing, null, or unknown identity; `0` is a valid key.

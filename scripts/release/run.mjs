@@ -2,7 +2,17 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { checkPack, disposition, fromCommit, git, ids, readRegistry, sameSet } from './verify-candidates.mjs';
+import { submitAndConfirm } from './confirmation.mjs';
+import {
+  registryRequest,
+  checkPack,
+  disposition,
+  fromCommit,
+  git,
+  ids,
+  readRegistry,
+  sameSet,
+} from './verify-candidates.mjs';
 
 const [mode, dir, names] = process.argv.slice(2);
 assert.ok(['inspect', 'publish'].includes(mode));
@@ -53,27 +63,63 @@ if (mode === 'inspect') {
   };
   for (const [name, tags] of Object.entries(snapshot)) {
     const e = entries.find(({ c }) => c.name === name);
-    checkTags(name, tags, e?.state === 'complete' ? e.c.version : undefined);
+    checkTags(name, tags, e && tags.latest === e.c.version ? e.c.version : undefined);
   }
   for (const { c } of entries) assert.ok(enabled.includes(c.name), `Publisher not enabled for ${c.name}`);
   for (const { c, pack, archive } of entries) {
-    if ((await disposition(c, pack, await readRegistry(c.name), sha)) === 'missing') {
-      execFileSync(
-        'npm',
-        [
-          'publish',
-          archive,
-          '--ignore-scripts',
-          '--provenance',
-          '--access',
-          'public',
-          '--registry=https://registry.npmjs.org',
-        ],
-        { stdio: 'inherit' },
+    const context = `npm-submit/${c.tag}`;
+    const api = (...args) => execFileSync('gh', ['api', ...args], { encoding: 'utf8' }).trim();
+    const path = `repos/${process.env.GITHUB_REPOSITORY}`;
+    try {
+      await submitAndConfirm({
+        observe: async (budget) => {
+          const request = registryRequest(budget);
+          const record = await readRegistry(c.name, request);
+          checkTags(c.name, record['dist-tags'], record['dist-tags'].latest === c.version ? c.version : undefined);
+          return disposition(c, pack, record, sha, request);
+        },
+        alreadyClaimed: async () => {
+          const pages = JSON.parse(api('--paginate', '--slurp', `${path}/commits/${sha}/statuses?per_page=100`));
+          const claims = pages.flat().filter((status) => status.context === context);
+          for (const claim of claims) assert.equal(claim.description, pack.integrity, 'Submission archive changed');
+          return claims.length > 0;
+        },
+        claim: () =>
+          api(
+            '--method',
+            'POST',
+            `${path}/statuses/${sha}`,
+            '-f',
+            'state=success',
+            '-f',
+            `context=${context}`,
+            '-f',
+            `description=${pack.integrity}`,
+            '-f',
+            `target_url=https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+          ),
+        submit: () =>
+          execFileSync(
+            'npm',
+            [
+              'publish',
+              archive,
+              '--ignore-scripts',
+              '--provenance',
+              '--access',
+              'public',
+              '--registry=https://registry.npmjs.org',
+            ],
+            { stdio: 'inherit' },
+          ),
+        tag: () => git('push', 'origin', `${sha}:refs/tags/${c.tag}`),
+      });
+    } catch (error) {
+      throw new Error(
+        `${c.tag} at ${sha}; reviewed artifact ${pack.archive} (${pack.integrity}), run ${process.env.GITHUB_RUN_ID}`,
+        { cause: error },
       );
     }
-    assert.equal(await disposition(c, pack, await readRegistry(c.name), sha), 'complete');
-    git('push', 'origin', `${sha}:refs/tags/${c.tag}`);
   }
   for (const name of Object.keys(snapshot)) {
     checkTags(name, (await readRegistry(name))['dist-tags'], due.find((c) => c.name === name)?.version);

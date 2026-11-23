@@ -98,7 +98,7 @@ export function useTable<
   );
   /** Query Kit field projection derived from visible data columns and required static fields. */
   const fields = computed(() => {
-    const paths = new Set<string>(options.staticFields ?? ['id']);
+    const paths = new Set<string>([identityKey, ...(options.staticFields ?? [])]);
     for (const column of columns.value) {
       if (column.id === 'actions') continue;
       if (column.fields?.length) column.fields.forEach((field) => paths.add(`${column.id}.${field}`));
@@ -221,6 +221,7 @@ export function useTable<
    */
   const updateRow = (row: TItem) => {
     const identity = row[identityKey];
+    if (identity == null) return;
     const index = items.value.findIndex((item) => Object.is(item[identityKey], identity));
     if (index !== -1) {
       items.value[index] = { ...items.value[index], ...row };
