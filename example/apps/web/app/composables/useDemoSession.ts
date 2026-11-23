@@ -7,6 +7,11 @@ export function useDemoSession() {
   const session = useState<DemoSession | null>('workboard:demo-session', /** Starts without a persona. */ () => null);
   const checked = useState('workboard:session-checked', /** Tracks the initial cookie check. */ () => false);
   const switching = useState('workboard:session-switching', /** Prevents concurrent login requests. */ () => false);
+  const pendingWrites = useState('workboard:pending-writes', /** Tracks all writes for this account. */ () => 0);
+  const uncertain = useState(
+    'workboard:uncertain-write',
+    /** Requires a new scoped read after a lost response. */ () => false,
+  );
   const error = useState<string | null>('workboard:session-error', /** Starts without a session error. */ () => null);
   const activeSession = computed(
     /** Hides account-bound components immediately, not after the cookie request returns. */
@@ -40,7 +45,7 @@ export function useDemoSession() {
 
   /** Selects a validated demo account and replaces the server-managed cookie. */
   async function select(login: DemoSession['login']): Promise<void> {
-    if (switching.value || session.value?.login === login) return;
+    if (switching.value || pendingWrites.value || uncertain.value || session.value?.login === login) return;
     switching.value = true;
     error.value = null;
     $invalidateWorkboardReads();
@@ -59,5 +64,20 @@ export function useDemoSession() {
     }
   }
 
-  return { session, activeSession, checked, switching, error, restore, select };
+  /** Holds the current persona until the complete write, including response validation, settles. */
+  async function mutate<T>(send: () => Promise<T>): Promise<T> {
+    if (!activeSession.value || uncertain.value) throw new Error('Refresh the active account before writing.');
+    pendingWrites.value++;
+    try {
+      return await send();
+    } catch (cause) {
+      const status = typeof cause === 'object' && cause && 'statusCode' in cause ? cause.statusCode : undefined;
+      if (typeof status !== 'number' || status >= 500) uncertain.value = true;
+      throw cause;
+    } finally {
+      pendingWrites.value--;
+    }
+  }
+
+  return { session, activeSession, checked, switching, pendingWrites, uncertain, error, restore, select, mutate };
 }

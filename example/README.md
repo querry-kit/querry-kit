@@ -51,6 +51,8 @@ New browser sessions start as `admin`. Use the navbar to switch between `user1`,
 
 Use **Switch demo account** in the dashboard navbar. Switching closes details, clears the active project filter, and cancels reads from the previous account. Try the shared Workboard project under both regular accounts: they get different task IDs despite having the same role.
 
+While a write is in progress, the account picker stays disabled. If its response is lost, use **Refresh current account** to read the saved state before retrying.
+
 ```sh
 curl --fail --cookie-jar workboard.cookies \
   -H 'Origin: http://127.0.0.1:3201' -H 'Content-Type: application/json' \
