@@ -9,7 +9,12 @@
           <UDashboardSidebarCollapse />
         </template>
         <template #right>
-          <DemoAccountSwitcher v-if="session" :login="session.login" :pending="switching" @select="select" />
+          <DemoAccountSwitcher
+            v-if="session"
+            :login="session.login"
+            :pending="switching || pendingWrites > 0 || uncertain"
+            @select="select"
+          />
           <UColorModeButton />
         </template>
       </UDashboardNavbar>
@@ -33,5 +38,5 @@ import type { BreadcrumbItem } from '@nuxt/ui';
 withDefaults(defineProps<{ title: string; fullPage?: boolean; heading?: boolean; breadcrumbs?: BreadcrumbItem[] }>(), {
   heading: true,
 });
-const { session, switching, select } = useDemoSession();
+const { session, switching, pendingWrites, uncertain, select } = useDemoSession();
 </script>

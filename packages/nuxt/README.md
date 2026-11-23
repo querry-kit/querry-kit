@@ -8,24 +8,19 @@
 [![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
 
-[![build](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/build.yml?branch=main&label=build&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/build.yml)
-[![test](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/test.yml?branch=main&label=test&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/test.yml)
-[![coverage](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/test.yml?branch=main&label=coverage&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/test.yml)
-[![lint](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/lint.yml?branch=main&label=lint&logo=eslint&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/lint.yml)
-[![changesets](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/changesets.yml?branch=main&label=changesets&logo=changesets&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/changesets.yml)
-[![npm publish](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt/release.yml?branch=main&label=npm%20publish&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt/actions/workflows/release.yml)
-
 Typed Vue 3 and Nuxt primitives for APIs implementing the Query Kit `ResourceQuery` contract: an Axios client, typed resource endpoints, headless remote tables, and autocompletes.
 
 📖 Documentation: https://querry-kit.github.io/querry-kit/docs/nuxt
 
+[![Workspace CI](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml)
+
 ## 🌐 Querry Kit Ecosystem
 
-The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three main repositories:
+The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three independently published packages:
 
-- [`@querry-kit/nest`](https://github.com/querry-kit/nest) for the Query Kit-compatible NestJS API and controller patterns.
-- [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt) for typed API clients and headless Vue/Nuxt data primitives.
-- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) for Nuxt UI integrations built on these primitives.
+- [`@querry-kit/nest`](https://github.com/querry-kit/querry-kit/tree/main/packages/nest) for the Query Kit-compatible NestJS API and controller patterns.
+- [`@querry-kit/nuxt`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt) for typed API clients and headless Vue/Nuxt data primitives.
+- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt-ui) for Nuxt UI integrations built on these primitives.
 
 It also contains the complete Workboard API-and-web-app example, which shows the packages working together end to end.
 
@@ -50,23 +45,7 @@ The current package version is published on npm. npm is the primary distribution
 
 ## 🚀 Release Workflow
 
-Releases are driven by Changesets and GitHub Actions. The `main` branch contains source, documentation, examples, and workflow configuration; distribution files are built in CI.
-
-Package-visible changes should include a changeset:
-
-```sh
-pnpm changeset
-```
-
-When changes land on `main`, the `changesets` workflow creates or updates a release PR. That PR contains the version bump and changelog updates produced by:
-
-```sh
-pnpm changeset version
-```
-
-The npm publish workflow uses npm Trusted Publishing through GitHub Actions OIDC. After a release PR is merged, it runs the package checks, builds the distribution, publishes `@querry-kit/nuxt`, creates the `vX.Y.Z` tag, and creates a GitHub Release.
-
-The release workflow checks npm before publishing. The manually published `0.0.1` baseline therefore remains safe: it is tagged and released from GitHub without an attempted duplicate publish.
+Add a package-scoped Changeset in the monorepo. The [version workflow](https://github.com/querry-kit/querry-kit/actions/workflows/version.yml) maintains the release PR; the [publish workflow](https://github.com/querry-kit/querry-kit/actions/workflows/publish.yml) publishes the reviewed archives from `main` using the `npm-production` environment. Each library keeps its own version and tag.
 
 ## 🧩 Package exports
 
@@ -123,12 +102,16 @@ The table selects `id,name,team{name}`, serializes its query with `qs`, persists
 
 The package stays independent of Nuxt runtime configuration, application authentication, routers, stores, global events, and UI components. Consumers provide their own Axios instance, route ref, storage adapter, and endpoint map.
 
+`useAutocomplete().error` reports the most recent unresolved selection or search failure. A successful retry clears only its own failure.
+
 ## 📖 Documentation
 
 The complete API reference, guides, and examples live in the central Querry Kit documentation:
 <https://querry-kit.github.io/querry-kit/docs/nuxt>
 
 ## 🛠 Development
+
+Work in `packages/nuxt` in the monorepo; report issues and open PRs in [querry-kit/querry-kit](https://github.com/querry-kit/querry-kit).
 
 ```sh
 pnpm install
@@ -142,7 +125,7 @@ pnpm build
 The workspace build allowlist permits the native scripts required by the test
 toolchain, including Parcel's file watcher.
 
-`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and retains the report as a workflow artifact.
+`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and checks its result.
 
 Dependency maintenance updates manifests and the pnpm lockfile within supported version ranges. The development toolchain pins patched transitive versions of glob and minimatch.
 
@@ -266,3 +249,5 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
+
+`useTable` always requests its `identityKey` (default `id`), even for hidden columns or custom `staticFields`. `updateRow()` ignores patches with a missing, null, or unknown identity; `0` is a valid key.

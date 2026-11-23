@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { cp, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
@@ -14,9 +14,12 @@ for (const { name, archive } of ledger) {
   if (selected && id !== selected) continue;
   const variants =
     id === 'nuxt-ui'
-      ? ['0.2.10', '1.0.0'].flatMap((v) =>
-          ['14.4.0', '15.0.0'].map((u) => ({ '@querry-kit/nuxt': v, '@vueuse/core': u, '@vueuse/router': u })),
-        )
+      ? [
+          ...['0.2.10', '1.0.0'].flatMap((v) =>
+            ['14.4.0', '15.0.0'].map((u) => ({ '@querry-kit/nuxt': v, '@vueuse/core': u, '@vueuse/router': u })),
+          ),
+          { '@querry-kit/nuxt': '1.1.2', '@vueuse/core': '15.0.0', '@vueuse/router': '15.0.0' },
+        ]
       : [{}];
   for (const peers of variants) {
     const cwd = await mkdtemp(join(tmpdir(), `packed-${id}-`));
@@ -55,7 +58,7 @@ for (const { name, archive } of ledger) {
     };
     const install = async () => {
       await writeFile(join(cwd, 'package.json'), JSON.stringify(manifest));
-      run('npm', ['install', '--ignore-scripts', '--legacy-peer-deps', '--no-audit', '--no-fund', '--prefer-offline']);
+      run('npm', ['install', '--ignore-scripts', '--strict-peer-deps', '--no-audit', '--no-fund', '--prefer-offline']);
     };
     await install();
     assert.ok((await realpath(join(cwd, 'node_modules', name))).startsWith(cwd + sep));
@@ -71,7 +74,7 @@ for (const { name, archive } of ledger) {
       await install();
     }
     const { exports } = JSON.parse(await readFile(join(cwd, 'node_modules', name, 'package.json')));
-    const types = [];
+    const types = [await readFile(join(cwd, 'usage.mts'), 'utf8')];
     for (const [sub, targets] of Object.entries(exports)) {
       const spec = sub === '.' ? name : name + sub.slice(1);
       types.push(`import type * as Entry${types.length} from ${JSON.stringify(spec)};`);
@@ -79,7 +82,30 @@ for (const { name, archive } of ledger) {
       if (targets.require) run('node', ['-e', `require(${JSON.stringify(spec)})`]);
     }
     await writeFile(join(cwd, 'consumer.mts'), types.join('\n'));
-    run(join(cwd, 'node_modules/.bin/tsc'), ['--module', 'nodenext', '--skipLibCheck', '--noEmit', 'consumer.mts']);
+    const tsc = join(cwd, 'node_modules/.bin/tsc');
+    const flags = ['--module', 'nodenext', '--strict', '--skipLibCheck', '--noEmit', 'consumer.mts'];
+    run(tsc, flags);
+    if (id === 'nuxt') {
+      const installed = join(cwd, 'node_modules', name);
+      // Corrupt only this temporary consumer's public declaration, after the positive compilation.
+      await writeFile(
+        join(installed, exports['./api'].types),
+        'export declare function createApiClient(options: {apiBaseUrl: string}): {defaults: {baseURL: number}};',
+      );
+      const broken = spawnSync(tsc, flags, { cwd, encoding: 'utf8' });
+      assert.equal(broken.status, 2);
+      assert.match(broken.stdout, /consumer\.mts.*TS2322.*number.*string/);
+      manifest.dependencies.vue = '2.7.16';
+      await writeFile(join(cwd, 'package.json'), JSON.stringify(manifest));
+      const mismatch = spawnSync(
+        'npm',
+        ['install', '--package-lock-only', '--ignore-scripts', '--strict-peer-deps', '--no-audit', '--no-fund'],
+        { cwd, encoding: 'utf8' },
+      );
+      assert.equal(mismatch.status, 1);
+      assert.match(mismatch.stderr, /ERESOLVE/);
+      assert.match(mismatch.stderr, /peer vue@/);
+    }
     console.log(`External consumer passed: ${name} ${JSON.stringify(peers)}`);
     await rm(cwd, { recursive: true });
   }

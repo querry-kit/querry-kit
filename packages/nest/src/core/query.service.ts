@@ -267,7 +267,17 @@ export class QueryService<
       const perPage = options.perPage ?? 10;
       const skip = (page - 1) * perPage;
       const where = this.mergeAbilityWhere(options.where, ability);
-      const itemCount = await this.count({ where } as Options['count']);
+      const distinct = options.distinct;
+      const keys = distinct == null ? [] : Array.isArray(distinct) ? distinct : [distinct];
+      const itemCount = keys.length
+        ? (
+            await this.findMany({
+              where,
+              distinct,
+              select: Object.fromEntries(keys.map((key) => [key, true])),
+            } as Options['findMany'])
+          ).length
+        : await this.count({ where } as Options['count']);
       const items = await this.findMany<T>({ ...options, take: perPage, skip, where } as Options['findMany']);
       const pageMeta = this.createPageMeta({ itemCount, pageOptions: { page, perPage } });
 

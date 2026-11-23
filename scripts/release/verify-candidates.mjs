@@ -74,7 +74,21 @@ export async function checkPack(dir, candidate, entry) {
   return path;
 }
 
-export async function readRegistry(name, request = fetch) {
+export function registryRequest(budget = 10000) {
+  const signal = AbortSignal.timeout(Math.max(1, Math.min(10000, budget)));
+  return async (url) => {
+    let response;
+    try {
+      response = await fetch(url, { signal });
+    } catch (error) {
+      throw Object.assign(new Error('Registry connection failed', { cause: error }), { retryable: true });
+    }
+    if (response.status === 429 || response.status >= 500)
+      throw Object.assign(new Error(`Registry HTTP ${response.status}`), { retryable: true });
+    return response;
+  };
+}
+export async function readRegistry(name, request = registryRequest()) {
   const r = await request(`${registry}/${encodeURIComponent(name)}`);
   assert.ok(r.ok, `Registry ${name}: HTTP ${r.status}`);
   const pkg = await r.json();
@@ -83,21 +97,26 @@ export async function readRegistry(name, request = fetch) {
   return pkg;
 }
 
-export async function disposition(c, pack, record, sha, request = fetch) {
+export async function disposition(c, pack, record, sha, request = registryRequest()) {
   const v = record.versions[c.version];
   if (!v) {
+    if (record['dist-tags'].latest === c.version) return 'pending';
     assert.equal(record['dist-tags'].latest, c.previous, `${c.name}: baseline latest changed`);
     return 'missing';
   }
   assert.equal(v.name, c.name);
   assert.equal(v.version, c.version);
   assert.equal(v.dist.integrity, pack.integrity);
-  assert.equal(record['dist-tags'].latest, c.version);
+  const latest = record['dist-tags'].latest;
+  assert.ok(latest === c.previous || latest === c.version, `${c.name}: unexpected latest tag`);
+  if (!v.dist.attestations?.url) return 'pending';
   const attestation = new URL(v.dist.attestations.url);
   assert.equal(attestation.origin, registry);
   const r = await request(attestation);
+  if (r.status === 404) return 'pending';
   assert.ok(r.ok, `Cannot verify provenance: HTTP ${r.status}`);
   const { attestations } = await r.json();
+  if (!attestations.some((a) => a.predicateType === 'https://slsa.dev/provenance/v1')) return 'pending';
   assert.ok(
     attestations.some((a) => {
       if (a.predicateType !== 'https://slsa.dev/provenance/v1') return false;
@@ -123,5 +142,5 @@ export async function disposition(c, pack, record, sha, request = fetch) {
     }),
     `${c.name}: reviewed commit or provenance mismatch`,
   );
-  return 'complete';
+  return latest === c.version ? 'complete' : 'pending';
 }

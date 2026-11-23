@@ -8,5 +8,12 @@ type Resources = {
 
 /** Provides the typed Query Kit client for an editable Workboard resource. */
 export function useWorkboardResources<T extends keyof Resources>(endpoint: T) {
-  return useModuleApi<Resources, T>(useNuxtApp().$workboardApi, endpoint);
+  const api = useModuleApi<Resources, T>(useNuxtApp().$workboardApi, endpoint);
+  const { mutate } = useDemoSession();
+  /** Preserves each method's signature and guards the entire mutation promise. */
+  function guarded<A extends unknown[], R>(method: (...args: A) => Promise<R>) {
+    return /** Sends exactly once for the active persona. */ (...args: A) =>
+      mutate(/** Forwards the original typed arguments. */ () => method(...args));
+  }
+  return { ...api, create: guarded(api.create), update: guarded(api.update), delete: guarded(api.delete) };
 }

@@ -3,6 +3,72 @@ import { expect, test, type Page } from '@playwright/test';
 import { selectAccount } from './demo-account';
 import { openTaskFilters } from './task-filters';
 
+test(
+  'honors independent caller cancellation on resource reads',
+  /** Exercises the same Nuxt-injected client the resource composables receive. */
+  async ({ page }) => {
+    await page.goto('/tasks');
+    await expect(page.getByText('Audit default projections')).toBeVisible();
+    const canceled = await page.evaluate(
+      /** A pre-aborted signal must not be replaced by the current persona signal. */
+      async () => {
+        const root = document.querySelector('#__nuxt') as Element & {
+          __vue_app__: {
+            $nuxt: { $workboardApi: { get: (url: string, config: { signal: AbortSignal }) => Promise<unknown> } };
+          };
+        };
+        try {
+          await root.__vue_app__.$nuxt.$workboardApi.get('/tasks', { signal: AbortSignal.abort() });
+          return false;
+        } catch (cause) {
+          return cause instanceof Error && 'code' in cause && cause.code === 'ERR_CANCELED';
+        }
+      },
+    );
+    expect(canceled).toBe(true);
+  },
+);
+
+test(
+  'keeps the persona until a write settles and refreshes a lost response before retry',
+  /** Lets the API finish a PATCH, then drops only the browser response. */
+  async ({ page }) => {
+    await page.goto('/tasks');
+    await page.getByRole('link', { name: 'Open Audit default projections' }).click();
+    await page.getByRole('button', { name: 'Edit task' }).click();
+    const received = Promise.withResolvers<void>();
+    const release = Promise.withResolvers<void>();
+    await page.route(
+      '**/api/tasks/*',
+      /** Holds the actual resource write while keeping lookups available. */
+      async (route) => {
+        if (route.request().method() !== 'PATCH') return route.continue();
+        const response = await route.fetch();
+        expect(response.ok()).toBe(true);
+        received.resolve();
+        await release.promise;
+        await route.abort('connectionreset');
+      },
+    );
+    await page.getByRole('button', { name: 'Save changes' }).click();
+    await received.promise;
+    const picker = page.locator('[aria-label="Switch demo account"]');
+    try {
+      await expect(picker).toBeDisabled();
+      await picker.dispatchEvent('click');
+      await expect(page.getByRole('option', { name: 'user1' })).toHaveCount(0);
+    } finally {
+      release.resolve();
+    }
+    await expect(page.getByRole('alert')).toContainText('The write outcome is unknown');
+    await page.getByRole('button', { name: 'Refresh current account' }).click();
+    await expect(page.getByRole('heading', { name: 'Audit default projections' })).toBeVisible();
+    await selectAccount(page, 'user1');
+    await expect(page.getByText('Sketch an empty state')).toBeVisible();
+    await expect(page.getByText('Audit default projections')).toHaveCount(0);
+  },
+);
+
 /** Holds one real previous-account list response until after the account changes. */
 async function holdRead(page: Page) {
   const captured = Promise.withResolvers<void>();

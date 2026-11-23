@@ -8,24 +8,19 @@
 [![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
 
-[![build](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/build.yml?branch=main&label=build&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/build.yml)
-[![test](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/test.yml?branch=main&label=test&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/test.yml)
-[![coverage](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/test.yml?branch=main&label=coverage&logo=jest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/test.yml)
-[![lint](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/lint.yml?branch=main&label=lint&logo=eslint&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/lint.yml)
-[![changesets](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/changesets.yml?branch=main&label=changesets&logo=changesets&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/changesets.yml)
-[![npm publish](https://img.shields.io/github/actions/workflow/status/querry-kit/nest/release.yml?branch=main&label=npm%20publish&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nest/actions/workflows/release.yml)
-
 Consolidated NestJS helpers for Query Kit APIs: fields projection, Prisma-style query services, CASL policies, OpenAPI decorators, pipes, pagination DTOs, and object utilities.
 
 📖 Documentation: [Querry Kit Nest documentation](https://querry-kit.github.io/querry-kit/docs/nest)
+
+[![Workspace CI](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml)
 
 ## 🌐 Querry Kit Ecosystem
 
 The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three core packages:
 
-- [`@querry-kit/nest`](https://github.com/querry-kit/nest) provides the NestJS API and controller patterns.
-- [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt) provides typed API clients and headless Vue/Nuxt data primitives.
-- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) provides Nuxt UI table controls built on those primitives.
+- [`@querry-kit/nest`](https://github.com/querry-kit/querry-kit/tree/main/packages/nest) provides the NestJS API and controller patterns.
+- [`@querry-kit/nuxt`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt) provides typed API clients and headless Vue/Nuxt data primitives.
+- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt-ui) provides Nuxt UI table controls built on those primitives.
 
 ## 📚 Table of Contents <!-- omit in toc -->
 
@@ -64,11 +59,7 @@ pnpm add @casl/ability @casl/prisma
 
 The current package version is published on npm. npm is the primary distribution channel.
 
-GitHub release tags remain available as a fallback:
-
-```sh
-pnpm add github:querry-kit/nest#v0.0.1
-```
+To pin a release, install `@querry-kit/nest@<version>` from npm.
 
 ## Zod 4 schemas
 
@@ -176,33 +167,7 @@ run before `ZodValidationPipe`. Do not apply normalization blindly to scalar
 
 ## 🚀 Release Workflow
 
-Releases are driven by Changesets and GitHub Actions. The `main` branch does not contain committed `dist` files; it only contains source, the README, and workflow configuration.
-
-Package-visible changes should include a changeset:
-
-```sh
-pnpm changeset
-```
-
-When changes land on `main`, the `changesets` workflow creates or updates a release PR. That PR contains the version bump and changelog updates produced by:
-
-```sh
-pnpm changeset version
-```
-
-The npm publish workflow uses npm Trusted Publishing through GitHub Actions OIDC. The npm package must be connected to this repository and workflow in the npm package publishing settings:
-
-- Repository: `querry-kit/nest`
-- Workflow file: `release.yml`
-- Environment: unset
-
-After the release PR is merged, the `npm publish` workflow runs for the version/changelog changes. It runs package checks, builds `dist` in CI, publishes `@querry-kit/nest` to npm, tags the release commit as `vX.Y.Z`, and creates a GitHub Release.
-
-Consumers should install from npm:
-
-```sh
-pnpm add @querry-kit/nest
-```
+Add a package-scoped Changeset in the monorepo. The [version workflow](https://github.com/querry-kit/querry-kit/actions/workflows/version.yml) maintains the release PR; the [publish workflow](https://github.com/querry-kit/querry-kit/actions/workflows/publish.yml) publishes the reviewed archives from `main` using the `npm-production` environment. Each library keeps its own version and tag.
 
 ## 🧩 Usage
 
@@ -331,6 +296,8 @@ return {
 
 ## 🛠 Development
 
+Work in `packages/nest` in the monorepo; report issues and open PRs in [querry-kit/querry-kit](https://github.com/querry-kit/querry-kit).
+
 ```sh
 pnpm install
 pnpm lint
@@ -341,7 +308,7 @@ pnpm test:optional-peers # Requires pnpm build first.
 pnpm build
 ```
 
-`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and retains the report as a workflow artifact. It also builds the package and runs `test:optional-peers` to verify ESM and CommonJS core/Zod query flows while both class-based validation packages are blocked.
+`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and checks its result. It also builds the package and runs `test:optional-peers` to verify ESM and CommonJS core/Zod query flows while both class-based validation packages are blocked.
 
 Dependency maintenance updates manifests and the pnpm lockfile within supported version ranges. The development toolchain pins patched transitive versions of glob and minimatch.
 
@@ -419,3 +386,5 @@ Offset pagination has no snapshot guarantee during concurrent writes; refresh th
 view after mutations. Relations and date intervals are outside this feature.
 
 Grouping keys consumed by the table must be JSON scalar values: strings, numbers, booleans, or null. Dates retain their normal ISO JSON encoding; Decimal-like values serialize to numbers. Binary and BigInt keys require application-owned encoding and filter conversion.
+
+Paginated `distinct` queries count the unique scalar tuples matching the same access filter, before cursor or page slicing. The generic delegate fetches one key-only row per unique tuple for the total; memory use grows with distinct cardinality. Separate count and page reads do not provide snapshot isolation. Ordinary pagination still uses `count`.

@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Only the current production deployment of the Querry Kit website is supported with security updates.
+Security updates cover the latest published releases of `@querry-kit/nest`, `@querry-kit/nuxt` and `@querry-kit/nuxt-ui`, the current documentation deployment and the reference example on `main`.
 
 ## Reporting a vulnerability
 

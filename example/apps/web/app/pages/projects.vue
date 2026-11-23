@@ -121,7 +121,7 @@ import { bulkDeleteLimit, projectBulkDeleteSchema, type ProjectTableRow } from '
 
 import { taskTableUi } from '~/utils/group-table';
 
-const { activeSession } = useDemoSession();
+const { activeSession, mutate } = useDemoSession();
 const { $workboardApi } = useNuxtApp();
 const tableApi = useModuleApi<{ 'projects/table': EndpointDefinition<ProjectTableRow> }, 'projects/table'>(
   $workboardApi,
@@ -266,7 +266,10 @@ function selectProjects(ids: string[], checked: boolean): void {
 async function deleteSelected(): Promise<void> {
   const ids = [...selectedIds];
   if (ids.length > bulkDeleteLimit) throw new Error(`Select at most ${bulkDeleteLimit} projects per deletion.`);
-  await $workboardApi.post('/projects/bulk-delete', projectBulkDeleteSchema.parse({ ids }));
+  await mutate(
+    /** Submits one scoped bulk deletion. */ () =>
+      $workboardApi.post('/projects/bulk-delete', projectBulkDeleteSchema.parse({ ids })),
+  );
 }
 
 /** Clears the completed selection and reloads the project list. */
