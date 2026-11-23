@@ -266,3 +266,5 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
+
+`useAutocomplete().error` reports the most recent unresolved selection or search failure. A successful retry clears only its own failure.

@@ -24,3 +24,5 @@ Selected and searched results are deduplicated by `identityKey`. Use `itemDisabl
 | `immediate`    | `true`              | Set to `false` and call `initialize()` yourself.                     |
 
 `initialize()` and `refresh()` load selected resources and query results concurrently. `loadCurrentItems()` and `loadItems()` are available when the UI needs more granular control. Empty, `null`, or `undefined` selections do not issue the selected-resource request.
+
+`useAutocomplete().error` reports the most recent unresolved selection or search failure. A successful retry clears only its own failure.
