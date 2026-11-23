@@ -19,7 +19,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'mkdir -p .output/pages-test/querry-kit && cp -R .output/public/. .output/pages-test/querry-kit/ && pnpm exec serve .output/pages-test -l tcp://127.0.0.1:4174',
+    command: 'rm -rf .output/pages-test && mkdir -p .output/pages-test && cp -R .output/public .output/pages-test/querry-kit && pnpm exec serve .output/pages-test -l tcp://127.0.0.1:4174',
     cwd: '.',
     url: 'http://127.0.0.1:4174/querry-kit/',
     reuseExistingServer: false,
