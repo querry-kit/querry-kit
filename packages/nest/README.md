@@ -8,7 +8,6 @@
 [![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
 
-
 Consolidated NestJS helpers for Query Kit APIs: fields projection, Prisma-style query services, CASL policies, OpenAPI decorators, pipes, pagination DTOs, and object utilities.
 
 📖 Documentation: [Querry Kit Nest documentation](https://querry-kit.github.io/querry-kit/docs/nest)

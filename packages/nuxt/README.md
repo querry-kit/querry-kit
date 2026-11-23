@@ -8,7 +8,6 @@
 [![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
 
-
 Typed Vue 3 and Nuxt primitives for APIs implementing the Query Kit `ResourceQuery` contract: an Axios client, typed resource endpoints, headless remote tables, and autocompletes.
 
 📖 Documentation: https://querry-kit.github.io/querry-kit/docs/nuxt
@@ -17,7 +16,7 @@ Typed Vue 3 and Nuxt primitives for APIs implementing the Query Kit `ResourceQue
 
 ## 🌐 Querry Kit Ecosystem
 
-The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three main repositories:
+The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three independently published packages:
 
 - [`@querry-kit/nest`](https://github.com/querry-kit/querry-kit/tree/main/packages/nest) for the Query Kit-compatible NestJS API and controller patterns.
 - [`@querry-kit/nuxt`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt) for typed API clients and headless Vue/Nuxt data primitives.
