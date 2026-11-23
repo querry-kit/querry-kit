@@ -31,7 +31,15 @@
       </template>
     </UDashboardSidebar>
 
-    <slot v-if="checked && activeSession" />
+    <WorkboardPanel v-if="uncertain" title="Workboard" :heading="false">
+      <UAlert
+        role="alert"
+        title="The write outcome is unknown."
+        description="Refresh this account to check what was saved before trying again."
+      />
+      <UButton label="Refresh current account" :disabled="pendingWrites > 0" @click="refreshAccount" />
+    </WorkboardPanel>
+    <slot v-else-if="checked && activeSession" />
     <WorkboardPanel v-else title="Workboard" :heading="false">
       <p v-if="!checked || switching" role="status" class="text-muted">
         {{ checked ? 'Switching demo account…' : 'Starting demo session…' }}
@@ -50,7 +58,11 @@
 </template>
 
 <script setup lang="ts">
-const { activeSession, checked, switching, error, restore } = useDemoSession();
+const { activeSession, checked, switching, pendingWrites, uncertain, error, restore } = useDemoSession();
+/** Reloads the current route and verifies the existing account cookie before fetching resources. */
+function refreshAccount(): void {
+  window.location.reload();
+}
 const navigation = [
   { label: 'Projects', icon: 'i-tabler-folder', to: '/projects' },
   { label: 'Tasks', icon: 'i-tabler-list-details', to: '/tasks' },
