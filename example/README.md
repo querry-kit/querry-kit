@@ -126,5 +126,3 @@ After bootstrapping, run `pnpm -w examples:lint`, `pnpm -w examples:format:check
 - `pnpm -w examples:test:api` runs migrations, seed and live Fastify integration against a disposable PostgreSQL Compose project. It requires free loopback ports `55463` and `35463` (or `WORKBOARD_TEST_DB_PORT` and `WORKBOARD_TEST_API_PORT`).
 - `pnpm -w examples:test:web` runs Playwright against a running test stack initialized with `WORKBOARD_SEED_PROFILE=compact` on the API. Set `WORKBOARD_TEST_APP_URL` if the app URL differs from `http://127.0.0.1:3201`. Install Chromium first with `pnpm --filter @workboard/app exec playwright install --with-deps chromium` on supported Linux hosts.
 - `pnpm -w examples:test:compose` uses Docker, curl and jq to build the standalone stack without a Docker build cache, run browser tests, and compare seed IDs across a restart. It uses a separate volume and loopback port `35465` by default; override that port with `WORKBOARD_TEST_COMPOSE_PORT`.
-
-<!-- Temporary workboard-only CI selection probe for #65. -->
