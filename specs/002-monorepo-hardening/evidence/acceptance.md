@@ -52,3 +52,14 @@ Published, unmerged review branches: [F02 #68](https://github.com/querry-kit/que
 For the remaining findings: F01 was confirmed on `9a13e36` with `pnpm audit` and the default-branch alert rescan; F03 on `8843b45` with `pnpm verify:release-plan` in CI; F04 with `gh pr checks --required` on both probe heads recorded in [the enforcement evidence](branch-rule.md). F09 and F10 passed `pnpm verify:packages` on the [reviewed #64 run](https://github.com/querry-kit/querry-kit/actions/runs/45089981142), merged at `88d8cb5`. F11 passed the selection probes, Pages-prefix browser suite and deployed-byte comparison for `50c1318` recorded above.
 
 The four source repositories still report `isArchived: true`. The latest central npm publish run is still the verified release at `332bfae`; npm `latest` remains Nest `2.1.2`, Nuxt `1.1.2`, Nuxt UI `4.3.1`. Validation did not modify publisher bindings, archived sources or package identities. No acceptance gate is pending for these revisions. The six implementation PRs remain unmerged drafts; reviewing, merging and releasing them are separate decisions.
+
+## Landed on `main`
+
+The six implementation drafts listed above subsequently passed their selected checks on the updated base and were squash-merged in the following order:
+
+- [#68](https://github.com/querry-kit/querry-kit/pull/68): `83e918a` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45099150801)).
+- [#69](https://github.com/querry-kit/querry-kit/pull/69): `3fca1e0` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45099831711)).
+- [#70](https://github.com/querry-kit/querry-kit/pull/70): `a8799be` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45100442614)).
+- [#71](https://github.com/querry-kit/querry-kit/pull/71): `c158746` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45101100183)).
+- [#72](https://github.com/querry-kit/querry-kit/pull/72): `9644cbc` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45101748219)).
+- [#73](https://github.com/querry-kit/querry-kit/pull/73): `0f3f32a` ([CI](https://github.com/querry-kit/querry-kit/actions/runs/45102273773)).
