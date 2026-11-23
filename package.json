@@ -22,7 +22,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm install --lockfile-only --no-frozen-lockfile",
     "build:packages": "pnpm --filter @querry-kit/nest build && pnpm --filter @querry-kit/nuxt build && pnpm --filter @querry-kit/nuxt-ui build",
-    "verify:packages": "node scripts/verify-packages.mjs",
+    "verify:packages": "node --test tests/packed/contracts/verify.test.mjs && node scripts/verify-packages.mjs",
     "verify:release-plan": "node scripts/release/rehearse.mjs",
     "examples:sources:check": "node example/scripts/check-querry-kit-sources.mjs",
     "examples:lint": "cd example && eslint . --max-warnings 0",
