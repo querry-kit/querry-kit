@@ -25,6 +25,14 @@ export function useAutocomplete<TItem extends Record<string, unknown>>(options: 
   const queryLoading = ref(false);
   const error = ref<unknown>();
 
+  // Map insertion order tracks the latest still-unresolved lane without changing the public ref.
+  const failures = new Map<'selection' | 'search', unknown>();
+  const settle = (lane: 'selection' | 'search', failure?: { cause: unknown }) => {
+    failures.delete(lane);
+    if (failure) failures.set(lane, failure.cause);
+    error.value = [...failures.values()].at(-1);
+  };
+
   // A response may resolve after a newer request; its sequence number then makes it stale.
   let currentRequest = 0;
   let queryRequest = 0;
@@ -54,6 +62,7 @@ export function useAutocomplete<TItem extends Record<string, unknown>>(options: 
     if (!selected) {
       currentValueItems.value = [];
       currentLoading.value = false;
+      settle('selection');
       return;
     }
     currentLoading.value = true;
@@ -61,11 +70,14 @@ export function useAutocomplete<TItem extends Record<string, unknown>>(options: 
       const query = mergeQuery((unref(options.query) ?? {}) as QueryParameters, selected);
       const response = await api.query(query);
       // Ignore an older response when the selection changed while it was in flight.
-      if (request === currentRequest) currentValueItems.value = response.data.items as TItem[];
+      if (request === currentRequest) {
+        currentValueItems.value = response.data.items as TItem[];
+        settle('selection');
+      }
     } catch (caught) {
       if (request === currentRequest) {
         currentValueItems.value = [];
-        error.value = caught;
+        settle('selection', { cause: caught });
       }
     } finally {
       if (request === currentRequest) currentLoading.value = false;
@@ -79,11 +91,14 @@ export function useAutocomplete<TItem extends Record<string, unknown>>(options: 
     try {
       const response = await api.query((unref(options.query) ?? {}) as QueryParameters);
       // Ignore an older response when the search query changed while it was in flight.
-      if (request === queryRequest) queryItems.value = response.data.items as TItem[];
+      if (request === queryRequest) {
+        queryItems.value = response.data.items as TItem[];
+        settle('search');
+      }
     } catch (caught) {
       if (request === queryRequest) {
         queryItems.value = [];
-        error.value = caught;
+        settle('search', { cause: caught });
       }
     } finally {
       if (request === queryRequest) queryLoading.value = false;

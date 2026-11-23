@@ -4,6 +4,42 @@ import { effectScope, nextTick, ref } from 'vue';
 import { useAutocomplete } from './index';
 
 describe('useAutocomplete', () => {
+  it('reports only unresolved failures from the current generation of each lane', async () => {
+    const selected = ref<string | null>('one');
+    const get = jest.fn();
+    const a = useAutocomplete({
+      api: { get } as unknown as AxiosInstance,
+      endpoint: 'people',
+      currentValue: selected,
+      immediate: false,
+    });
+    const selectionError = Error('selection'),
+      searchError = Error('search');
+    let reject!: (err: Error) => void;
+    get.mockImplementationOnce(
+      () =>
+        new Promise((_resolve, fail) => {
+          reject = fail;
+        }),
+    );
+    const stale = a.loadItems();
+    get.mockRejectedValueOnce(selectionError);
+    await a.loadCurrentItems();
+    get.mockRejectedValueOnce(searchError);
+    await a.loadItems();
+    expect(a.error.value).toBe(searchError);
+    get.mockResolvedValueOnce({ data: { items: [{ id: 'new' }] } });
+    await a.loadItems();
+    expect(a.error.value).toBe(selectionError);
+    reject(Error('stale'));
+    await stale;
+    expect(a.queryItems.value).toEqual([{ id: 'new' }]);
+    expect(a.error.value).toBe(selectionError);
+    selected.value = null;
+    await nextTick();
+    expect(a.error.value).toBeUndefined();
+  });
+
   it('merges selected and query items by a configurable identity key', async () => {
     const get = jest
       .fn()
