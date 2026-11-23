@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      statuses: write
       id-token: write
     steps:
       - uses: actions/checkout@v7
@@ -47,5 +48,6 @@ jobs:
           path: ${{ runner.temp }}/release
       - env:
           EXPECTED: ${{ inputs.packages }}
+          GH_TOKEN: ${{ github.token }}
           NPM_ENABLED_PACKAGES: ${{ vars.NPM_ENABLED_PACKAGES }}
         run: node scripts/release/run.mjs publish "$RUNNER_TEMP/release" "$EXPECTED"

@@ -237,11 +237,7 @@ test(
     await page.getByRole('button', { name: 'Filter', exact: true }).click();
 
     await page.getByRole('button', { name: 'Table options' }).click();
-    await page
-      .getByRole('listitem')
-      .filter({ has: page.getByText('Priority', { exact: true }) })
-      .getByRole('switch', { name: 'Toggle column visibility' })
-      .click();
+    await page.getByRole('switch', { name: 'Toggle column visibility: Priority', exact: true }).press('Space');
     await page.keyboard.press('Escape');
     await expect(page.getByRole('columnheader', { name: 'Priority', exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Table options' }).click();

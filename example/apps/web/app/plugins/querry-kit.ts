@@ -33,8 +33,8 @@ export default defineNuxtPlugin(
     api.interceptors.request.use(
       /** Attaches the active account's cancellation signal to every data read. */
       (config) => {
-        if (/^\/(?:tasks|projects|labels)(?:[/?]|$)/.test(config.url ?? '')) {
-          config.signal = reads.signal;
+        if (config.method === 'get' && /^\/(?:tasks|projects|labels)(?:[/?]|$)/.test(config.url ?? '')) {
+          config.signal = config.signal ? AbortSignal.any([config.signal as AbortSignal, reads.signal]) : reads.signal;
         }
         return config;
       },

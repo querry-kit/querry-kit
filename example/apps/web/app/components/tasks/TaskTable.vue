@@ -192,6 +192,7 @@ import { taskFilterFields, taskStaticWhere } from '~/utils/task-controls';
 
 const props = defineProps<{ session: DemoSession }>();
 const { $workboardApi } = useNuxtApp();
+const { mutate } = useDemoSession();
 const route = useRoute();
 const router = useRouter();
 const search = ref('');
@@ -454,7 +455,10 @@ function openCreatedTask(task: Task): void {
 
 /** Submits the confirmed selection as one atomic request. */
 async function deleteSelected(): Promise<void> {
-  await $workboardApi.post('/tasks/bulk-delete', deletePayload(groupFilter.value));
+  await mutate(
+    /** Submits one scoped bulk deletion. */ () =>
+      $workboardApi.post('/tasks/bulk-delete', deletePayload(groupFilter.value)),
+  );
 }
 
 /** Reloads tasks and group totals after the confirmed deletion. */

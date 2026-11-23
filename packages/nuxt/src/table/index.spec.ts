@@ -22,6 +22,28 @@ function memoryStorage(): StorageLike & { values: Map<string, string> } {
 }
 
 describe('useTable', () => {
+  it('projects a hidden custom identity and updates only a row with a known key', async () => {
+    type Row = { slug?: string | number | null; name: string; owner?: { name: string } };
+    const rows: Row[] = [{ name: 'Missing' }, { slug: 0, name: 'Second' }];
+    const get = jest.fn().mockResolvedValue({ data: { items: rows, meta: { itemCount: 2, pageCount: 1 } } });
+    const table = useTable<Row>({
+      name: 'custom-key',
+      api: { get } as unknown as AxiosInstance,
+      endpoint: 'rows',
+      columns: ref([{ id: 'name' }, { id: 'owner', fields: ['name'] }]),
+      identityKey: 'slug',
+      staticFields: ['name'],
+      storage: memoryStorage(),
+    });
+    await table.initialize();
+    table.updateRow({ name: 'No identity' });
+    table.updateRow({ slug: null, name: 'Null identity' });
+    table.updateRow({ slug: 'unknown', name: 'Not loaded' });
+    table.updateRow({ slug: 0, name: 'Updated' });
+    expect(table.items.value).toEqual([{ name: 'Missing' }, { slug: 0, name: 'Updated' }]);
+    expect(table.fields.value).toBe('slug,name,owner{name}');
+  });
+
   it('appends in infinite mode, retries the same page, and invalidates an append on mode change', async () => {
     const get = jest.fn();
     const routePage = ref<string | number>('3');
