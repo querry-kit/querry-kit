@@ -32,3 +32,9 @@ Verify the new Pages deployment revision and artifact separately. Check root, `/
 ## T032 — Retire the source repositories
 
 After T031, recheck open PRs/issues and out-of-band refs; transfer or link each outstanding item, add source README notices pointing to its monorepo directory, and record decisions per repository. Archival requires explicit owner authorization. Keep historical release URLs and commit links resolvable.
+
+## Completed handoff — 2026-11-22
+
+- T030: [owner confirmation for all three publisher bindings](https://github.com/querry-kit/querry-kit/issues/53#issuecomment-7087056100).
+- T031: [registry, SHA-512, provenance, scoped tag and Pages deployment evidence](https://github.com/querry-kit/querry-kit/issues/53#issuecomment-7087321696). Nuxt UI `4.3.1` and Pages shipped at `332bfae`; Nest remained `2.1.2`, Nuxt `1.1.2`.
+- T032: [final queue checks and migration notices; four repositories archived](https://github.com/querry-kit/querry-kit/issues/53#issuecomment-7087405721). [Migration #53](https://github.com/querry-kit/querry-kit/issues/53) closed as completed. The dated preflight and rollback evidence above describes the historical cutover.

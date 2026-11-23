@@ -8,24 +8,19 @@
 [![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
 [![Buy Me a Coffee](https://img.shields.io/badge/buy_me_a_coffee-tobiaswaelde-ffdd00?logo=buymeacoffee&logoColor=000000&style=for-the-badge)](https://www.buymeacoffee.com/tobiaswaelde)
 
-[![build](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/build.yml?branch=main&label=build&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/build.yml)
-[![test](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/test.yml?branch=main&label=test&logo=vitest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/test.yml)
-[![coverage](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/test.yml?branch=main&label=coverage&logo=vitest&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/test.yml)
-[![lint](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/lint.yml?branch=main&label=lint&logo=eslint&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/lint.yml)
-[![changesets](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/changesets.yml?branch=main&label=changesets&logo=changesets&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/changesets.yml)
-[![npm publish](https://img.shields.io/github/actions/workflow/status/querry-kit/nuxt-ui/release.yml?branch=main&label=npm%20publish&logo=githubactions&logoColor=white&style=for-the-badge)](https://github.com/querry-kit/nuxt-ui/actions/workflows/release.yml)
-
 Composable Nuxt UI table controls for Query Kit applications: toolbar, sorting, filtering, column preferences, pagination and keyboard shortcuts. Every public component begins with `Q`, and the package does not depend on application stores, layouts or runtime configuration.
 
 📖 Documentation: https://querry-kit.github.io/querry-kit/docs/nuxt-ui/
 
+[![Workspace CI](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/querry-kit/querry-kit/actions/workflows/ci.yml)
+
 ## 🌐 Querry Kit Ecosystem
 
-The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three main repositories:
+The [Querry Kit overview](https://querry-kit.github.io/querry-kit/) connects the three independently published packages:
 
-- [`@querry-kit/nest`](https://github.com/querry-kit/nest) for the Query Kit-compatible NestJS API and controller patterns.
-- [`@querry-kit/nuxt`](https://github.com/querry-kit/nuxt) for typed API clients and headless Vue/Nuxt data primitives.
-- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/nuxt-ui) for Nuxt UI integrations built on these primitives.
+- [`@querry-kit/nest`](https://github.com/querry-kit/querry-kit/tree/main/packages/nest) for the Query Kit-compatible NestJS API and controller patterns.
+- [`@querry-kit/nuxt`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt) for typed API clients and headless Vue/Nuxt data primitives.
+- [`@querry-kit/nuxt-ui`](https://github.com/querry-kit/querry-kit/tree/main/packages/nuxt-ui) for Nuxt UI integrations built on these primitives.
 
 It also contains the complete Workboard API-and-web-app example, which shows the packages working together end to end.
 
@@ -82,41 +77,11 @@ export default defineAppConfig({
 
 The current package version is published on npm. npm is the primary distribution channel.
 
-GitHub release tags remain available as a fallback:
-
-```sh
-pnpm add github:querry-kit/nuxt-ui#v0.0.1
-```
+To pin a release, install `@querry-kit/nuxt-ui@<version>` from npm.
 
 ## 🚀 Release Workflow
 
-Releases are driven by Changesets and GitHub Actions. The `main` branch contains source, documentation and workflow configuration; published package files are built in CI.
-
-Package-visible changes should include a changeset:
-
-```sh
-pnpm changeset
-```
-
-When changes land on `main`, the [changesets workflow](https://github.com/querry-kit/nuxt-ui/actions/workflows/changesets.yml) creates or updates a release PR. That PR contains the version bump and changelog updates produced by:
-
-```sh
-pnpm changeset version
-```
-
-The [npm publish workflow](https://github.com/querry-kit/nuxt-ui/actions/workflows/release.yml) uses npm Trusted Publishing through GitHub Actions OIDC. The npm package must be connected to this repository and workflow in the npm package publishing settings:
-
-- Repository: `querry-kit/nuxt-ui`
-- Workflow file: `release.yml`
-- Environment: unset
-
-After the release PR is merged, the publish workflow runs the package checks, builds the package, publishes `@querry-kit/nuxt-ui` to npm, tags the release as `vX.Y.Z`, and creates a GitHub Release.
-
-Consumers should install from npm:
-
-```sh
-pnpm add @querry-kit/nuxt-ui
-```
+Add a package-scoped Changeset in the monorepo. The [version workflow](https://github.com/querry-kit/querry-kit/actions/workflows/version.yml) maintains the release PR; the [publish workflow](https://github.com/querry-kit/querry-kit/actions/workflows/publish.yml) publishes the reviewed archives from `main` using the `npm-production` environment. Each library keeps its own version and tag.
 
 ## 🧩 Usage
 
@@ -218,6 +183,8 @@ is controlled by the global footer.
 
 ## 🛠 Development
 
+Work in `packages/nuxt-ui` in the monorepo; report issues and open PRs in [querry-kit/querry-kit](https://github.com/querry-kit/querry-kit).
+
 ```sh
 pnpm install
 pnpm lint
@@ -227,7 +194,7 @@ pnpm test:coverage
 pnpm build
 ```
 
-`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and retains the report as a workflow artifact.
+`pnpm test:coverage` collects all source files, prints the coverage summary, and writes HTML and LCOV reports to `coverage/`. GitHub Actions runs the same command and checks its result.
 
 Verify visual component changes through the corresponding live demo in the central documentation.
 
