@@ -10,27 +10,25 @@ jobs:
   scope:
     runs-on: ubuntu-latest
     outputs:
-      full: ${{ steps.scope.outputs.full }}
+      plan: ${{ steps.scope.outputs.plan }}
     steps:
       - uses: actions/checkout@v7
         with: { fetch-depth: 0, persist-credentials: false }
       - id: scope
         env:
+          FORCE_FULL: ${{ vars.WORKSPACE_CI_FORCE_FULL }}
           BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          full=true
-          if git cat-file -e "$BASE^{commit}" 2>/dev/null; then
-            git diff --name-only -z "$BASE"...HEAD > "$RUNNER_TEMP/changed"
-            full=$(python3 -c 'import sys; paths=open(sys.argv[1],"rb").read().split(b"\0"); print(str(any(p and not p.startswith(b"apps/docs/") for p in paths)).lower())' "$RUNNER_TEMP/changed")
-          fi
-          echo "full=$full" >> "$GITHUB_OUTPUT"
+          node --test scripts/ci/select-jobs.test.mjs
+          echo "plan=$(node scripts/ci/select-jobs.mjs)" >> "$GITHUB_OUTPUT"
   libraries:
     needs: scope
-    if: needs.scope.outputs.full == 'true'
+    if: fromJSON(needs.scope.outputs.plan).libraries[0] != null
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: { id: [nest, nuxt, nuxt-ui] }
+      matrix:
+        id: ${{ fromJSON(needs.scope.outputs.plan).libraries }}
     steps:
       - uses: actions/checkout@v7
         with: { persist-credentials: false }
@@ -48,7 +46,7 @@ jobs:
           pnpm --filter "@querry-kit/$LIB" test:coverage
   consumers:
     needs: scope
-    if: needs.scope.outputs.full == 'true'
+    if: fromJSON(needs.scope.outputs.plan).consumers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -66,7 +64,7 @@ jobs:
           pnpm examples:test:compose
   packed:
     needs: scope
-    if: needs.scope.outputs.full == 'true'
+    if: fromJSON(needs.scope.outputs.plan).packed
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -78,6 +76,8 @@ jobs:
           pnpm verify:packages
           pnpm verify:release-plan
   docs:
+    needs: scope
+    if: fromJSON(needs.scope.outputs.plan).docs
     outputs:
       artifact-id: ${{ steps.upload.outputs.artifact-id }}
       artifact-digest: ${{ steps.upload.outputs.artifact-digest }}
@@ -109,12 +109,11 @@ jobs:
     needs: [scope, libraries, consumers, packed, docs]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
       - env:
           NEEDS: ${{ toJSON(needs) }}
-        run: |
-          jq -e '.scope.result == "success" and .docs.result == "success" and
-            ((if .scope.outputs.full == "true" then "success" else "skipped" end) as $want |
-            [.libraries.result,.consumers.result,.packed.result] | all(. == $want))' <<< "$NEEDS"
+        run: node scripts/ci/select-jobs.mjs verify
   deploy:
     needs: [docs, result]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit' && needs.docs.result == 'success' && needs.result.result == 'success'
