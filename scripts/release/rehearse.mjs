@@ -17,7 +17,12 @@ const copy = async (base, path) => {
   await cp(join(root, path), join(base, path), { recursive: true });
 };
 const ledger = [];
-const cases = { 'ui-only': ['nuxt-ui'], 'nest-and-ui': ['nest', 'nuxt-ui'], 'docs-only': [] };
+const cases = {
+  'ui-only': ['nuxt-ui'],
+  'nest-and-ui': ['nest', 'nuxt-ui'],
+  'nuxt-and-ui': ['nuxt', 'nuxt-ui'],
+  'docs-only': [],
+};
 const args = process.argv.slice(2);
 assert.ok(!args.length || (args.length === 2 && args[0] === '--case' && Object.hasOwn(cases, args[1])));
 for (const names of args.length ? [cases[args[1]]] : Object.values(cases)) {
@@ -48,6 +53,13 @@ for (const names of args.length ? [cases[args[1]]] : Object.values(cases)) {
     await writeFile(join(cwd, 'apps/docs/README.md'), 'Documentation rehearsal.\n');
   }
   run(join(root, 'node_modules/.bin/changeset'), ['version']);
+  const ui = 'packages/nuxt-ui/package.json';
+  const versionedUi = JSON.parse(await readFile(join(cwd, ui)));
+  assert.equal(
+    versionedUi.peerDependencies['@querry-kit/nuxt'],
+    original[ui].peerDependencies['@querry-kit/nuxt'],
+    'A compatible patch release must preserve the supported Nuxt peer range',
+  );
   await rm(join(cwd, 'node_modules'));
   run('pnpm', ['install', '--lockfile-only', '--offline', '--no-frozen-lockfile']);
   const changed = await manifests(cwd);
