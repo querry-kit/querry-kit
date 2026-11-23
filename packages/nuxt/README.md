@@ -123,6 +123,8 @@ The table selects `id,name,team{name}`, serializes its query with `qs`, persists
 
 The package stays independent of Nuxt runtime configuration, application authentication, routers, stores, global events, and UI components. Consumers provide their own Axios instance, route ref, storage adapter, and endpoint map.
 
+`useAutocomplete().error` reports the most recent unresolved selection or search failure. A successful retry clears only its own failure.
+
 ## 📖 Documentation
 
 The complete API reference, guides, and examples live in the central Querry Kit documentation:
@@ -266,5 +268,3 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
-
-`useAutocomplete().error` reports the most recent unresolved selection or search failure. A successful retry clears only its own failure.
