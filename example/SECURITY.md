@@ -9,7 +9,7 @@ with real data.
 
 ## Reporting a vulnerability
 
-[Report the vulnerability privately on GitHub](https://github.com/querry-kit/example/security/advisories/new).
+[Report the vulnerability privately on GitHub](https://github.com/querry-kit/querry-kit/security/advisories/new).
 Include the affected commit, reproduction steps, and potential impact. Use
 synthetic data and omit secrets from the report. Keep vulnerability details
 private while maintainers investigate and coordinate disclosure.
