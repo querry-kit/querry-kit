@@ -4,6 +4,7 @@ import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/pr
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { submitAndConfirm } from './confirmation.mjs';
 import { candidates, checkPack, disposition, fromCommit, git, hash, ids, readRegistry } from './verify-candidates.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -135,6 +136,43 @@ for (const names of args.length ? [cases[args[1]]] : Object.values(cases)) {
     assert.equal(await disposition(c, pack, published, sha, proof), 'complete');
     await assert.rejects(disposition(c, pack, published, '0'.repeat(40), proof));
     await assert.rejects(disposition(c, { ...pack, integrity: 'mismatch' }, published, sha, proof));
+    // Drive the production recovery loop using a virtual clock and a durable per-candidate claim.
+    let now = 0,
+      reads = 0,
+      submits = 0,
+      tags = 0,
+      claimed = false;
+    const delayed = { ...published, 'dist-tags': record['dist-tags'] };
+    const noProof = structuredClone(published);
+    delete noProof.versions[c.version].dist.attestations;
+    const observations = [record, delayed, noProof, published];
+    const hooks = {
+      observe: () => disposition(c, pack, observations[Math.min(reads++, 3)], sha, proof),
+      alreadyClaimed: async () => claimed,
+      claim: async () => {
+        claimed = true;
+      },
+      submit: () => {
+        submits++;
+        throw Error('ambiguous response');
+      },
+      tag: () => {
+        tags++;
+      },
+      now: () => now,
+      wait: async (ms) => {
+        now += ms;
+      },
+      budget: 10000,
+    };
+    await assert.rejects(submitAndConfirm({ ...hooks, observe: async () => 'missing', budget: 10 }), /unconfirmed/);
+    assert.deepEqual([submits, tags], [1, 0]);
+    await submitAndConfirm(hooks);
+    assert.deepEqual([submits, tags], [1, 1]);
+    await assert.rejects(
+      submitAndConfirm({ ...hooks, observe: () => disposition(c, pack, published, 'f'.repeat(40), proof) }),
+    );
+    assert.deepEqual([submits, tags], [1, 1]);
     results.push({
       name: c.name,
       version: c.version,

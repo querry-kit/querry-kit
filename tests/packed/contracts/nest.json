@@ -1,0 +1,121 @@
+{
+  "manifest": {
+    "name": "@querry-kit/nest",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "license": "MIT",
+    "engines": {
+      "node": ">=26.13.0"
+    },
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+      },
+      "./object": {
+        "types": "./dist/object.d.ts",
+        "import": "./dist/object.js",
+        "require": "./dist/object.cjs",
+        "default": "./dist/object.js"
+      },
+      "./fields": {
+        "types": "./dist/fields.d.ts",
+        "import": "./dist/fields.js",
+        "require": "./dist/fields.cjs",
+        "default": "./dist/fields.js"
+      },
+      "./dto": {
+        "types": "./dist/dto.d.ts",
+        "import": "./dist/dto.js",
+        "require": "./dist/dto.cjs",
+        "default": "./dist/dto.js"
+      },
+      "./pagination": {
+        "types": "./dist/pagination.d.ts",
+        "import": "./dist/pagination.js",
+        "require": "./dist/pagination.cjs",
+        "default": "./dist/pagination.js"
+      },
+      "./query-service": {
+        "types": "./dist/query-service.d.ts",
+        "import": "./dist/query-service.js",
+        "require": "./dist/query-service.cjs",
+        "default": "./dist/query-service.js"
+      },
+      "./casl": {
+        "types": "./dist/casl.d.ts",
+        "import": "./dist/casl.js",
+        "require": "./dist/casl.cjs",
+        "default": "./dist/casl.js"
+      },
+      "./decorators": {
+        "types": "./dist/decorators.d.ts",
+        "import": "./dist/decorators.js",
+        "require": "./dist/decorators.cjs",
+        "default": "./dist/decorators.js"
+      },
+      "./pipes": {
+        "types": "./dist/pipes.d.ts",
+        "import": "./dist/pipes.js",
+        "require": "./dist/pipes.cjs",
+        "default": "./dist/pipes.js"
+      },
+      "./zod": {
+        "types": "./dist/zod.d.ts",
+        "import": "./dist/zod.js",
+        "require": "./dist/zod.cjs",
+        "default": "./dist/zod.js"
+      },
+      "./core": {
+        "types": "./dist/core.d.ts",
+        "import": "./dist/core.js",
+        "require": "./dist/core.cjs",
+        "default": "./dist/core.js"
+      }
+    },
+    "peerDependencies": {
+      "@casl/ability": "^6.7.3 || ^7.0.0",
+      "@casl/prisma": "^1.5.2 || ^2.0.0",
+      "@nestjs/common": "^11.1.28 || ^12.0.1",
+      "@nestjs/core": "^11.1.28 || ^12.0.1",
+      "@nestjs/swagger": "^11.4.6 || ^12.0.1",
+      "class-transformer": "^0.5.1",
+      "class-validator": "^0.15.1",
+      "reflect-metadata": "^0.2.2",
+      "zod": "^4.0.0"
+    },
+    "peerDependenciesMeta": {
+      "@casl/ability": {
+        "optional": true
+      },
+      "@casl/prisma": {
+        "optional": true
+      },
+      "zod": {
+        "optional": true
+      },
+      "class-validator": {
+        "optional": true
+      },
+      "class-transformer": {
+        "optional": true
+      }
+    },
+    "publishConfig": {
+      "access": "public"
+    }
+  },
+  "requiredFiles": [
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "incidental": [
+    "^dist/chunk-[A-Z0-9]{8}\\.(?:js|cjs)(?:\\.map)?$",
+    "^dist/[a-z][a-z0-9.-]*-[A-Za-z0-9_-]{8}\\.d\\.(?:ts|cts)$"
+  ]
+}
