@@ -8,7 +8,7 @@ The specification identifies twelve independently acceptable findings rather tha
 
 Confirm the delivery base; do not attach implementation to the example-layout PR.
 
-- [ ] T001 Confirm PR #58’s merge `fcbcee5` is in the implementation base and `example/apps/web/package.json` is present on updated `main`. Record base SHA, Node/pnpm versions, eight workspace members and three publishable packages in `specs/002-monorepo-hardening/evidence/baseline.md`. If the move is still pending, defer branch-dependent implementation.
+- [X] T001 Confirm PR #58’s merge `fcbcee5` is in the implementation base and `example/apps/web/package.json` is present on updated `main`. Record base SHA, Node/pnpm versions, eight workspace members and three publishable packages in `specs/002-monorepo-hardening/evidence/baseline.md`. If the move is still pending, defer branch-dependent implementation.
 
 ## Phase 2 — Foundation
 
