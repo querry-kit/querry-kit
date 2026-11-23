@@ -3,12 +3,12 @@
 | Finding | Commit or PR | Local proof | Outstanding |
 | --- | --- | --- | --- |
 | F01 | [#60](https://github.com/querry-kit/querry-kit/pull/60), `151ec83` | Frozen install, before/after dependency tree and `pnpm audit` (zero); [full CI passed](https://github.com/querry-kit/querry-kit/actions/runs/45086518530). | [Merged on main; alerts 79–81 fixed](dependencies.md). |
-| F02 | `6ee2f29`, `fix/59-table-identity` | Keyless update changed row one before the fix. Nuxt lint, types, build, 75 tests, 100% lines after. | Package push approval. |
+| F02 | `6ee2f29`, `fix/59-table-identity` | Keyless update changed row one before the fix. Nuxt lint, types, build, 75 tests, 100% lines after. | [Draft #68](https://github.com/querry-kit/querry-kit/pull/68); review pending. |
 | F03 | [#61](https://github.com/querry-kit/querry-kit/pull/61), `8bed108` | Local release rehearsal with virtual time, recorded submit and tag counts; no live release. | [Full CI passed](https://github.com/querry-kit/querry-kit/actions/runs/45086737037); [Full CI including #60 passed](https://github.com/querry-kit/querry-kit/actions/runs/45088766676); merged at `8843b45`. |
-| F04 | [Rule proposal](branch-rule.md) | Full and docs-only PRs reported the same successful check. | Operator decision, effective enforcement and rollback evidence. |
-| F05 | `02cf7f1`, `fix/59-autocomplete-retry` | Deferred failures, stale generation, selection clear; Nuxt lint, types, build and 75 tests passed. | Package push approval. |
-| F06 | `1b69b1a`, `fix/59-distinct-total` | Nest lint, types, build, 267 tests and optional-peer ESM/CJS passed. Synthetic delegate: 40,000 rows, 2,000 distinct keys, 20,891 serialized key-projection bytes (3 ms locally; not a database benchmark). | Package push approval. |
-| F08 | `1b5b403`, `fix/59-accessible-column-names` | UI lint, types, build, 100% lines. Full Compose validation passed (29 tests); fresh local fixture requires `pnpm --filter @workboard/contracts build` before running Playwright. | Package push approval. |
+| F04 | [Rule proposal](branch-rule.md) | Full and docs-only PRs reported the same successful check. | Rule active; disposable enforcement probe in progress. |
+| F05 | `02cf7f1`, `fix/59-autocomplete-retry` | Deferred failures, stale generation, selection clear; Nuxt lint, types, build and 75 tests passed. | [Draft #69](https://github.com/querry-kit/querry-kit/pull/69); review pending. |
+| F06 | `1b69b1a`, `fix/59-distinct-total` | Nest lint, types, build, 267 tests and optional-peer ESM/CJS passed. Synthetic delegate: 40,000 rows, 2,000 distinct keys, 20,891 serialized key-projection bytes (3 ms locally; not a database benchmark). | [Draft #70](https://github.com/querry-kit/querry-kit/pull/70); review pending. |
+| F08 | `1b5b403`, `fix/59-accessible-column-names` | UI lint, types, build, 100% lines. Full Compose validation passed (29 tests); fresh local fixture requires `pnpm --filter @workboard/contracts build` before running Playwright. | [Draft #71](https://github.com/querry-kit/querry-kit/pull/71); review pending. |
 
 ## Additional results
 
@@ -34,4 +34,6 @@ All six remaining branch tips merged cleanly in a disposable checkout based on `
 | F06 | `45efb57` | `distinct-page-total` | `nest/api/query-service.md` |
 | F08 | `1b5b403` | `column-visibility-label` | `nuxt-ui/components/options.md` |
 
-`changeset status --since=50c1318` projected exactly three public patch releases: Nest `2.1.2 → 2.1.3`, Nuxt `1.1.2 → 1.1.3` and Nuxt UI `4.3.1 → 4.3.2`. The Workboard fix (`26a6ea9`) and contributor guidance (`954e8bb`, empty Changeset) add no release. The latter replaces obsolete standalone-repository installation examples with version-pinned npm instructions. Frozen install, the package builds and `pnpm verify:packages --archives-only` passed on the combined tree without changing versions. The local audit is complete; confirm the same files on the submitted PRs before closing T027.
+`changeset status --since=50c1318` projected exactly three public patch releases: Nest `2.1.2 → 2.1.3`, Nuxt `1.1.2 → 1.1.3` and Nuxt UI `4.3.1 → 4.3.2`. The Workboard fix (`26a6ea9`) and contributor guidance (`954e8bb`, empty Changeset) add no release. The latter replaces obsolete standalone-repository installation examples with version-pinned npm instructions. Frozen install, the package builds and `pnpm verify:packages --archives-only` passed on the combined tree without changing versions. T027 verified: the GitHub file list for each of the six draft PRs matched its audited branch diff, including the package Changesets and consumer guides.
+
+Published, unmerged review branches: [F02 #68](https://github.com/querry-kit/querry-kit/pull/68), [F05 #69](https://github.com/querry-kit/querry-kit/pull/69), [F06 #70](https://github.com/querry-kit/querry-kit/pull/70), [F08 #71](https://github.com/querry-kit/querry-kit/pull/71), [F07 #72](https://github.com/querry-kit/querry-kit/pull/72), [F12 #73](https://github.com/querry-kit/querry-kit/pull/73).
