@@ -3,7 +3,9 @@
     <UIcon v-if="showDragHandle" class="drag-handle text-dimmed shrink-0 cursor-grab" :name="icon('options.drag')" />
     <span class="text-muted grow truncate text-sm">{{ column.header }}</span>
     <USwitch
-      :aria-label="t('options.visibility')"
+      :aria-label="
+        t('options.visibilityFor', { action: t('options.visibility'), field: column.header.trim() || column.id })
+      "
       :checked-icon="icon('options.visible')"
       :unchecked-icon="icon('options.hidden')"
       :disabled="column.enableHiding === false"

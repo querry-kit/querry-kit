@@ -541,6 +541,24 @@ describe('table controls', () => {
       }),
     );
 
+    expect(wrapper.findAllComponents({ name: 'USwitch' }).map((s) => s.attributes('aria-label'))).toEqual([
+      'Toggle column visibility: Name',
+      'Toggle column visibility: Email',
+      'Toggle column visibility: Fixed',
+    ]);
+    await wrapper.setProps({
+      texts: { options: { visibility: 'Sichtbarkeit', visibilityFor: '{field}: {action}' } },
+      columns: [
+        { id: 'name', header: '' },
+        { id: 'email', header: 'E-Mail' },
+        { id: 'fixed', header: 'Fixed', enableHiding: false },
+      ],
+    });
+    expect(wrapper.findAllComponents({ name: 'USwitch' }).map((s) => s.attributes('aria-label'))).toEqual([
+      'name: Sichtbarkeit',
+      'E-Mail: Sichtbarkeit',
+      'Fixed: Sichtbarkeit',
+    ]);
     await wrapper.findComponent({ name: 'USwitch' }).vm.$emit('update:modelValue', false);
     await wrapper.findAllComponents({ name: 'USwitch' }).at(2)?.vm.$emit('update:modelValue', false);
     await wrapper.setProps({ invisibleColumns: ['name'] });

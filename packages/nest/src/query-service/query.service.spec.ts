@@ -68,6 +68,72 @@ class TestDelegate {
 }
 
 describe.each([QueryService, CoreQueryService])('QueryService %p', (QueryService) => {
+  it.each([
+    { distinct: 'category', total: 2, page: 2, expected: [] },
+    { distinct: ['category', 'rank'], total: 3, page: 2, expected: [{ id: '4' }] },
+    { distinct: ['category', 'rank'], total: 3, page: 9, expected: [] },
+  ])('counts scoped distinct tuples before pagination: %j', async ({ distinct, total, page, expected }) => {
+    const data = [
+      ['1', 'A', 1, 'mine'],
+      ['2', 'A', 1, 'mine'],
+      ['3', 'A', 2, 'mine'],
+      ['4', 'B', 1, 'mine'],
+      ['5', 'C', 3, 'other'],
+    ];
+    const rows = data.map(([id, category, rank, org]) => ({ id, category, rank, org }));
+    const delegate = new TestDelegate();
+    const findMany = jest.spyOn(delegate, 'findMany').mockImplementation(async (raw) => {
+      const args = raw as {
+        where: unknown;
+        distinct: string | string[];
+        select: Record<string, boolean>;
+        skip?: number;
+        take?: number;
+        cursor?: unknown;
+        include?: unknown;
+      };
+      expect(args.where).toEqual({ AND: [{ org: 'mine' }, {}] });
+      const keys = [args.distinct].flat() as Array<keyof (typeof rows)[number]>;
+      const tuples = new Map(
+        rows.filter((r) => r.org === 'mine').map((r) => [JSON.stringify(keys.map((k) => r[k])), r]),
+      );
+      if (args.take === undefined) {
+        expect(args.select).toEqual(Object.fromEntries(keys.map((k) => [k, true])));
+        expect(args.cursor).toBeUndefined();
+        expect(args.include).toBeUndefined();
+        return [...tuples.values()].map((r) => Object.fromEntries(keys.map((k) => [k, r[k]]))) as never;
+      }
+      expect(args.select).toEqual({ id: true });
+      expect(args.cursor).toEqual({ id: 'start' });
+      return [...tuples.values()].slice(args.skip, (args.skip ?? 0) + args.take).map(({ id }) => ({ id })) as never;
+    });
+    const service = new QueryService(delegate, { subject: 'Row', accessibleWhere: () => ({ org: 'mine' }) });
+    const result = await service.query(
+      { distinct, page, perPage: 2, select: { id: true }, cursor: { id: 'start' } } as never,
+      {},
+    );
+    expect(findMany).toHaveBeenCalledTimes(2);
+    expect(result.items).toEqual(expected);
+    expect(result.pageMeta).toMatchObject({ itemCount: total, pageCount: Math.ceil(total / 2) });
+  });
+
+  it('keeps includes on the page query and uses ordinary count for an empty distinct list', async () => {
+    const delegate = new TestDelegate();
+    delegate.data = [];
+    const service = new QueryService(delegate);
+    const include = { owner: true };
+    const distinct = await service.query({ distinct: ['name'], include } as never);
+    expect(distinct.items).toEqual([]);
+    expect(distinct.pageMeta.itemCount).toBe(0);
+    expect(delegate.calls).toEqual([
+      ['findMany', expect.objectContaining({ distinct: ['name'], select: { name: true }, include: undefined })],
+      ['findMany', expect.objectContaining({ distinct: ['name'], include, select: undefined })],
+    ]);
+    delegate.calls = [];
+    await service.query({ distinct: [], include } as never);
+    expect(delegate.calls.map((call) => (call as [string, unknown])[0])).toEqual(['count', 'findMany']);
+  });
+
   it('finds one record and parses query options', async () => {
     const delegate = new TestDelegate();
     const service = new QueryService(delegate);
