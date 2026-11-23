@@ -22,3 +22,16 @@
 ## Combined local verification
 
 Integrated tree `7165cdb`: frozen install; package and example builds; example types, lint, formatting and workspace-link checks; PostgreSQL API integration; 31 cold-Compose browser tests; three verified archives; seven isolated strict-peer consumer installations; and the offline release rehearsal all passed. The same tree passed 76 Nuxt tests and 68 desktop/mobile documentation browser tests. No production publish or Pages deployment was part of these runs.
+
+## T027 — Changesets and consumer documentation
+
+All six remaining branch tips merged cleanly in a disposable checkout based on `main` at `50c1318`. For each public behavior change, the package README, the central guide and the named patch Changeset are present on the same branch:
+
+| Finding | Branch tip | Changeset | Central documentation |
+| --- | --- | --- | --- |
+| F02 | `6ee2f29` | `table-row-identity` | `nuxt/guide/table.md` |
+| F05 | `2c62e53` | `autocomplete-retry` | `nuxt/guide/autocomplete.md` |
+| F06 | `45efb57` | `distinct-page-total` | `nest/api/query-service.md` |
+| F08 | `1b5b403` | `column-visibility-label` | `nuxt-ui/components/options.md` |
+
+`changeset status --since=50c1318` projected exactly three public patch releases: Nest `2.1.2 → 2.1.3`, Nuxt `1.1.2 → 1.1.3` and Nuxt UI `4.3.1 → 4.3.2`. The Workboard fix (`26a6ea9`) and contributor guidance (`954e8bb`, empty Changeset) add no release. The latter replaces obsolete standalone-repository installation examples with version-pinned npm instructions. Frozen install, the package builds and `pnpm verify:packages --archives-only` passed on the combined tree without changing versions. The local audit is complete; confirm the same files on the submitted PRs before closing T027.
