@@ -65,7 +65,7 @@ Independent proof: reject broken packs and peers, promote the tested artifact on
 An external gate is not complete until it has external evidence.
 
 - [X] T027 For every release-affecting increment include appropriate package Changesets under `.changeset/` and public docs changes with its PR; at final review audit the set against `specs/002-monorepo-hardening/contracts/behavior.md`. No manufactured release for private-only work. Do not defer required per-PR documentation until after merge.
-- [ ] T028 Run applicable scenarios in `specs/002-monorepo-hardening/quickstart.md` and record per-finding SHA, command, outcome, and separately pending operator/hosted checks in `specs/002-monorepo-hardening/evidence/acceptance.md`. Confirm all twelve outcomes independently and that no publisher, archived repository or public package identity was changed by validation.
+- [X] T028 Run applicable scenarios in `specs/002-monorepo-hardening/quickstart.md` and record per-finding SHA, command, outcome, and separately pending operator/hosted checks in `specs/002-monorepo-hardening/evidence/acceptance.md`. Confirm all twelve outcomes independently and that no publisher, archived repository or public package identity was changed by validation.
 
 ## Dependencies and parallel execution
 

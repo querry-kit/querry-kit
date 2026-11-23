@@ -37,3 +37,18 @@ All six remaining branch tips merged cleanly in a disposable checkout based on `
 `changeset status --since=50c1318` projected exactly three public patch releases: Nest `2.1.2 → 2.1.3`, Nuxt `1.1.2 → 1.1.3` and Nuxt UI `4.3.1 → 4.3.2`. The Workboard fix (`26a6ea9`) and contributor guidance (`954e8bb`, empty Changeset) add no release. The latter replaces obsolete standalone-repository installation examples with version-pinned npm instructions. Frozen install, the package builds and `pnpm verify:packages --archives-only` passed on the combined tree without changing versions. T027 verified: the GitHub file list for each of the six draft PRs matched its audited branch diff, including the package Changesets and consumer guides.
 
 Published, unmerged review branches: [F02 #68](https://github.com/querry-kit/querry-kit/pull/68), [F05 #69](https://github.com/querry-kit/querry-kit/pull/69), [F06 #70](https://github.com/querry-kit/querry-kit/pull/70), [F08 #71](https://github.com/querry-kit/querry-kit/pull/71), [F07 #72](https://github.com/querry-kit/querry-kit/pull/72), [F12 #73](https://github.com/querry-kit/querry-kit/pull/73).
+
+## T028 — Final acceptance at the reviewed revisions
+
+| Finding | Draft and verified head | Relevant gate | Hosted Workspace checks |
+| --- | --- | --- | --- |
+| F02 | [#68](https://github.com/querry-kit/querry-kit/pull/68), `6ee2f29` | Nuxt `test:coverage` (table identity) | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097387421) |
+| F05 | [#69](https://github.com/querry-kit/querry-kit/pull/69), `2c62e53` | Nuxt `test:coverage` (autocomplete recovery) | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097396355) |
+| F06 | [#70](https://github.com/querry-kit/querry-kit/pull/70), `45efb57` | Nest `test:coverage`, `test:optional-peers` | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097405947) |
+| F08 | [#71](https://github.com/querry-kit/querry-kit/pull/71), `1b5b403` | UI `test:coverage`, `pnpm examples:test:compose` | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097415314) |
+| F07 | [#72](https://github.com/querry-kit/querry-kit/pull/72), `26a6ea9` | `pnpm examples:test:compose` | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097425185) |
+| F12 | [#73](https://github.com/querry-kit/querry-kit/pull/73), `954e8bb` | `pnpm install --frozen-lockfile`; archive and guidance inventory | [Passed](https://github.com/querry-kit/querry-kit/actions/runs/45097435539) |
+
+For the remaining findings: F01 was confirmed on `9a13e36` with `pnpm audit` and the default-branch alert rescan; F03 on `8843b45` with `pnpm verify:release-plan` in CI; F04 with `gh pr checks --required` on both probe heads recorded in [the enforcement evidence](branch-rule.md). F09 and F10 passed `pnpm verify:packages` on the [reviewed #64 run](https://github.com/querry-kit/querry-kit/actions/runs/45089981142), merged at `88d8cb5`. F11 passed the selection probes, Pages-prefix browser suite and deployed-byte comparison for `50c1318` recorded above.
+
+The four source repositories still report `isArchived: true`. The latest central npm publish run is still the verified release at `332bfae`; npm `latest` remains Nest `2.1.2`, Nuxt `1.1.2`, Nuxt UI `4.3.1`. Validation did not modify publisher bindings, archived sources or package identities. No acceptance gate is pending for these revisions. The six implementation PRs remain unmerged drafts; reviewing, merging and releasing them are separate decisions.
