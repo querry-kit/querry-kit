@@ -1,5 +1,12 @@
 # @querry-kit/nuxt
 
+## 1.1.3
+
+### Patch Changes
+
+- 3fca1e0: Clear recovered autocomplete errors without hiding independent selection or search failures.
+- 83e918a: Preserve the configured row identity in field selections and ignore updates without a matching key.
+
 ## 1.1.2
 
 ### Patch Changes
