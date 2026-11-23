@@ -1,5 +1,11 @@
 # @querry-kit/nest
 
+## 2.1.3
+
+### Patch Changes
+
+- a8799be: Count matching distinct tuples rather than raw rows in paginated query metadata.
+
 ## 2.1.2
 
 ### Patch Changes

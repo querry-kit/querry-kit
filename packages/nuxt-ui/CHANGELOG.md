@@ -1,5 +1,11 @@
 # @querry-kit/nuxt-ui
 
+## 4.3.2
+
+### Patch Changes
+
+- c158746: Identify each column visibility switch by its localized action and column name.
+
 ## 4.3.1
 
 ### Patch Changes
