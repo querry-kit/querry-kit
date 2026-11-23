@@ -8,7 +8,7 @@
   "scripts": {
     "sync:changelogs": "node scripts/sync-package-changelogs.mjs",
     "dev": "pnpm sync:changelogs && nuxt dev",
-    "lint": "node -e \"throw Error('QK65_EXPECTED_DOCS_FAILURE')\"",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "nuxt typecheck",
     "build": "pnpm sync:changelogs && nuxt generate",
     "preview": "nuxt preview",
