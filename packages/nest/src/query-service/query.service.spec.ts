@@ -117,6 +117,23 @@ describe.each([QueryService, CoreQueryService])('QueryService %p', (QueryService
     expect(result.pageMeta).toMatchObject({ itemCount: total, pageCount: Math.ceil(total / 2) });
   });
 
+  it('keeps includes on the page query and uses ordinary count for an empty distinct list', async () => {
+    const delegate = new TestDelegate();
+    delegate.data = [];
+    const service = new QueryService(delegate);
+    const include = { owner: true };
+    const distinct = await service.query({ distinct: ['name'], include } as never);
+    expect(distinct.items).toEqual([]);
+    expect(distinct.pageMeta.itemCount).toBe(0);
+    expect(delegate.calls).toEqual([
+      ['findMany', expect.objectContaining({ distinct: ['name'], select: { name: true }, include: undefined })],
+      ['findMany', expect.objectContaining({ distinct: ['name'], include, select: undefined })],
+    ]);
+    delegate.calls = [];
+    await service.query({ distinct: [], include } as never);
+    expect(delegate.calls.map((call) => (call as [string, unknown])[0])).toEqual(['count', 'findMany']);
+  });
+
   it('finds one record and parses query options', async () => {
     const delegate = new TestDelegate();
     const service = new QueryService(delegate);
