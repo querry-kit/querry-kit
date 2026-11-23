@@ -77,11 +77,7 @@ export default defineAppConfig({
 
 The current package version is published on npm. npm is the primary distribution channel.
 
-GitHub release tags remain available as a fallback:
-
-```sh
-pnpm add github:querry-kit/nuxt-ui#v0.0.1
-```
+To pin a release, install `@querry-kit/nuxt-ui@<version>` from npm.
 
 ## 🚀 Release Workflow
 
