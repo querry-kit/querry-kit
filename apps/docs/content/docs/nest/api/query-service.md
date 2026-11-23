@@ -330,3 +330,5 @@ Grouping keys consumed by the table must be JSON scalar values: strings, numbers
 - `AccessibleWhereResolver<TAbility, TSubject>` accepts the active ability and service subject and returns the access predicate.
 - `QueryServiceOptions` configures `subject`, the optional `accessibleWhere` resolver, `errorLogger.error` for unexpected failures, and `preserveJsonWhereTypes` (off by default).
 - `ResourceQueryOptions` requires a query-capable `service`, controller `query`, field `schema` and async or synchronous `map(model, ability?)`. Optional `ability`, `include` and `fields` configure access and projection. `ResourceFindByIdOptions` adds the required string `id`.
+
+Paginated `distinct` queries count the unique scalar tuples matching the same access filter, before cursor or page slicing. The generic delegate fetches one key-only row per unique tuple for the total; memory use grows with distinct cardinality. Separate count and page reads do not provide snapshot isolation. Ordinary pagination still uses `count`.

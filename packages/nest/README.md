@@ -419,3 +419,5 @@ Offset pagination has no snapshot guarantee during concurrent writes; refresh th
 view after mutations. Relations and date intervals are outside this feature.
 
 Grouping keys consumed by the table must be JSON scalar values: strings, numbers, booleans, or null. Dates retain their normal ISO JSON encoding; Decimal-like values serialize to numbers. Binary and BigInt keys require application-owned encoding and filter conversion.
+
+Paginated `distinct` queries count the unique scalar tuples matching the same access filter, before cursor or page slicing. The generic delegate fetches one key-only row per unique tuple for the total; memory use grows with distinct cardinality. Separate count and page reads do not provide snapshot isolation. Ordinary pagination still uses `count`.
