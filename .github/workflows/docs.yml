@@ -1,34 +1,38 @@
-name: Docs
+name: Deploy tested documentation
 on:
-  workflow_run:
-    workflows: [Workspace CI]
-    branches: [main]
-    types: [completed]
-permissions:
-  contents: read
+  workflow_call:
+    inputs:
+      artifact-id: { type: string, required: true }
+      artifact-digest: { type: string, required: true }
+permissions: {}
 concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
-  build:
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with: { ref: "${{ github.event.workflow_run.head_sha }}", persist-credentials: false }
-      - uses: ./.github/actions/workspace
-      - run: pnpm build:packages && pnpm docs:build
-      - uses: actions/upload-pages-artifact@v5
-        with: { path: apps/docs/.output/public }
   deploy:
-    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit'
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
+    permissions: { actions: read, pages: write, id-token: write }
     environment:
       name: github-pages
       url: ${{ steps.pages.outputs.page_url }}
     steps:
+      - name: Verify the tested artifact identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ inputs.artifact-id }}
+          DIGEST: ${{ inputs.artifact-digest }}
+        run: |
+          set -euo pipefail
+          [[ "$ID" =~ ^[0-9]+$ && "${DIGEST#sha256:}" =~ ^[a-f0-9]{64}$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ID" | jq -e \
+            --arg id "$ID" --arg run "$GITHUB_RUN_ID" --arg sha "$GITHUB_SHA" \
+            --arg repo "$GITHUB_REPOSITORY_ID" --arg hash "sha256:${DIGEST#sha256:}" '
+              (.id | tostring) == $id and .expired == false and .digest == $hash and
+              .name == ("pages-" + $run + "-" + $sha) and (.workflow_run.id | tostring) == $run and
+              (.workflow_run.head_repository_id | tostring) == $repo and
+              .workflow_run.head_sha == $sha and .workflow_run.head_branch == "main"'
+          echo "Pages: $GITHUB_SHA, run $GITHUB_RUN_ID, artifact $ID, $DIGEST" >> "$GITHUB_STEP_SUMMARY"
       - id: pages
         uses: actions/deploy-pages@v5
+        with: { artifact_name: 'pages-${{ github.run_id }}-${{ github.sha }}' }

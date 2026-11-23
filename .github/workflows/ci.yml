@@ -78,6 +78,9 @@ jobs:
           pnpm verify:packages
           pnpm verify:release-plan
   docs:
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+      artifact-digest: ${{ steps.upload.outputs.artifact-digest }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -89,6 +92,17 @@ jobs:
           pnpm docs:typecheck
           pnpm --dir apps/docs exec playwright install --with-deps chromium
           pnpm docs:test
+      - name: Archive the tree served by Playwright
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit'
+        run: tar --dereference --hard-dereference -cf "$RUNNER_TEMP/artifact.tar" -C apps/docs/.output/pages-test/querry-kit .
+      - id: upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pages-${{ github.run_id }}-${{ github.sha }}
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 7
+          if-no-files-found: error
   result:
     name: Workspace checks
     if: always()
@@ -101,3 +115,11 @@ jobs:
           jq -e '.scope.result == "success" and .docs.result == "success" and
             ((if .scope.outputs.full == "true" then "success" else "skipped" end) as $want |
             [.libraries.result,.consumers.result,.packed.result] | all(. == $want))' <<< "$NEEDS"
+  deploy:
+    needs: [docs, result]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'querry-kit/querry-kit' && needs.docs.result == 'success' && needs.result.result == 'success'
+    uses: ./.github/workflows/docs.yml
+    permissions: { actions: read, pages: write, id-token: write }
+    with:
+      artifact-id: ${{ needs.docs.outputs.artifact-id }}
+      artifact-digest: ${{ needs.docs.outputs.artifact-digest }}
