@@ -66,6 +66,7 @@ export const defaultTableTexts = {
     right: 'Pin right',
     center: 'Unpin',
     visibility: 'Toggle column visibility',
+    visibilityFor: '{action}: {field}',
   },
   pagination: {
     pageSize: 'Items per page',
