@@ -1,0 +1,5 @@
+# F04 — operator review
+
+Observed main rules: ruleset `20121609` contributes a deletion rule; classic protection does not require status contexts. The main CI for `fcbcee5` reported `Workspace checks` from GitHub Actions app `15368`. The aggregate checks docs and scope unconditionally and permits only the skips specified by the selector. Validate this context on a docs-only and a full PR before applying.
+
+Proposed change: create a separate active branch ruleset scoped only to `refs/heads/main`, requiring `Workspace checks` with integration ID `15368`. No bypass actors; no change to existing rules, publication permissions or versioning. Do not require individual conditional jobs. Before applying record the current effective rules, approval identity and timestamp; after applying query the effective rules, observe clean docs/full PRs and a failing selected job preventing merge on a disposable PR. Rollback: remove **only** the new ruleset by its recorded ID, then compare effective rules to the saved snapshot. This proposal is not authorization to change protection.
