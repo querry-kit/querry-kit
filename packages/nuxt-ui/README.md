@@ -331,3 +331,5 @@ for extra content under expanded groups. The `footer-start` slot can hold a load
 The table controls support `@querry-kit/nuxt` 0.2.x and 1.x. Use the 1.x package for `useGroupedTable`; existing controls remain compatible with 0.2.x consumers on the supported Node.js runtime.
 
 Keyboard interaction: after resetting the table layout, press Escape from the focused options heading to dismiss the panel.
+
+<!-- Temporary ui-only CI selection probe for #65. -->

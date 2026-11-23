@@ -266,5 +266,3 @@ import { useGroupedSelection } from '@querry-kit/nuxt';
 
 const selection = useGroupedSelection<{ id: string; status: string }>((item) => item.id);
 ```
-
-<!-- Temporary nuxt-only CI selection probe for #65. -->
