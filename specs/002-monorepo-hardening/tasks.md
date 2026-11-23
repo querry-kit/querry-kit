@@ -14,7 +14,7 @@ Confirm the delivery base; do not attach implementation to the example-layout PR
 
 Capture the shared validation baseline before changing any gate.
 
-- [ ] T002 Using `specs/002-monorepo-hardening/quickstart.md`, record the frozen install, native/consumer check entry points, current package exports and coverage thresholds in `specs/002-monorepo-hardening/evidence/baseline.md`. Save existing failures separately. Confirm the release rehearsal uses disposable copies without publish credentials; keep the frozen #53 evidence read-only.
+- [X] T002 Using `specs/002-monorepo-hardening/quickstart.md`, record the frozen install, native/consumer check entry points, current package exports and coverage thresholds in `specs/002-monorepo-hardening/evidence/baseline.md`. Save existing failures separately. Confirm the release rehearsal uses disposable copies without publish credentials; keep the frozen #53 evidence read-only.
 
 ## Phase 3 — US1 (P1): safe dependencies and predictable row updates
 
