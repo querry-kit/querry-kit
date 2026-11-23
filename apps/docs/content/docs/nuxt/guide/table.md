@@ -15,6 +15,8 @@ const table = useTable({
 await table.initialize();
 ```
 
+`useTable` always requests its `identityKey` (default `id`), even for hidden columns or custom `staticFields`. `updateRow()` ignores patches with a missing, null, or unknown identity; `0` is a valid key.
+
 The composable sends `where` and `orderBy` as JSON values through `qs`, creates Nest-compatible `fields` selections, and ignores responses that finish after a newer request. Call `refresh()` explicitly after domain mutations or `updateRow()` for an in-place merge.
 
 | Option                           | Purpose                                                                            |

@@ -20,7 +20,7 @@ export interface UseTableOptions<
   name?: string;
   /** Reactive column descriptions. Their IDs determine the selected fields. */
   columns: Ref<readonly TColumn[]>;
-  /** Fields always included in the backend selection; defaults to `id`. */
+  /** Additional fields always included alongside the row identity. */
   staticFields?: string[];
   /** Static relation include payload sent with every query. */
   staticInclude?: Record<string, unknown>;
@@ -36,7 +36,7 @@ export interface UseTableOptions<
   storage?: StorageLike;
   /** A ref backed by the consumer's URL query parameter; no router is required. */
   routePage?: RoutePageRef;
-  /** Row property used by `updateRow`; defaults to `id`. */
+  /** Row identity always requested and used by `updateRow`; defaults to `id`. */
   identityKey?: keyof TItem & string;
   /** Called after the initial request has completed. */
   onInitialized?: () => void | Promise<void>;
