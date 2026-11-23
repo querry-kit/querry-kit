@@ -419,5 +419,3 @@ Offset pagination has no snapshot guarantee during concurrent writes; refresh th
 view after mutations. Relations and date intervals are outside this feature.
 
 Grouping keys consumed by the table must be JSON scalar values: strings, numbers, booleans, or null. Dates retain their normal ISO JSON encoding; Decimal-like values serialize to numbers. Binary and BigInt keys require application-owned encoding and filter conversion.
-
-<!-- Temporary nest-only CI selection probe for #65. -->
