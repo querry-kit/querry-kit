@@ -243,3 +243,27 @@ test('group references retain their shared and individual deep links', async ({ 
     await expect(page.locator(`article :is(h3,h4)[id="${id}"]`)).toHaveCount(1);
   }
 });
+
+const catalogTargets = {
+  QTableToolbar: 'toolbar', QTableSorting: 'sorting', QTableOptions: 'options', QTablePagination: 'pagination',
+  QTableFiltering: 'filtering', QTableFilterLookup: 'filtering#searchable-lookup-filters',
+  QTableGrouping: 'grouping#qtablegrouping', QTableGrouped: 'grouping#qtablegrouped',
+  QTableGroup: 'grouping#qtablegroup', QTableGroupLoadMore: 'grouping#qtablegrouploadmore',
+};
+
+test('catalog survives reload and links every public component to its reference', async ({ page, request }) => {
+  await page.goto('docs/nuxt-ui');
+  await page.getByRole('link', { name: 'Browse components' }).click();
+  await expect(page).toHaveURL(/\/querry-kit\/docs\/nuxt-ui\/components\/?$/);
+  await page.reload();
+  const article = page.locator('article');
+  await expect(article.getByRole('link', { name: /^QTable/ })).toHaveCount(10);
+  for (const [name, target] of Object.entries(catalogTargets)) {
+    const href = `/querry-kit/docs/nuxt-ui/components/${target}`;
+    await expect(article.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+    const response = await request.get(href);
+    expect(response.ok()).toBeTruthy();
+    const fragment = target.split('#')[1];
+    if (fragment) expect(await response.text()).toContain(`id="${fragment}"`);
+  }
+});

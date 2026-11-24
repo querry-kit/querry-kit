@@ -107,6 +107,7 @@ export const documentationPackages: DocumentationPackage[] = [
         text: 'Table Controls',
         icon: 'i-lucide-sliders-horizontal',
         items: [
+          { text: 'Components overview', path: page('nuxt-ui', '/components'), icon: 'i-lucide-layout-grid' },
           { text: 'Table Toolbar', path: page('nuxt-ui', '/components/toolbar'), icon: 'i-lucide-panels-top-left' },
           { text: 'Grouping', path: page('nuxt-ui', '/components/grouping'), icon: 'i-lucide-list-tree' },
           { text: 'Sorting', path: page('nuxt-ui', '/components/sorting'), icon: 'i-lucide-arrow-down-up' },
