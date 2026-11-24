@@ -137,7 +137,7 @@ test('theme controls work when storage is unavailable', async ({ page }) => {
 test('surround navigation remains available after a trailing-slash reload', async ({ page }) => {
   await page.goto('docs/nuxt-ui/components/toolbar/');
   const surround = page.getByRole('main');
-  await expect(surround.getByRole('link', { name: 'Getting Started' })).toBeVisible();
+  await expect(surround.getByRole('link', { name: 'Components overview' })).toBeVisible();
   await expect(surround.locator('a[data-slot="link"][href="/querry-kit/docs/nuxt-ui/components/grouping"]')).toBeVisible();
 });
 
@@ -267,3 +267,51 @@ test('catalog survives reload and links every public component to its reference'
     if (fragment) expect(await response.text()).toContain(`id="${fragment}"`);
   }
 });
+
+test('catalog is reachable from package navigation and usable by keyboard', async ({ page }, testInfo) => {
+  await page.goto('docs/nuxt-ui/components/sorting');
+  const mobile = testInfo.project.name === 'mobile';
+  if (mobile) await page.getByRole('button', { name: 'Navigation', exact: true }).click();
+  const navigation = mobile ? page.getByRole('dialog') : page.getByRole('navigation', { name: '@querry-kit/nuxt-ui navigation' });
+  await navigation.getByRole('link', { name: 'Components overview' }).click();
+  const article = page.locator('article');
+  await expect(article.getByRole('heading', { name: 'Components', exact: true })).toBeVisible();
+  const sorting = article.getByRole('link', { name: 'QTableSorting', exact: true });
+  await article.getByRole('link', { name: 'QTableToolbar', exact: true }).focus();
+  await page.keyboard.press('Tab');
+  await expect(sorting).toBeFocused();
+  await expect(sorting.locator('..')).toHaveCSS('outline-style', 'solid');
+  const title = article.getByText('QTableGroupLoadMore', { exact: true });
+  expect(await title.evaluate(el => el.scrollWidth <= el.clientWidth)).toBeTruthy();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/components\/sorting\/?$/);
+});
+
+for (const theme of ['light', 'dark'] as const) {
+  test(`catalog text has readable contrast in the ${theme} theme`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: theme });
+    await page.goto('docs/nuxt-ui/components');
+    await expect(page.locator('html')).toHaveClass(new RegExp(`\\b${theme}\\b`));
+    const title = page.locator('article').getByText('QTableGroupLoadMore', { exact: true });
+    const contrasts = await title.evaluate(el => {
+      const canvas = document.createElement('canvas').getContext('2d')!;
+      const luminance = (color: string): number => {
+        canvas.fillStyle = color;
+        canvas.fillRect(0, 0, 1, 1);
+        const rgb = [...canvas.getImageData(0, 0, 1, 1).data].slice(0, 3).map(channel => {
+          const s = channel / 255;
+          return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        });
+        return rgb[0]! * 0.2126 + rgb[1]! * 0.7152 + rgb[2]! * 0.0722;
+      };
+      const card = el.closest('[data-orientation]')!;
+      const bg = luminance(getComputedStyle(card).backgroundColor);
+      return [el, card.querySelector('[data-slot="description"]')!].map(text => {
+        const fg = luminance(getComputedStyle(text).color);
+        return (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05);
+      });
+    });
+    expect(Math.min(...contrasts)).toBeGreaterThanOrEqual(4.5);
+  });
+}
