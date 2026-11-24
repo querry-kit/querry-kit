@@ -236,3 +236,10 @@ test('the historical Nest reference and static icon survive a direct Pages reloa
   expect(icon.ok()).toBe(true);
   expect(await icon.text()).toContain('<svg');
 });
+
+test('group references retain their shared and individual deep links', async ({ page }) => {
+  await page.goto('docs/nuxt-ui/components/grouping');
+  for (const id of ['qtablegroup-and-qtablegrouploadmore', 'qtablegroup', 'qtablegrouploadmore']) {
+    await expect(page.locator(`article :is(h3,h4)[id="${id}"]`)).toHaveCount(1);
+  }
+});

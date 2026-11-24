@@ -283,7 +283,11 @@ Requires an ordered `v-model:grouping` (`string[]`) and `fields: readonly Groupi
 
 ### QTableGroup and QTableGroupLoadMore
 
+#### QTableGroup
+
 `QTableGroup` requires `label: string`, `count: number` and `expanded: boolean`. Optional `loading: boolean` and `error: unknown` control expanded status. `texts` and `icons` override defaults. Its `toggle` and `retry` events have no payload. `trigger` receives `label`, `count`, `expanded`, and `toggle()`, with an accessible disclosure button as fallback. The button's `header` slot receives the same data except `toggle`, with the localized label and count as fallback. The unnamed slot renders expanded content. `loading` is unscoped and renders a status by default. `error` receives `error` and `retry()` and renders a retry alert by default.
+
+#### QTableGroupLoadMore
 
 `QTableGroupLoadMore` requires `hasMore: boolean`. It accepts optional `loading: boolean`, `error: unknown`, and `texts`. Its unnamed slot receives `hasMore`, `loading`, `error`, `attrs`, and `load()`. It renders when the branch has another batch or a request failed. The default button forwards attributes, disables itself while loading, and says Load more or Retry. The `load` event has no payload.
 
