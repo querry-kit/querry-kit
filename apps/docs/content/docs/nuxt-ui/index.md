@@ -18,5 +18,5 @@ Every public component starts with `Q`. It emits immutable replacement values, s
 
 <div class="not-prose mt-8 flex flex-wrap gap-3">
   <a class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-inverted" href="/docs/nuxt-ui/guide/getting-started">Get started</a>
-  <NuxtLink class="rounded-md border border-default px-4 py-2 text-sm font-medium text-highlighted" to="/docs/nuxt-ui/components">Browse components</NuxtLink>
+  <a class="rounded-md border border-default px-4 py-2 text-sm font-medium text-highlighted" href="/docs/nuxt-ui/components">Browse components</a>
 </div>
